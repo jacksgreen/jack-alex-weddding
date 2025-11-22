@@ -1,251 +1,247 @@
-import { useState, useEffect } from "react";
-import { X } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+  X,
+  Heart,
+  MessageCircle,
+  Send,
+  Bookmark,
+  MoreHorizontal,
+} from "lucide-react";
 
-// Photo data from /public/photos folder
+// Photo data from /public/photos folder with Instagram-style metadata
 const mockPhotos = [
-  { id: 1, url: "/photos/jack_1.jpeg", alt: "Jack & Alex 1" },
-  { id: 2, url: "/photos/jack_2.jpeg", alt: "Jack & Alex 2" },
-  { id: 3, url: "/photos/jack_3.jpeg", alt: "Jack & Alex 3" },
-  { id: 4, url: "/photos/jack_4.jpeg", alt: "Jack & Alex 4" },
-  { id: 5, url: "/photos/jack_5.jpeg", alt: "Jack & Alex 5" },
-  { id: 6, url: "/photos/jack_6.jpeg", alt: "Jack & Alex 6" },
-  { id: 7, url: "/photos/jack_7.jpeg", alt: "Jack & Alex 7" },
-  { id: 8, url: "/photos/jack_8.jpeg", alt: "Jack & Alex 8" },
+  {
+    id: 1,
+    url: "/photos/jack_1.jpeg",
+    alt: "Jack & Alex 1",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption:
+      "If your girl (1) drives a Honda ATC 110 three-wheeler, (2) owns a speargun, (3) cruises Caribbean beaches on said vehicle to catch fresh grouper with said speargun... then you, my friend... you've found what they call a 'keeper' Picture by the king Jean-Daniel Lorieux",
+    timestamp: "5 months ago",
+  },
+  {
+    id: 2,
+    url: "/photos/jack_2.jpeg",
+    alt: "Jack & Alex 2",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption: "Forever starts now 💍",
+    timestamp: "5 months ago",
+  },
+  {
+    id: 3,
+    url: "/photos/jack_3.jpeg",
+    alt: "Jack & Alex 3",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption: "Celebrating with our favorite people 🎉",
+    timestamp: "5 months ago",
+  },
+  {
+    id: 4,
+    url: "/photos/jack_4.jpeg",
+    alt: "Jack & Alex 4",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption: "Just married! 👰🤵",
+    timestamp: "5 months ago",
+  },
+  {
+    id: 5,
+    url: "/photos/jack_5.jpeg",
+    alt: "Jack & Alex 5",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption: "What a magical evening 🌙",
+    timestamp: "5 months ago",
+  },
+  {
+    id: 6,
+    url: "/photos/jack_6.jpeg",
+    alt: "Jack & Alex 6",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption: "Dancing the night away 💃🕺",
+    timestamp: "5 months ago",
+  },
+  {
+    id: 7,
+    url: "/photos/jack_7.jpeg",
+    alt: "Jack & Alex 7",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption: "Golden hour perfection 🌅",
+    timestamp: "5 months ago",
+  },
+  {
+    id: 8,
+    url: "/photos/jack_8.jpeg",
+    alt: "Jack & Alex 8",
+    username: "poolsuite",
+    likes: "93901750",
+    comments: "88586857",
+    caption: "Thank you to everyone who made this day special ❤️",
+    timestamp: "5 months ago",
+  },
 ];
 
 const Photos = () => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(
     null
   );
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [mainCarouselApi, setMainCarouselApi] = useState<CarouselApi>();
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Keyboard navigation
-  useEffect(() => {
-    if (!mainCarouselApi || selectedPhotoIndex === null) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        mainCarouselApi.scrollPrev();
-      } else if (e.key === "ArrowRight") {
-        e.preventDefault();
-        mainCarouselApi.scrollNext();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [mainCarouselApi, selectedPhotoIndex]);
-
-  // Sync carousel index when it changes from swiping/keyboard
-  useEffect(() => {
-    if (!mainCarouselApi) return;
-
-    const onSelect = () => {
-      setSelectedPhotoIndex(mainCarouselApi.selectedScrollSnap());
-    };
-
-    mainCarouselApi.on("select", onSelect);
-    return () => {
-      mainCarouselApi.off("select", onSelect);
-    };
-  }, [mainCarouselApi]);
+  const [liked, setLiked] = useState<boolean[]>(
+    new Array(mockPhotos.length).fill(false)
+  );
 
   const handlePhotoClick = (index: number) => {
     setSelectedPhotoIndex(index);
   };
 
-  const handleThumbnailClick = (index: number) => {
-    if (mainCarouselApi) {
-      mainCarouselApi.scrollTo(index); // animated scroll for thumbnails
-    }
+  const handleLike = (index: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newLiked = [...liked];
+    newLiked[index] = !newLiked[index];
+    setLiked(newLiked);
   };
 
   const selectedPhoto =
     selectedPhotoIndex !== null ? mockPhotos[selectedPhotoIndex] : null;
 
   return (
-    <div className="p-2">
-      <div className="grid grid-cols-2 gap-2">
-        {mockPhotos.map((photo, index) => (
-          <Dialog
-            key={photo.id}
-            open={selectedPhotoIndex === index}
-            onOpenChange={(open) => {
-              if (!open) setSelectedPhotoIndex(null);
-            }}
-          >
-            <DialogTrigger asChild>
-              <div
-                className="aspect-square bg-gray-300 border border-gray-500 overflow-hidden hover:opacity-80 cursor-pointer"
-                onClick={() => handlePhotoClick(index)}
-              >
+    <div className="h-full overflow-y-auto bg-white">
+      {mockPhotos.map((photo, index) => (
+        <div
+          key={photo.id}
+          className="bg-white border-[3px] border-black rounded-[12px] mb-8 overflow-hidden shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+        >
+          {/* Post Header */}
+          <div className="flex items-center justify-between px-4 py-3 bg-white">
+            <div className="flex items-center gap-3">
+              {/* Profile Picture */}
+              <div className="w-11 h-11 rounded-full border-[3px] border-black overflow-hidden bg-white">
                 <img
-                  src={photo.url}
-                  alt={photo.alt}
+                  src="/oz.svg"
+                  alt="Profile"
                   className="w-full h-full object-cover"
                 />
               </div>
-            </DialogTrigger>
-            <DialogContent className="max-w-6xl max-h-[90vh] bg-win-bg border-2 border-win-bevel-light shadow-win-out p-0 max-md:max-w-full max-md:!h-[90vh] flex flex-col">
-              {/* Title Bar */}
-              <div className="flex justify-between items-center p-1 bg-pool-pink border-b-2 border-black flex-shrink-0">
-                <div className="font-bold text-black px-1">
-                  {selectedPhoto?.alt}
-                </div>
-                <button
-                  onClick={() => setSelectedPhotoIndex(null)}
-                  className="w-5 h-5 flex items-center justify-center bg-win-bg border border-win-bevel-light active:border-win-bevel-dark shadow-win-out active:shadow-win-in"
-                >
-                  <X size={14} color="black" />
-                </button>
+              {/* Username */}
+              <div className="font-bold text-base">{photo.username}</div>
+            </div>
+            <button className="p-1 hover:bg-gray-100 rounded">
+              <MoreHorizontal
+                size={24}
+                strokeWidth={2.5}
+                className="text-black"
+              />
+            </button>
+          </div>
+
+          {/* Photo */}
+          <div
+            className="aspect-square bg-gray-200 cursor-pointer relative overflow-hidden border-t-[3px] border-b-[3px] border-black"
+            onClick={() => handlePhotoClick(index)}
+          >
+            <img
+              src={photo.url}
+              alt={photo.alt}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center justify-between px-4 py-3 bg-white">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={(e) => handleLike(index, e)}
+                className="hover:opacity-70 transition-opacity"
+              >
+                <Heart
+                  size={28}
+                  strokeWidth={2.5}
+                  className={`${
+                    liked[index]
+                      ? "fill-red-500 stroke-red-500"
+                      : "stroke-black"
+                  }`}
+                />
+              </button>
+              <button className="hover:opacity-70 transition-opacity">
+                <MessageCircle
+                  size={28}
+                  strokeWidth={2.5}
+                  className="stroke-black"
+                />
+              </button>
+              <button className="hover:opacity-70 transition-opacity">
+                <Send size={28} strokeWidth={2.5} className="stroke-black" />
+              </button>
+            </div>
+            <button className="hover:opacity-70 transition-opacity">
+              <Bookmark size={28} strokeWidth={2.5} className="stroke-black" />
+            </button>
+          </div>
+
+          {/* Likes and Caption */}
+          <div className="px-4 pb-4 bg-white">
+            <div className="flex items-center gap-2 mb-2">
+              <Heart size={16} className="fill-black stroke-black" />
+              <div className="font-bold text-sm">
+                {liked[index]
+                  ? `${(parseInt(photo.likes) + 1).toLocaleString()} likes`
+                  : `${parseInt(photo.likes).toLocaleString()} likes`}
               </div>
+              <MessageCircle
+                size={16}
+                className="fill-black stroke-black ml-2"
+              />
+              <div className="font-bold text-sm">
+                {parseInt(photo.comments).toLocaleString()} comments
+              </div>
+            </div>
+            <div className="text-sm leading-relaxed mb-2">
+              <span className="font-bold">{photo.username}</span>{" "}
+              {photo.caption}
+            </div>
+            <div className="text-xs text-gray-500 uppercase">
+              {photo.timestamp}
+            </div>
+          </div>
+        </div>
+      ))}
 
-              {/* Content Layout */}
-              {isMobile ? (
-                // Mobile: Vertical layout
-                <div className="flex flex-col gap-2 p-2 bg-win-bg flex-1 min-h-0">
-                  {/* Main Photo Carousel */}
-                  <div className="flex-1 min-h-0 bg-slate-200 border-2 border-gray-500 overflow-hidden">
-                    <Carousel
-                      setApi={setMainCarouselApi}
-                      opts={{
-                        loop: true,
-                        startIndex: selectedPhotoIndex || 0,
-                        duration: 30,
-                      }}
-                      className="h-full flex flex-col"
-                      tabIndex={0}
-                    >
-                      <CarouselContent className="h-full grow flex items-center">
-                        {mockPhotos.map((photo) => (
-                          <CarouselItem
-                            key={photo.id}
-                            className="flex items-center justify-center bg-slate-200"
-                          >
-                            <img
-                              src={photo.url}
-                              alt={photo.alt}
-                              className="max-w-full max-h-full object-contain"
-                            />
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                    </Carousel>
-                  </div>
-
-                  {/* Thumbnail Carousel */}
-                  <div className="h-20 bg-white border-2 border-gray-500 p-1 flex-shrink-0">
-                    <Carousel
-                      opts={{
-                        align: "start",
-                        loop: false,
-                        dragFree: true,
-                      }}
-                      className="w-full"
-                    >
-                      <CarouselContent className="ml-0 gap-1">
-                        {mockPhotos.map((photo, index) => (
-                          <CarouselItem
-                            key={photo.id}
-                            className="basis-auto pl-0"
-                          >
-                            <div
-                              className={`w-16 h-16 border-2 cursor-pointer overflow-hidden hover:opacity-80 transition-opacity flex-shrink-0 ${
-                                selectedPhotoIndex === index
-                                  ? "border-win-blue border-4"
-                                  : "border-gray-400"
-                              }`}
-                              onClick={() => handleThumbnailClick(index)}
-                            >
-                              <img
-                                src={photo.url}
-                                alt={photo.alt}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                    </Carousel>
-                  </div>
-                </div>
-              ) : (
-                // Desktop: Horizontal layout
-                <div className="flex gap-2 p-2 bg-win-bg h-[75vh]">
-                  {/* Main Photo Carousel */}
-                  <div className="flex-1 bg-slate-200 border-2 border-gray-500 overflow-hidden flex items-center justify-center">
-                    <Carousel
-                      setApi={setMainCarouselApi}
-                      opts={{
-                        loop: true,
-                        startIndex: selectedPhotoIndex || 0,
-                        align: "center",
-                        duration: 30,
-                      }}
-                      className="h-full w-full flex flex-col"
-                      tabIndex={0}
-                    >
-                      <CarouselContent className="h-full ">
-                        {mockPhotos.map((photo) => (
-                          <CarouselItem
-                            key={photo.id}
-                            className="items-center justify-center flex flex-col bg-slate-200"
-                          >
-                            <img
-                              src={photo.url}
-                              alt={photo.alt}
-                              className="object-contain max-w-full max-h-full"
-                              style={{ maxHeight: "calc(75vh - 60px)" }}
-                            />
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                    </Carousel>
-                  </div>
-
-                  {/* Thumbnail Grid */}
-                  <div className="w-48 bg-white border-2 border-gray-500 p-2 flex-shrink-0 overflow-y-auto">
-                    <div className="grid grid-cols-2 gap-2">
-                      {mockPhotos.map((photo, index) => (
-                        <div
-                          key={photo.id}
-                          className={`aspect-square border-2 cursor-pointer overflow-hidden hover:opacity-80 transition-opacity ${
-                            selectedPhotoIndex === index
-                              ? "border-win-blue border-4"
-                              : "border-gray-400"
-                          }`}
-                          onClick={() => handleThumbnailClick(index)}
-                        >
-                          <img
-                            src={photo.url}
-                            alt={photo.alt}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </DialogContent>
-          </Dialog>
-        ))}
-      </div>
+      {/* Lightbox Modal */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedPhotoIndex(null)}
+        >
+          <div
+            className="relative max-w-5xl max-h-[90vh] bg-white border-[6px] border-black rounded-xl shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedPhotoIndex(null)}
+              className="absolute top-4 right-4 bg-white border-2 border-black rounded p-2 hover:bg-gray-100 z-10"
+            >
+              <X size={24} className="text-black" />
+            </button>
+            <img
+              src={selectedPhoto.url}
+              alt={selectedPhoto.alt}
+              className="w-full h-full object-contain max-h-[85vh]"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
