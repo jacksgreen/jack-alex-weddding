@@ -51,7 +51,7 @@ const Photos = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mainCarouselApi, selectedPhotoIndex]);
 
-  // Sync carousel index when it changes
+  // Sync carousel index when it changes from swiping/keyboard
   useEffect(() => {
     if (!mainCarouselApi) return;
 
@@ -65,24 +65,13 @@ const Photos = () => {
     };
   }, [mainCarouselApi]);
 
-  // Initialize carousel to correct position when opening dialog
-  useEffect(() => {
-    if (!mainCarouselApi || selectedPhotoIndex === null) return;
-
-    // Only scroll on initial open, not on subsequent updates
-    const currentIndex = mainCarouselApi.selectedScrollSnap();
-    if (currentIndex !== selectedPhotoIndex) {
-      mainCarouselApi.scrollTo(selectedPhotoIndex, true); // true = instant scroll
-    }
-  }, [mainCarouselApi, selectedPhotoIndex]);
-
   const handlePhotoClick = (index: number) => {
     setSelectedPhotoIndex(index);
   };
 
   const handleThumbnailClick = (index: number) => {
     if (mainCarouselApi) {
-      mainCarouselApi.scrollTo(index);
+      mainCarouselApi.scrollTo(index); // animated scroll for thumbnails
     }
   };
 
@@ -137,6 +126,7 @@ const Photos = () => {
                       opts={{
                         loop: true,
                         startIndex: selectedPhotoIndex || 0,
+                        duration: 30,
                       }}
                       className="h-full flex flex-col"
                       tabIndex={0}
@@ -198,21 +188,23 @@ const Photos = () => {
                 // Desktop: Horizontal layout
                 <div className="flex gap-2 p-2 bg-win-bg h-[75vh]">
                   {/* Main Photo Carousel */}
-                  <div className="flex-1 bg-white border-2 border-gray-500 overflow-hidden">
+                  <div className="flex-1 bg-white border-2 border-gray-500 overflow-hidden flex items-center justify-center">
                     <Carousel
                       setApi={setMainCarouselApi}
                       opts={{
                         loop: true,
                         startIndex: selectedPhotoIndex || 0,
+                        align: "center",
+                        duration: 30,
                       }}
                       className="h-full w-full"
                       tabIndex={0}
                     >
-                      <CarouselContent className="h-full items-center">
+                      <CarouselContent className="h-full">
                         {mockPhotos.map((photo) => (
                           <CarouselItem
                             key={photo.id}
-                            className="flex items-center justify-center p-4"
+                            className="flex items-center justify-center"
                           >
                             <img
                               src={photo.url}
