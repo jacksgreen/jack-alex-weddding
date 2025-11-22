@@ -99,10 +99,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           {/* Credits/Info */}
           <div className="text-xs max-md:text-[10px] space-y-2 mb-auto text-gray-800 leading-relaxed max-md:space-y-1">
             <p>
-              Jack Green, Alex Smith, Best Man, Maid of Honor, The Parents, The
-              Dog, The Cat, The Venue Staff.
+              Two people who clean up nice, and one dog who steals the show.
             </p>
-            <p>Copyright 2025 Wedding Systems Ltd.</p>
+            <p>© 2026 Wedding Systems Ltd. • No refunds on dance moves.</p>
           </div>
 
           {/* Loading Status */}
