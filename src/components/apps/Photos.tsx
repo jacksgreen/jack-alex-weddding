@@ -120,7 +120,7 @@ const Photos = () => {
                 // Mobile: Vertical layout
                 <div className="flex flex-col gap-2 p-2 bg-win-bg flex-1 min-h-0">
                   {/* Main Photo Carousel */}
-                  <div className="flex-1 min-h-0 bg-white border-2 border-gray-500 overflow-hidden">
+                  <div className="flex-1 min-h-0 bg-gray-800 border-2 border-gray-500 overflow-hidden">
                     <Carousel
                       setApi={setMainCarouselApi}
                       opts={{
@@ -135,7 +135,7 @@ const Photos = () => {
                         {mockPhotos.map((photo) => (
                           <CarouselItem
                             key={photo.id}
-                            className="flex items-center justify-center "
+                            className="flex items-center justify-center bg-gray-800"
                           >
                             <img
                               src={photo.url}
@@ -188,7 +188,7 @@ const Photos = () => {
                 // Desktop: Horizontal layout
                 <div className="flex gap-2 p-2 bg-win-bg h-[75vh]">
                   {/* Main Photo Carousel */}
-                  <div className="flex-1 bg-white border-2 border-gray-500 overflow-hidden flex items-center justify-center">
+                  <div className="flex-1 bg-gray-800 border-2 border-gray-500 overflow-hidden flex items-center justify-center">
                     <Carousel
                       setApi={setMainCarouselApi}
                       opts={{
@@ -204,7 +204,7 @@ const Photos = () => {
                         {mockPhotos.map((photo) => (
                           <CarouselItem
                             key={photo.id}
-                            className="items-center justify-center  flex flex-col"
+                            className="items-center justify-center flex flex-col bg-gray-800"
                           >
                             <img
                               src={photo.url}
