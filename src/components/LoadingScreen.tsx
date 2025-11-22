@@ -68,10 +68,10 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 bg-pool-pink flex items-center justify-center z-[100] font-mono">
-      <div className="w-[600px] h-[300px] bg-[#e0f2f1] border-2 border-black rounded-lg p-2 flex gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+    <div className="fixed inset-0 bg-pool-pink flex items-center justify-center z-[100] font-mono p-4">
+      <div className="w-full max-w-[600px] h-auto max-md:max-w-full bg-[#e0f2f1] border-2 border-black rounded-lg p-2 flex max-md:flex-col gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
         {/* Left Column - Image */}
-        <div className="w-1/3 h-full border-2 border-black overflow-hidden relative">
+        <div className="w-1/3 max-md:w-full max-md:h-96 h-[284px] max-md:min-h-0 border-2 border-black overflow-hidden relative">
           <img
             src="/loading-image.png"
             alt="Wedding Couple"
@@ -81,23 +81,23 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         </div>
 
         {/* Right Column - Content */}
-        <div className="flex-1 flex flex-col relative">
+        <div className="flex-1 flex flex-col relative min-h-0">
           {/* Header */}
           <div className="border-b-2 border-black pb-2 mb-2">
-            <h1 className="text-5xl font-serif tracking-tighter text-black mb-1">
+            <h1 className="text-5xl max-md:text-3xl font-serif tracking-tighter text-black mb-1">
               ALEX & JACK
             </h1>
             <div className="flex justify-between items-end">
-              <span className="text-xs font-bold tracking-wider">
+              <span className="text-xs max-md:text-[10px] font-bold tracking-wider">
                 WEDDING ENHANCER VERSION 1.0
               </span>
               {/* Sun icon placeholder - using CSS/SVG or just a div for now */}
-              <div className="w-8 h-4 bg-black rounded-t-full" />
+              <div className="w-8 h-4 max-md:w-6 max-md:h-3 bg-black rounded-t-full" />
             </div>
           </div>
 
           {/* Credits/Info */}
-          <div className="text-xs space-y-2 mb-auto text-gray-800 leading-relaxed">
+          <div className="text-xs max-md:text-[10px] space-y-2 mb-auto text-gray-800 leading-relaxed max-md:space-y-1">
             <p>
               Jack Green, Alex Smith, Best Man, Maid of Honor, The Parents, The
               Dog, The Cat, The Venue Staff.
@@ -106,14 +106,16 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           </div>
 
           {/* Loading Status */}
-          <div className="mt-4">
-            <div className="flex justify-between text-xs font-bold mb-1">
-              <span>{textLines[textLines.length - 1] || "Loading..."}</span>
-              <span>{Math.round(progress)}%</span>
+          <div className="mt-4 max-md:mt-3">
+            <div className="flex justify-between text-xs max-md:text-[10px] font-bold mb-1">
+              <span className="truncate pr-2">
+                {textLines[textLines.length - 1] || "Loading..."}
+              </span>
+              <span className="flex-shrink-0">{Math.round(progress)}%</span>
             </div>
 
             {/* Segmented Progress Bar */}
-            <div className="h-6 border-2 border-black p-0.5 flex gap-0.5 bg-white">
+            <div className="h-6 max-md:h-4 border-2 border-black p-0.5 flex gap-0.5 bg-white">
               {Array.from({ length: 20 }).map((_, i) => (
                 <div
                   key={i}
