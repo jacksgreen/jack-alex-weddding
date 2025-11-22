@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import {
     Dialog,
@@ -34,6 +34,30 @@ const Photos = () => {
     const [expandedPhoto, setExpandedPhoto] = useState<number | null>(null);
     const selectedPhoto = mockPhotos.find(p => p.id === expandedPhoto);
 
+    // Keyboard navigation
+    useEffect(() => {
+        if (expandedPhoto === null) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const currentIndex = mockPhotos.findIndex(p => p.id === expandedPhoto);
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                // Go to next photo, wrap around to first if at end
+                const nextIndex = (currentIndex + 1) % mockPhotos.length;
+                setExpandedPhoto(mockPhotos[nextIndex].id);
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                // Go to previous photo, wrap around to last if at beginning
+                const prevIndex = currentIndex === 0 ? mockPhotos.length - 1 : currentIndex - 1;
+                setExpandedPhoto(mockPhotos[prevIndex].id);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [expandedPhoto]);
+
     return (
         <div className="p-2">
             <div className="grid grid-cols-2 gap-2">
@@ -53,7 +77,7 @@ const Photos = () => {
                                 />
                             </div>
                         </DialogTrigger>
-                        <DialogContent className="max-w-4xl max-h-[90vh] bg-win-bg border-2 border-win-bevel-light shadow-win-out p-0">
+                        <DialogContent className="max-w-6xl max-h-[90vh] bg-win-bg border-2 border-win-bevel-light shadow-win-out p-0">
                             {/* Title Bar */}
                             <div className="flex justify-between items-center p-1 bg-pool-pink border-b-2 border-black">
                                 <div className="font-bold text-black px-1">
@@ -67,13 +91,39 @@ const Photos = () => {
                                 </button>
                             </div>
 
-                            {/* Photo Content */}
-                            <div className="p-2 bg-win-bg">
-                                <img
-                                    src={selectedPhoto?.url}
-                                    alt={selectedPhoto?.alt}
-                                    className="max-w-full max-h-[80vh] object-contain border-2 border-gray-500"
-                                />
+                            {/* Content Layout: Main Photo + Thumbnail Grid */}
+                            <div className="flex gap-2 p-2 bg-win-bg">
+                                {/* Left: Main Photo */}
+                                <div className="flex-1 flex items-center justify-center bg-white border-2 border-gray-500">
+                                    <img
+                                        src={selectedPhoto?.url}
+                                        alt={selectedPhoto?.alt}
+                                        className="max-w-full max-h-[75vh] object-contain"
+                                    />
+                                </div>
+
+                                {/* Right: Thumbnail Grid */}
+                                <div className="w-48 bg-white border-2 border-gray-500 p-2">
+                                    <div className="grid grid-cols-2 gap-2 max-h-[75vh] overflow-y-auto">
+                                        {mockPhotos.map((photo) => (
+                                            <div
+                                                key={photo.id}
+                                                className={`aspect-square border-2 cursor-pointer overflow-hidden hover:opacity-80 transition-opacity ${
+                                                    expandedPhoto === photo.id
+                                                        ? 'border-win-blue border-4'
+                                                        : 'border-gray-400'
+                                                }`}
+                                                onClick={() => setExpandedPhoto(photo.id)}
+                                            >
+                                                <img
+                                                    src={photo.url}
+                                                    alt={photo.alt}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </DialogContent>
                     </Dialog>
