@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-import Desktop from './components/Desktop';
-import Window from './components/Window';
+import { useState, useEffect } from "react";
+import Desktop from "./components/Desktop";
+import Window from "./components/Window";
 
-import MusicPlayer from './components/apps/MusicPlayer';
-import AboutUs from './components/apps/AboutUs';
-import RSVP from './components/apps/RSVP';
-import Recommendations from './components/apps/Recommendations';
-import Events from './components/apps/Events';
-import Photos from './components/apps/Photos';
+import MusicPlayer from "./components/apps/MusicPlayer";
+import AboutUs from "./components/apps/AboutUs";
+import RSVP from "./components/apps/RSVP";
+import Recommendations from "./components/apps/Recommendations";
+import Events from "./components/apps/Events";
+import Photos from "./components/apps/Photos";
 
-import Dock, { DockItem } from './components/Dock';
+import Dock, { DockItem } from "./components/Dock";
 
-import LoadingScreen from './components/LoadingScreen';
+import LoadingScreen from "./components/LoadingScreen";
 
 interface WindowState {
   id: string;
@@ -26,12 +26,22 @@ function App() {
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
 
-  const openWindow = (id: string, title: string, component: React.ReactNode) => {
+  const openWindow = (
+    id: string,
+    title: string,
+    component: React.ReactNode
+  ) => {
     if (windows.find((w) => w.id === id)) {
       setActiveWindowId(id);
       return;
     }
-    const newWindow = { id, title, component, x: 50 + windows.length * 30, y: 50 + windows.length * 30 };
+    const newWindow = {
+      id,
+      title,
+      component,
+      x: 50 + windows.length * 30,
+      y: 50 + windows.length * 30,
+    };
     setWindows([...windows, newWindow]);
     setActiveWindowId(id);
   };
@@ -39,7 +49,9 @@ function App() {
   const closeWindow = (id: string) => {
     setWindows(windows.filter((w) => w.id !== id));
     if (activeWindowId === id) {
-      setActiveWindowId(windows.length > 1 ? windows[windows.length - 2].id : null);
+      setActiveWindowId(
+        windows.length > 1 ? windows[windows.length - 2].id : null
+      );
     }
   };
 
@@ -50,7 +62,7 @@ function App() {
   useEffect(() => {
     if (!isLoading) {
       // Open About Us window on load after loading screen
-      openWindow('about', 'About Us', <AboutUs />);
+      openWindow("about", "About Us", <AboutUs />);
     }
   }, [isLoading]);
 
@@ -77,12 +89,37 @@ function App() {
 
       {/* Dock Layer */}
       <Dock>
-        <DockItem title="About" iconSrc="/icons/about.png" iconClassName="w-12 h-12" onClick={() => openWindow('about', 'About Us', <AboutUs />)} />
-        <DockItem title="Events" iconSrc="/icons/events.png" onClick={() => openWindow('events', 'Events', <Events />)} />
-        <DockItem title="Recs" iconSrc="/icons/recs.png" onClick={() => openWindow('recs', 'Local Gems', <Recommendations />)} />
-        <DockItem title="Photos" iconSrc="/icons/photos.png" onClick={() => openWindow('photos', 'Gallery', <Photos />)} />
-        <DockItem title="RSVP" iconSrc="/icons/poolsuite/newsroom.png" onClick={() => openWindow('rsvp', 'RSVP', <RSVP />)} />
-        <DockItem title="PoolFM" iconSrc="/icons/poolsuite/player.png" onClick={() => openWindow('music', 'PoolFM', <MusicPlayer />)} />
+        <DockItem
+          title="About"
+          iconSrc="/icons/about.png"
+          iconClassName="w-12 h-12"
+          onClick={() => openWindow("about", "About Us", <AboutUs />)}
+        />
+        <DockItem
+          title="Events"
+          iconSrc="/icons/events.png"
+          onClick={() => openWindow("events", "Events", <Events />)}
+        />
+        <DockItem
+          title="Recs"
+          iconSrc="/icons/recs.png"
+          onClick={() => openWindow("recs", "Local Gems", <Recommendations />)}
+        />
+        <DockItem
+          title="Photos"
+          iconSrc="/icons/photos.png"
+          onClick={() => openWindow("photos", "Gallery", <Photos />)}
+        />
+        <DockItem
+          title="RSVP"
+          iconSrc="/icons/rsvp.png"
+          onClick={() => openWindow("rsvp", "RSVP", <RSVP />)}
+        />
+        <DockItem
+          title="PoolFM"
+          iconSrc="/icons/mixtapes.png"
+          onClick={() => openWindow("music", "PoolFM", <MusicPlayer />)}
+        />
       </Dock>
     </Desktop>
   );
