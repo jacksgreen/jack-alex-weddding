@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -22,32 +22,40 @@ const Window = ({
   initialPosition = { x: 100, y: 100 },
 }: WindowProps) => {
   const dragControls = useDragControls();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <motion.div
-      drag
+      drag={!isMobile}
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
-      initial={initialPosition}
-      className={`absolute bg-pool-mint shadow-win-out w-[400px] ${
+      initial={isMobile ? { x: 0, y: 0 } : initialPosition}
+      animate={isMobile ? { x: 0, y: 0 } : undefined}
+      className={`absolute bg-pool-mint shadow-win-out w-[400px] md:w-[400px] ${
         isActive ? "z-50" : "z-10"
-      }`}
+      } max-md:!left-0 max-md:!right-0 max-md:!top-0 max-md:w-full max-md:!h-[calc(100vh-7rem)]`}
       onMouseDown={onFocus}
       style={{
         border: "2px solid",
         borderColor: "#ffffff #808080 #808080 #ffffff",
         display: "grid",
         gridTemplateRows: "auto 1fr",
-        height: "fit-content",
-        minHeight: "200px",
-        maxHeight: "600px",
+        height: isMobile ? undefined : "fit-content",
+        minHeight: isMobile ? undefined : "200px",
+        maxHeight: isMobile ? undefined : "600px",
       }}
     >
       {/* Title Bar */}
       <div
-        className="flex justify-between items-center p-1 bg-pool-pink border-b-2 border-black cursor-move select-none"
-        onPointerDown={(e) => dragControls.start(e)}
+        className={`flex justify-between items-center p-1 bg-pool-pink border-b-2 border-black select-none ${isMobile ? 'cursor-default' : 'cursor-move'}`}
+        onPointerDown={(e) => !isMobile && dragControls.start(e)}
       >
         <div className="font-bold text-black px-1 flex items-center gap-2">
           {title}
