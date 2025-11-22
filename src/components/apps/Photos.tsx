@@ -14,7 +14,6 @@ const mockPhotos = [
     id: 1,
     url: "/photos/jack_1.jpeg",
     alt: "Jack & Alex 1",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption:
@@ -25,7 +24,6 @@ const mockPhotos = [
     id: 2,
     url: "/photos/jack_2.jpeg",
     alt: "Jack & Alex 2",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption: "Forever starts now 💍",
@@ -35,7 +33,6 @@ const mockPhotos = [
     id: 3,
     url: "/photos/jack_3.jpeg",
     alt: "Jack & Alex 3",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption: "Celebrating with our favorite people 🎉",
@@ -45,7 +42,6 @@ const mockPhotos = [
     id: 4,
     url: "/photos/jack_4.jpeg",
     alt: "Jack & Alex 4",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption: "Just married! 👰🤵",
@@ -55,7 +51,6 @@ const mockPhotos = [
     id: 5,
     url: "/photos/jack_5.jpeg",
     alt: "Jack & Alex 5",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption: "What a magical evening 🌙",
@@ -65,7 +60,6 @@ const mockPhotos = [
     id: 6,
     url: "/photos/jack_6.jpeg",
     alt: "Jack & Alex 6",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption: "Dancing the night away 💃🕺",
@@ -75,7 +69,6 @@ const mockPhotos = [
     id: 7,
     url: "/photos/jack_7.jpeg",
     alt: "Jack & Alex 7",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption: "Golden hour perfection 🌅",
@@ -85,7 +78,6 @@ const mockPhotos = [
     id: 8,
     url: "/photos/jack_8.jpeg",
     alt: "Jack & Alex 8",
-    username: "poolsuite",
     likes: "93901750",
     comments: "88586857",
     caption: "Thank you to everyone who made this day special ❤️",
@@ -134,7 +126,7 @@ const Photos = () => {
                 />
               </div>
               {/* Username */}
-              <div className="font-bold text-base">{photo.username}</div>
+              <div className="font-bold text-base">Oz the dog</div>
             </div>
             <button className="p-1 hover:bg-gray-100 rounded">
               <MoreHorizontal
