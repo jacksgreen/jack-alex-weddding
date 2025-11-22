@@ -62,7 +62,7 @@ const Window = ({
         width: isMobile ? "80vw" : "400px",
         height: "fit-content",
         minHeight: "200px",
-        maxHeight: isMobile ? "50vh" : "600px",
+        maxHeight: isMobile ? "60vh" : "600px",
       }}
     >
       {/* Title Bar */}
