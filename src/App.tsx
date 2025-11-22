@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 import Desktop from './components/Desktop';
 import Window from './components/Window';
 
-import { Heart, Music, Calendar, BookOpen, MapPin, Camera, Info } from 'lucide-react';
 import MusicPlayer from './components/apps/MusicPlayer';
-import { AboutUs, RSVP, Recommendations, Events, Photos } from './components/apps/WeddingApps';
+import AboutUs from './components/apps/AboutUs';
+import RSVP from './components/apps/RSVP';
+import Recommendations from './components/apps/Recommendations';
+import Events from './components/apps/Events';
+import Photos from './components/apps/Photos';
 
 import Dock, { DockItem } from './components/Dock';
 
