@@ -19,8 +19,29 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
     const timer = setInterval(() => {
       currentStep++;
-      const newProgress = Math.min(100, (currentStep / steps) * 100);
-      setProgress(newProgress);
+
+      // Non-linear progress with slowdown at 30% and pause at 70%
+      let linearProgress = (currentStep / steps) * 100;
+      let newProgress;
+
+      if (linearProgress < 30) {
+        // Normal speed up to 30%
+        newProgress = linearProgress;
+      } else if (linearProgress < 40) {
+        // Slow down between 30-40% (takes 2x as long)
+        newProgress = 30 + (linearProgress - 30) * 0.5;
+      } else if (linearProgress < 70) {
+        // Normal speed between 40-70%
+        newProgress = 35 + (linearProgress - 40) * 1.33;
+      } else if (linearProgress < 88) {
+        // Pause at 75% between 70-88% (longer pause)
+        newProgress = 75;
+      } else {
+        // Final push to 100%
+        newProgress = 75 + (linearProgress - 88) * 2.08;
+      }
+
+      setProgress(Math.min(100, newProgress));
 
       // Add random boot messages
       if (currentStep % 15 === 0) {
