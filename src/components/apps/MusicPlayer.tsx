@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Play, Pause, SkipForward, SkipBack, Volume2 } from 'lucide-react';
 
 const MusicPlayer = () => {

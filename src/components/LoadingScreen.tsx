@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const LoadingScreen = ({ onComplete }) => {
+interface LoadingScreenProps {
+    onComplete: () => void;
+}
+
+const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     const [progress, setProgress] = useState(0);
     const [textLines, setTextLines] = useState([
         "Initializing Wedding GuestOS...",

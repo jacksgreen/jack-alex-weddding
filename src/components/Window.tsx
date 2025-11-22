@@ -1,8 +1,18 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { motion, useDragControls } from 'framer-motion';
 import { X } from 'lucide-react';
 
-const Window = ({ id, title, children, onClose, isActive, onFocus, initialPosition = { x: 100, y: 100 } }) => {
+interface WindowProps {
+    id: string;
+    title: string;
+    children: ReactNode;
+    onClose: (id: string) => void;
+    isActive: boolean;
+    onFocus: () => void;
+    initialPosition?: { x: number; y: number };
+}
+
+const Window = ({ id, title, children, onClose, isActive, onFocus, initialPosition = { x: 100, y: 100 } }: WindowProps) => {
     const dragControls = useDragControls();
 
     return (

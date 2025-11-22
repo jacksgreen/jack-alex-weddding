@@ -1,6 +1,13 @@
-import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
-const Icon = ({ title, icon: IconComponent, iconSrc, onOpen }) => {
+interface IconProps {
+    title: string;
+    icon?: LucideIcon;
+    iconSrc?: string;
+    onOpen: () => void;
+}
+
+const Icon = ({ title, icon: IconComponent, iconSrc, onOpen }: IconProps) => {
     return (
         <div
             className="flex flex-col items-center justify-center w-20 h-20 m-4 cursor-pointer group"

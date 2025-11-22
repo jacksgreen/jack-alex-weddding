@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Desktop from './components/Desktop';
 import Window from './components/Window';
 
@@ -10,12 +10,20 @@ import Dock, { DockItem } from './components/Dock';
 
 import LoadingScreen from './components/LoadingScreen';
 
+interface WindowState {
+  id: string;
+  title: string;
+  component: React.ReactNode;
+  x: number;
+  y: number;
+}
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [windows, setWindows] = useState([]);
-  const [activeWindowId, setActiveWindowId] = useState(null);
+  const [windows, setWindows] = useState<WindowState[]>([]);
+  const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
 
-  const openWindow = (id, title, component) => {
+  const openWindow = (id: string, title: string, component: React.ReactNode) => {
     if (windows.find((w) => w.id === id)) {
       setActiveWindowId(id);
       return;
@@ -25,11 +33,15 @@ function App() {
     setActiveWindowId(id);
   };
 
-  const closeWindow = (id) => {
+  const closeWindow = (id: string) => {
     setWindows(windows.filter((w) => w.id !== id));
     if (activeWindowId === id) {
       setActiveWindowId(windows.length > 1 ? windows[windows.length - 2].id : null);
     }
+  };
+
+  const focusWindow = (id: string) => {
+    setActiveWindowId(id);
   };
 
   useEffect(() => {
