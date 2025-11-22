@@ -80,19 +80,19 @@ const Photos = () => {
                             </div>
 
                             {/* Content Layout: Main Photo + Thumbnail Grid */}
-                            <div className="flex gap-2 p-2 bg-win-bg">
+                            <div className="flex gap-2 p-2 bg-win-bg h-[75vh]">
                                 {/* Left: Main Photo */}
-                                <div className="flex-1 flex items-center justify-center bg-white border-2 border-gray-500">
+                                <div className="flex-1 flex items-center justify-center bg-white border-2 border-gray-500 overflow-hidden">
                                     <img
                                         src={selectedPhoto?.url}
                                         alt={selectedPhoto?.alt}
-                                        className="max-w-full max-h-[75vh] object-contain"
+                                        className="max-w-full max-h-full object-contain"
                                     />
                                 </div>
 
                                 {/* Right: Thumbnail Grid */}
-                                <div className="w-48 bg-white border-2 border-gray-500 p-2">
-                                    <div className="grid grid-cols-2 gap-2 max-h-[75vh] overflow-y-auto">
+                                <div className="w-48 bg-white border-2 border-gray-500 p-2 flex-shrink-0 overflow-y-auto">
+                                    <div className="grid grid-cols-2 gap-2">
                                         {mockPhotos.map((photo) => (
                                             <div
                                                 key={photo.id}
