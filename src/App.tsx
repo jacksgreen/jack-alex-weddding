@@ -77,10 +77,10 @@ function App() {
 
       {/* Dock Layer */}
       <Dock>
-        <DockItem title="About" iconSrc="/icons/poolsuite/guestbook.png" onClick={() => openWindow('about', 'About Us', <AboutUs />)} />
-        <DockItem title="Events" iconSrc="/icons/poolsuite/events.png" onClick={() => openWindow('events', 'Events', <Events />)} />
-        <DockItem title="Gems" iconSrc="/icons/poolsuite/vacation.png" onClick={() => openWindow('recs', 'Local Gems', <Recommendations />)} />
-        <DockItem title="Photos" iconSrc="/icons/poolsuite/instagram.png" onClick={() => openWindow('photos', 'Gallery', <Photos />)} />
+        <DockItem title="About" iconSrc="/icons/about.png" iconClassName="w-12 h-12" onClick={() => openWindow('about', 'About Us', <AboutUs />)} />
+        <DockItem title="Events" iconSrc="/icons/events.png" onClick={() => openWindow('events', 'Events', <Events />)} />
+        <DockItem title="Recs" iconSrc="/icons/recs.png" onClick={() => openWindow('recs', 'Local Gems', <Recommendations />)} />
+        <DockItem title="Photos" iconSrc="/icons/photos.png" onClick={() => openWindow('photos', 'Gallery', <Photos />)} />
         <DockItem title="RSVP" iconSrc="/icons/poolsuite/newsroom.png" onClick={() => openWindow('rsvp', 'RSVP', <RSVP />)} />
         <DockItem title="PoolFM" iconSrc="/icons/poolsuite/player.png" onClick={() => openWindow('music', 'PoolFM', <MusicPlayer />)} />
       </Dock>

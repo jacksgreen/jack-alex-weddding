@@ -20,15 +20,16 @@ interface DockItemProps {
     iconSrc?: string;
     icon?: LucideIcon;
     onClick: () => void;
+    iconClassName?: string;
 }
 
-export const DockItem = ({ title, iconSrc, icon: IconComponent, onClick }: DockItemProps) => {
+export const DockItem = ({ title, iconSrc, icon: IconComponent, onClick, iconClassName = "w-8 h-8" }: DockItemProps) => {
     return (
         <div
             className="flex flex-col items-center justify-center w-20 h-20 cursor-pointer hover:bg-pastel-peach active:bg-pastel-pink border-r-2 border-black last:border-r-0 transition-colors"
             onClick={onClick}
         >
-            <div className="w-8 h-8 mb-1 flex items-center justify-center">
+            <div className={`${iconClassName} mb-1 flex items-center justify-center`}>
                 {iconSrc ? (
                     <img src={iconSrc} alt={title} className="w-full h-full object-contain" />
                 ) : IconComponent ? (
