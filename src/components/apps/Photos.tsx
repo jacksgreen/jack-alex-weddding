@@ -197,14 +197,14 @@ const Photos = () => {
                         align: "center",
                         duration: 30,
                       }}
-                      className="h-full w-full"
+                      className="h-full w-full flex flex-col"
                       tabIndex={0}
                     >
-                      <CarouselContent className="h-full">
+                      <CarouselContent className="h-full ">
                         {mockPhotos.map((photo) => (
                           <CarouselItem
                             key={photo.id}
-                            className="flex items-center justify-center"
+                            className="items-center justify-center  flex flex-col"
                           >
                             <img
                               src={photo.url}
