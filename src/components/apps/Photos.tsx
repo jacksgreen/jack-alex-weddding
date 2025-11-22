@@ -6,28 +6,16 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 
-// Mock photo data - replace these URLs with real photos later
+// Photo data from /public/photos folder
 const mockPhotos = [
-    { id: 1, url: 'https://placehold.co/600x600/FF6B9D/white?text=Photo+1', alt: 'Photo 1' },
-    { id: 2, url: 'https://placehold.co/600x600/C44569/white?text=Photo+2', alt: 'Photo 2' },
-    { id: 3, url: 'https://placehold.co/600x600/FFC7C7/white?text=Photo+3', alt: 'Photo 3' },
-    { id: 4, url: 'https://placehold.co/600x600/8FCACA/white?text=Photo+4', alt: 'Photo 4' },
-    { id: 5, url: 'https://placehold.co/600x600/FFE5B4/white?text=Photo+5', alt: 'Photo 5' },
-    { id: 6, url: 'https://placehold.co/600x600/B4E7CE/white?text=Photo+6', alt: 'Photo 6' },
-    { id: 7, url: 'https://placehold.co/600x600/A8E6CF/white?text=Photo+7', alt: 'Photo 7' },
-    { id: 8, url: 'https://placehold.co/600x600/FFD3B6/white?text=Photo+8', alt: 'Photo 8' },
-    { id: 9, url: 'https://placehold.co/600x600/FFAAA5/white?text=Photo+9', alt: 'Photo 9' },
-    { id: 10, url: 'https://placehold.co/600x600/FF8B94/white?text=Photo+10', alt: 'Photo 10' },
-    { id: 11, url: 'https://placehold.co/600x600/A2D5F2/white?text=Photo+11', alt: 'Photo 11' },
-    { id: 12, url: 'https://placehold.co/600x600/BDB2FF/white?text=Photo+12', alt: 'Photo 12' },
-    { id: 13, url: 'https://placehold.co/600x600/FFC6FF/white?text=Photo+13', alt: 'Photo 13' },
-    { id: 14, url: 'https://placehold.co/600x600/E7C6FF/white?text=Photo+14', alt: 'Photo 14' },
-    { id: 15, url: 'https://placehold.co/600x600/C7CEEA/white?text=Photo+15', alt: 'Photo 15' },
-    { id: 16, url: 'https://placehold.co/600x600/FFDFD3/white?text=Photo+16', alt: 'Photo 16' },
-    { id: 17, url: 'https://placehold.co/600x600/FEC8D8/white?text=Photo+17', alt: 'Photo 17' },
-    { id: 18, url: 'https://placehold.co/600x600/D4F1F4/white?text=Photo+18', alt: 'Photo 18' },
-    { id: 19, url: 'https://placehold.co/600x600/B5EAD7/white?text=Photo+19', alt: 'Photo 19' },
-    { id: 20, url: 'https://placehold.co/600x600/C7CEEA/white?text=Photo+20', alt: 'Photo 20' },
+    { id: 1, url: '/photos/jack_1.jpeg', alt: 'Jack & Alex 1' },
+    { id: 2, url: '/photos/jack_2.jpeg', alt: 'Jack & Alex 2' },
+    { id: 3, url: '/photos/jack_3.jpeg', alt: 'Jack & Alex 3' },
+    { id: 4, url: '/photos/jack_4.jpeg', alt: 'Jack & Alex 4' },
+    { id: 5, url: '/photos/jack_5.jpeg', alt: 'Jack & Alex 5' },
+    { id: 6, url: '/photos/jack_6.jpeg', alt: 'Jack & Alex 6' },
+    { id: 7, url: '/photos/jack_7.jpeg', alt: 'Jack & Alex 7' },
+    { id: 8, url: '/photos/jack_8.jpeg', alt: 'Jack & Alex 8' },
 ];
 
 const Photos = () => {
