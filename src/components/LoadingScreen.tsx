@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -68,8 +67,8 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 bg-pool-pink flex items-center justify-center z-[100] font-mono p-4">
-      <div className="w-full max-w-[600px] h-auto max-md:max-w-full bg-[#e0f2f1] border-2 border-black rounded-lg p-2 flex max-md:flex-col gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+    <div className="fixed inset-0 bg-[#f5f2e9] flex items-center justify-center z-[100] font-mono p-4">
+      <div className="w-full max-w-[600px] h-auto max-md:max-w-full bg-gradient-to-t from-[#7dd3c0] from-0% to-[#e8e4d5] to-50% border-4 border-black rounded-lg p-2 flex max-md:flex-col gap-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
         {/* Left Column - Image */}
         <div className="w-1/3 max-md:w-full max-md:h-96 h-[284px] max-md:min-h-0 border-2 border-black overflow-hidden relative">
           <img
@@ -113,18 +112,33 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
               <span className="flex-shrink-0">{Math.round(progress)}%</span>
             </div>
 
-            {/* Segmented Progress Bar */}
+            {/* Segmented Progress Bar with Gradient */}
             <div className="h-6 max-md:h-4 border-2 border-black p-0.5 flex gap-0.5 bg-white">
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`flex-1 transition-colors duration-150 ${
-                    (i / 20) * 100 < progress
-                      ? "bg-[#4fd1c5]"
-                      : "bg-transparent"
-                  }`}
-                />
-              ))}
+              {Array.from({ length: 20 }).map((_, i) => {
+                const isActive = (i / 20) * 100 < progress;
+                // Create gradient from teal to light green
+                const gradientIndex = (i / 20) * 100;
+                let bgColor = "bg-transparent";
+                if (isActive) {
+                  if (gradientIndex < 20) {
+                    bgColor = "bg-[#4db8a8]";
+                  } else if (gradientIndex < 40) {
+                    bgColor = "bg-[#5ec4b3]";
+                  } else if (gradientIndex < 60) {
+                    bgColor = "bg-[#6fd1c0]";
+                  } else if (gradientIndex < 80) {
+                    bgColor = "bg-[#80ddcc]";
+                  } else {
+                    bgColor = "bg-[#91e9d9]";
+                  }
+                }
+                return (
+                  <div
+                    key={i}
+                    className={`flex-1 transition-colors duration-150 ${bgColor}`}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

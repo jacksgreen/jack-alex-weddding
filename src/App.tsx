@@ -106,9 +106,9 @@ function App() {
           onClick={() => openWindow("recs", "Local Gems", <Recommendations />)}
         />
         <DockItem
-          title="Photos"
+          title="Insta"
           iconSrc="/icons/photos.png"
-          onClick={() => openWindow("photos", "Gallery", <Photos />)}
+          onClick={() => openWindow("photos", "Insta", <Photos />)}
         />
         <DockItem
           title="RSVP"
