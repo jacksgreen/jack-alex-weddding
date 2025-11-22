@@ -1,0 +1,45 @@
+import React from 'react';
+import { motion, useDragControls } from 'framer-motion';
+import { X } from 'lucide-react';
+
+const Window = ({ id, title, children, onClose, isActive, onFocus, initialPosition = { x: 100, y: 100 } }) => {
+    const dragControls = useDragControls();
+
+    return (
+        <motion.div
+            drag
+            dragControls={dragControls}
+            dragListener={false}
+            dragMomentum={false}
+            initial={initialPosition}
+            className={`absolute flex flex-col bg-pool-mint shadow-win-out w-[400px] min-h-[200px] ${isActive ? 'z-50' : 'z-10'}`}
+            onMouseDown={onFocus}
+            style={{ border: '2px solid', borderColor: '#ffffff #808080 #808080 #ffffff' }} // Custom bevel
+        >
+            {/* Title Bar */}
+            <div
+                className="flex justify-between items-center p-1 bg-pool-pink border-b-2 border-black cursor-move select-none"
+                onPointerDown={(e) => dragControls.start(e)}
+            >
+                <div className="font-bold text-black px-1 flex items-center gap-2">
+                    {title}
+                </div>
+                <button
+                    onClick={(e) => { e.stopPropagation(); onClose(id); }}
+                    className="w-5 h-5 flex items-center justify-center bg-win-bg border border-win-bevel-light active:border-win-bevel-dark shadow-win-out active:shadow-win-in"
+                >
+                    <X size={14} color="black" />
+                </button>
+            </div>
+
+            {/* Content Area */}
+            <div className="flex-1 p-1">
+                <div className="h-full w-full bg-white border border-gray-500 shadow-win-in p-2 overflow-auto text-black">
+                    {children}
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+export default Window;

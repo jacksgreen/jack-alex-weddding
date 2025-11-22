@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'VT323', monospace;
+  overflow: hidden; /* Prevent scrolling on desktop */
+  @apply bg-pool-bg text-win-text;
+}
+
+/* Custom Scrollbar for Webkit */
+::-webkit-scrollbar {
+  width: 16px;
+  background: #c0c0c0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px 0px 1px #ffffff, inset -1px -1px 0px 1px #808080;
+}
+
+::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px 0px 1px #ffffff, inset -1px -1px 0px 1px #808080;
+  height: 16px;
+}
