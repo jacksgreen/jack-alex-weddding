@@ -22,8 +22,8 @@ const AboutUs = () => {
           <>
             <p>
               In 2019, two humans showed up in Tel Aviv for what they called a
-              "six-month program." Obviously, they needed someone to keep an
-              eye on them. Enter: me.
+              "six-month program." Obviously, they needed someone to keep an eye
+              on them. Enter: me.
             </p>
             <p>
               They met, started dating, and apparently decided I was the best
@@ -50,7 +50,7 @@ const AboutUs = () => {
         ) : (
           <>
             <p>
-              In 2019, a girl from the quiet countryside of Connecticut and a
+              In 2019, a girl from the quiet suburbs of Connecticut and a
               lifelong city boy from London both enrolled in a six-month program
               in Tel Aviv. "It'll be a great experience," they reassured their
               parents. "I'll be back before you know it," they promised.

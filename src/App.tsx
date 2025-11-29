@@ -81,9 +81,6 @@ function App() {
   return (
     <OzModeProvider>
       <Desktop>
-        {/* Oz Mode Toggle Button */}
-        <OzModeToggle />
-
         {/* Windows Layer */}
         {windows.map((win) => (
           <Window
@@ -98,44 +95,47 @@ function App() {
             {win.component}
           </Window>
         ))}
-
-        {/* Dock Layer */}
-        <Dock>
-          <DockItem
-            title="About"
-            iconSrc="/icons/about.png"
-            iconClassName="w-12 h-12"
-            onClick={() => openWindow("about", "About Us", <AboutUs />)}
-          />
-          <DockItem
-            title="Events"
-            iconSrc="/icons/events.png"
-            onClick={() => openWindow("events", "Events", <Events />)}
-          />
-          <DockItem
-            title="Recs"
-            iconSrc="/icons/recs.png"
-            onClick={() =>
-              openWindow("recs", "Local Gems", <Recommendations />)
-            }
-          />
-          <DockItem
-            title="Insta"
-            iconSrc="/icons/photos.png"
-            onClick={() => openWindow("photos", "Insta", <Photos />)}
-          />
-          <DockItem
-            title="RSVP"
-            iconSrc="/icons/rsvp.png"
-            onClick={() => openWindow("rsvp", "RSVP", <RSVP />)}
-          />
-          <DockItem
-            title="PoolFM"
-            iconSrc="/icons/mixtapes.png"
-            onClick={() => openWindow("music", "PoolFM", <MusicPlayer />)}
-          />
-        </Dock>
       </Desktop>
+
+      {/* Oz Mode Toggle Button - Outside Desktop to avoid dark filter */}
+      <OzModeToggle />
+
+      {/* Dock Layer - Outside Desktop to avoid dark filter */}
+      <Dock>
+        <DockItem
+          title="About"
+          iconSrc="/icons/about.png"
+          iconClassName="w-12 h-12"
+          onClick={() => openWindow("about", "About Us", <AboutUs />)}
+        />
+        <DockItem
+          title="Events"
+          iconSrc="/icons/events.png"
+          onClick={() => openWindow("events", "Events", <Events />)}
+        />
+        <DockItem
+          title="Recs"
+          iconSrc="/icons/recs.png"
+          onClick={() =>
+            openWindow("recs", "Local Gems", <Recommendations />)
+          }
+        />
+        <DockItem
+          title="Insta"
+          iconSrc="/icons/photos.png"
+          onClick={() => openWindow("photos", "Insta", <Photos />)}
+        />
+        <DockItem
+          title="RSVP"
+          iconSrc="/icons/rsvp.png"
+          onClick={() => openWindow("rsvp", "RSVP", <RSVP />)}
+        />
+        <DockItem
+          title="PoolFM"
+          iconSrc="/icons/mixtapes.png"
+          onClick={() => openWindow("music", "PoolFM", <MusicPlayer />)}
+        />
+      </Dock>
     </OzModeProvider>
   );
 }
