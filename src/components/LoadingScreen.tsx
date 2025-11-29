@@ -72,7 +72,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         {/* Left Column - Image */}
         <div className="w-1/3 max-md:w-full max-md:h-96 h-[284px] max-md:min-h-0 border-2 border-black overflow-hidden relative">
           <img
-            src="/loading-image.png"
+            src="/loading-image.jpg"
             alt="Wedding Couple"
             className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
           />

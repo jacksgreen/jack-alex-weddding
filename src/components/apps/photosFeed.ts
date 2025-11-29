@@ -61,7 +61,7 @@ export const photosFeed = [
   },
   {
     id: 7,
-    url: "/photos/ceramics_lesson.png",
+    url: "/photos/ceramics_lesson.jpg",
     alt: "Ceramics Lesson",
     likes: "93901750",
     comments: "88586857",

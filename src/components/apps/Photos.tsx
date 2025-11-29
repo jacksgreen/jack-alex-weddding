@@ -70,6 +70,7 @@ const Photos = () => {
               src={photo.url}
               alt={photo.alt}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
 
@@ -154,6 +155,7 @@ const Photos = () => {
               src={selectedPhoto.url}
               alt={selectedPhoto.alt}
               className="w-full h-full object-contain max-h-[85vh]"
+              loading="lazy"
             />
           </div>
         </div>
