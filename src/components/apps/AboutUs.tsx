@@ -7,17 +7,32 @@ const AboutUs = () => (
           alt="Couple"
           className="w-full h-48 object-cover mb-2 border border-gray-400 shadow-[inset_0_0_60px_rgba(0,0,0,0.2),4px_4px_0_rgba(0,0,0,0.3)] brightness-105 contrast-105 saturate-110 hue-rotate-[-5deg] sepia-[0.15] hover:saturate-125 hover:sepia-[0.05] transition-all duration-300"
         />
-        <p className="text-sm italic text-center">"The day we met..."</p>
+        <p className="text-sm italic text-center">
+          "Just a casual stroll through Park HaMesila..."
+        </p>
       </div>
       <p>
-        Alex and Jack met in the summer of 2018 at a rooftop party in Brooklyn.
-        Jack spilled his drink on Alex's shoes, and the rest is history. They
-        share a love for vintage synthesizers, spicy noodles, and long walks on
-        the beach (ironically).
+        In 2019, a girl from the quiet countryside of Connecticut and a lifelong
+        city boy from London both enrolled in a six-month program in Tel Aviv.
+        “It'll be a great experience,” they reassured their parents. “I'll be
+        back before you know it,” they promised.
       </p>
+      <p>Spoiler...They did not come back six months later.</p>
       <p>
-        After 5 years of adventures, 3 apartments, and 1 cat named "Synth", they
-        are finally tying the knot!
+        They met on the program, started dating, and promptly lost all interest
+        in their return flights. Today, they're software engineers at different
+        startups in Tel Aviv (healthy boundaries and all), living in Neve Tzedek
+        with their dog Oz - who remains entirely convinced he's the protagonist
+        of this story.
+      </p>
+
+      <p>
+        These days, you'll find Jack out on his bike and Alex reminding
+        him—lovingly, of course, that it does not belong in the middle of the
+        apartment. Or the hallway. Or the bedroom. Otherwise, they're visiting
+        family or escorting Oz on his daily constitutional along Park HaMesila.
+        And now, after all these years together, they've decided to make it
+        official. No return ticket this time.
       </p>
     </div>
   </div>
