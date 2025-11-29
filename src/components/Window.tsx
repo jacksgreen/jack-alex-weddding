@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { X } from "lucide-react";
+import { useOzMode } from "@/contexts/OzModeContext";
 
 interface WindowProps {
   id: string;
@@ -21,6 +22,7 @@ const Window = ({
   onFocus,
   initialPosition = { x: 100, y: 100 },
 }: WindowProps) => {
+  const { isOzMode } = useOzMode();
   const dragControls = useDragControls();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -50,13 +52,12 @@ const Window = ({
       dragListener={false}
       dragMomentum={false}
       initial={isMobile ? mobileInitialPos : initialPosition}
-      className={`absolute bg-pool-mint shadow-win-out ${
+      className={`absolute shadow-win-out ${
         isActive ? "z-50" : "z-10"
-      }`}
+      } ${isOzMode ? "bg-gray-800" : "bg-pool-mint"}`}
       onMouseDown={onFocus}
       style={{
         border: "2px solid",
-        borderColor: "#ffffff #808080 #808080 #ffffff",
         display: "grid",
         gridTemplateRows: "auto 1fr",
         width: isMobile ? "80vw" : "400px",
@@ -67,11 +68,19 @@ const Window = ({
     >
       {/* Title Bar */}
       <div
-        className="flex justify-between items-center p-1 bg-pool-pink border-b-2 border-black select-none cursor-move"
+        className={`flex justify-between items-center p-1 border-b-2 select-none cursor-move ${
+          isOzMode
+            ? "bg-gray-700 border-gray-900"
+            : "bg-pool-pink border-black"
+        }`}
         onPointerDown={(e) => dragControls.start(e)}
       >
-        <div className="font-bold text-black px-1 flex items-center gap-2">
+        <div className={`font-bold px-1 flex items-center gap-2 ${
+          isOzMode ? "text-gray-100" : "text-black"
+        }`}>
+          {isOzMode && <span className="text-base brightness-150 contrast-125">🐾</span>}
           {title}
+          {isOzMode && <span className="text-base brightness-150 contrast-125">🐾</span>}
         </div>
         <button
           onClick={(e) => {
@@ -87,7 +96,11 @@ const Window = ({
       {/* Content Area */}
       <div className="p-1" style={{ minHeight: 0, overflow: "hidden" }}>
         <div
-          className="bg-white border border-gray-500 shadow-win-in p-2 text-black"
+          className={`border shadow-win-in p-2 ${
+            isOzMode
+              ? "bg-gray-900 border-gray-700 text-gray-100"
+              : "bg-white border-gray-500 text-black"
+          }`}
           style={{ height: "100%", overflowY: "auto" }}
         >
           {children}

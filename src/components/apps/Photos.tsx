@@ -8,8 +8,10 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { photosFeed } from "./photosFeed";
+import { useOzMode } from "@/contexts/OzModeContext";
 
 const Photos = () => {
+  const { incrementClickCount, isOzMode } = useOzMode();
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(
     null
   );
@@ -32,38 +34,59 @@ const Photos = () => {
     selectedPhotoIndex !== null ? photosFeed[selectedPhotoIndex] : null;
 
   return (
-    <div className="h-full overflow-y-auto bg-white">
+    <div className={`h-full overflow-y-auto ${isOzMode ? "bg-black" : "bg-white"}`}>
       {photosFeed.map((photo, index) => (
         <div
           key={photo.id}
-          className="bg-white border-[3px] border-black rounded-[12px] mb-8 overflow-hidden shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+          className={`border-[3px] rounded-[12px] mb-8 overflow-hidden ${
+            isOzMode
+              ? "bg-gray-900 border-gray-700 shadow-[6px_6px_0px_0px_rgba(50,50,50,1)]"
+              : "bg-white border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+          }`}
         >
           {/* Post Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-white">
+          <div className={`flex items-center justify-between px-4 py-3 ${
+            isOzMode ? "bg-gray-900" : "bg-white"
+          }`}>
             <div className="flex items-center gap-3">
-              {/* Profile Picture */}
-              <div className="w-11 h-11 rounded-full border-[3px] border-black overflow-hidden bg-white">
+              {/* Profile Picture - Click 3 times for Oz Mode */}
+              <button
+                onClick={incrementClickCount}
+                className={`w-11 h-11 rounded-full border-[3px] overflow-hidden cursor-pointer transition-colors ${
+                  isOzMode
+                    ? "border-gray-600 bg-gray-800 hover:border-gray-500"
+                    : "border-black bg-white hover:border-[#FFB7B2]"
+                }`}
+              >
                 <img
                   src="/oz.svg"
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </button>
               {/* Username */}
-              <div className="font-bold text-base">Oz the dog</div>
+              <div className={`font-bold text-base ${
+                isOzMode ? "text-gray-100" : "text-black"
+              }`}>Oz the dog</div>
             </div>
-            <button className="p-1 hover:bg-gray-100 rounded">
+            <button className={`p-1 rounded ${
+              isOzMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
+            }`}>
               <MoreHorizontal
                 size={24}
                 strokeWidth={2.5}
-                className="text-black"
+                className={isOzMode ? "text-gray-300" : "text-black"}
               />
             </button>
           </div>
 
           {/* Photo */}
           <div
-            className="aspect-square bg-gray-200 cursor-pointer relative overflow-hidden border-t-[3px] border-b-[3px] border-black"
+            className={`aspect-square cursor-pointer relative overflow-hidden border-t-[3px] border-b-[3px] ${
+              isOzMode
+                ? "bg-gray-800 border-gray-700"
+                : "bg-gray-200 border-black"
+            }`}
             onClick={() => handlePhotoClick(index)}
           >
             <img
@@ -75,7 +98,9 @@ const Photos = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-between px-4 py-3 bg-white">
+          <div className={`flex items-center justify-between px-4 py-3 ${
+            isOzMode ? "bg-gray-900" : "bg-white"
+          }`}>
             <div className="flex items-center gap-4">
               <button
                 onClick={(e) => handleLike(index, e)}
@@ -87,6 +112,8 @@ const Photos = () => {
                   className={`${
                     liked[index]
                       ? "fill-red-500 stroke-red-500"
+                      : isOzMode
+                      ? "stroke-gray-300"
                       : "stroke-black"
                   }`}
                 />
@@ -95,36 +122,57 @@ const Photos = () => {
                 <MessageCircle
                   size={28}
                   strokeWidth={2.5}
-                  className="stroke-black"
+                  className={isOzMode ? "stroke-gray-300" : "stroke-black"}
                 />
               </button>
               <button className="hover:opacity-70 transition-opacity">
-                <Send size={28} strokeWidth={2.5} className="stroke-black" />
+                <Send
+                  size={28}
+                  strokeWidth={2.5}
+                  className={isOzMode ? "stroke-gray-300" : "stroke-black"}
+                />
               </button>
             </div>
             <button className="hover:opacity-70 transition-opacity">
-              <Bookmark size={28} strokeWidth={2.5} className="stroke-black" />
+              <Bookmark
+                size={28}
+                strokeWidth={2.5}
+                className={isOzMode ? "stroke-gray-300" : "stroke-black"}
+              />
             </button>
           </div>
 
           {/* Likes and Caption */}
-          <div className="px-4 pb-4 bg-white">
+          <div className={`px-4 pb-4 ${isOzMode ? "bg-gray-900" : "bg-white"}`}>
             <div className="flex items-center gap-2 mb-2">
-              <Heart size={16} className="fill-black stroke-black" />
-              <div className="font-bold text-sm">
+              <Heart
+                size={16}
+                className={isOzMode ? "fill-gray-300 stroke-gray-300" : "fill-black stroke-black"}
+              />
+              <div className={`font-bold text-sm ${
+                isOzMode ? "text-gray-300" : "text-black"
+              }`}>
                 {liked[index]
                   ? `${(parseInt(photo.likes) + 1).toLocaleString()} likes`
                   : `${parseInt(photo.likes).toLocaleString()} likes`}
               </div>
               <MessageCircle
                 size={16}
-                className="fill-black stroke-black ml-2"
+                className={`ml-2 ${
+                  isOzMode
+                    ? "fill-gray-300 stroke-gray-300"
+                    : "fill-black stroke-black"
+                }`}
               />
-              <div className="font-bold text-sm">
+              <div className={`font-bold text-sm ${
+                isOzMode ? "text-gray-300" : "text-black"
+              }`}>
                 {parseInt(photo.comments).toLocaleString()} comments
               </div>
             </div>
-            <div className="text-sm leading-relaxed mb-2">
+            <div className={`text-sm leading-relaxed mb-2 ${
+              isOzMode ? "text-gray-200" : "text-black"
+            }`}>
               <span className="font-black">oz_the_dog</span>{" "}
               <span className="font-extralight">{photo.caption}</span>
             </div>

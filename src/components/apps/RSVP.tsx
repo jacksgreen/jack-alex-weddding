@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useOzMode } from "@/contexts/OzModeContext";
 
 const formSchema = z.object({
   attendingFriday: z.boolean(),
@@ -25,6 +26,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const RSVP = () => {
+  const { isOzMode } = useOzMode();
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
@@ -69,6 +71,19 @@ const RSVP = () => {
 
   return (
     <div className="p-4">
+      {isOzMode && (
+        <div className={`border-2 p-3 mb-4 text-sm ${
+          isOzMode
+            ? "bg-yellow-900/30 border-yellow-600 text-gray-200"
+            : "bg-yellow-50 border-yellow-400 text-black"
+        }`}>
+          <p className="font-bold mb-1">🐕 Oz's Note:</p>
+          <p>
+            If you're bringing treats for me, check "Yes". If not... also check
+            "Yes" but reconsider your life choices.
+          </p>
+        </div>
+      )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           {/* Name */}
@@ -77,106 +92,172 @@ const RSVP = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="block text-sm font-bold mb-1">
+                  {isOzMode ? "Human's Name" : "Name"}
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="Your full name" {...field} />
+                  <Input
+                    placeholder={
+                      isOzMode
+                        ? "What do they call you?"
+                        : "Your full name"
+                    }
+                    {...field}
+                    className="h-8 text-sm"
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs text-red-700" />
               </FormItem>
             )}
           />
+
           {/* Email */}
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="block text-sm font-bold mb-1">
+                  {isOzMode ? "Email (For Spam, Probably)" : "Email"}
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="you@email.com" type="email" {...field} />
+                  <Input
+                    type="email"
+                    placeholder={
+                      isOzMode
+                        ? "human@example.com"
+                        : "your.email@example.com"
+                    }
+                    {...field}
+                    className="h-8 text-sm"
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs text-red-700" />
               </FormItem>
             )}
           />
+
           {/* Guest Count */}
           <FormField
             control={form.control}
             name="guestCount"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Number of Guests</FormLabel>
+                <FormLabel className="block text-sm font-bold mb-1">
+                  {isOzMode ? "Number of Humans" : "Number of Guests"}
+                </FormLabel>
                 <FormControl>
-                  <Input type="number" min={1} max={10} {...field} />
+                  <Input
+                    type="number"
+                    min={1}
+                    max={10}
+                    {...field}
+                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    className="h-8 text-sm"
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs text-red-700" />
               </FormItem>
             )}
           />
+
           {/* Attending Friday */}
           <FormField
             control={form.control}
             name="attendingFriday"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Attending Friday?</FormLabel>
+              <FormItem className="flex items-center gap-2">
                 <FormControl>
                   <input
                     type="checkbox"
                     checked={field.value}
-                    onChange={e => field.onChange(e.target.checked)}
+                    onChange={(e) => field.onChange(e.target.checked)}
+                    className="w-4 h-4"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormLabel className="text-sm font-bold mb-0">
+                  {isOzMode ? "Friday Dinner (No dogs allowed 😔)" : "Attending Friday?"}
+                </FormLabel>
+                <FormMessage className="text-xs text-red-700" />
               </FormItem>
             )}
           />
+
           {/* Attending Wedding */}
           <FormField
             control={form.control}
             name="attendingWedding"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Attending Wedding?</FormLabel>
+              <FormItem className="flex items-center gap-2">
                 <FormControl>
                   <input
                     type="checkbox"
                     checked={field.value}
-                    onChange={e => field.onChange(e.target.checked)}
+                    onChange={(e) => field.onChange(e.target.checked)}
+                    className="w-4 h-4"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormLabel className="text-sm font-bold mb-0">
+                  {isOzMode ? "Sunday Wedding (Say yes!)" : "Attending Wedding?"}
+                </FormLabel>
+                <FormMessage className="text-xs text-red-700" />
               </FormItem>
             )}
           />
+
           {/* Notes */}
           <FormField
             control={form.control}
             name="notes"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Notes</FormLabel>
+                <FormLabel className="block text-sm font-bold mb-1">
+                  {isOzMode ? "Special Requests (Treats for Oz?)" : "Notes"}
+                </FormLabel>
                 <FormControl>
                   <textarea
-                    className="w-full p-2 min-h-[80px] border border-gray-400 rounded shadow-sm focus:border-black focus:outline-none text-base resize-y"
-                    placeholder="Anything we should know?"
+                    className={`w-full p-2 min-h-[80px] border rounded shadow-sm focus:outline-none text-sm resize-y ${
+                      isOzMode
+                        ? "bg-gray-800 border-gray-600 text-gray-100 focus:border-gray-500"
+                        : "bg-white border-gray-400 text-black focus:border-black"
+                    }`}
+                    placeholder={
+                      isOzMode
+                        ? "Any dietary restrictions? Bringing treats for me?"
+                        : "Anything we should know?"
+                    }
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs text-red-700" />
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={status === "submitting"}>
-            {status === "submitting" ? "Submitting..." : "Submit"}
+
+          <Button
+            type="submit"
+            disabled={status === "submitting"}
+            variant="win95"
+            className="mt-4"
+          >
+            {status === "submitting"
+              ? isOzMode
+                ? "Sending to my humans..."
+                : "Submitting..."
+              : isOzMode
+              ? "Submit (Oz Approved)"
+              : "Submit"}
           </Button>
+
           {message && (
             <div
               className={`text-sm ${
                 status === "success" ? "text-green-700" : "text-red-700"
               }`}
             >
-              {message}
+              {isOzMode && status === "success"
+                ? "Woof! I'll see you there! - Oz 🐕"
+                : message}
             </div>
           )}
         </form>
