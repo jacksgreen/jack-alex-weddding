@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import cuid from 'cuid';
-import fetch from 'node-fetch';
 
 interface RSVPSubmission {
   attendingFriday: boolean;
