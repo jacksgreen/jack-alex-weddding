@@ -6,7 +6,7 @@ export const photosFeed = [
     likes: "93901750",
     comments: "88586857",
     caption:
-      "They said YES to each other! I already said yes to both of them years ago, so this was really just a formality. 💍 - Oz",
+      "They said YES to each other! I already said yes to both of them months ago, so this was really just a formality. 💍",
     timestamp: "8 months ago",
   },
   {
@@ -15,7 +15,8 @@ export const photosFeed = [
     alt: "Engagement Photo 2",
     likes: "93901750",
     comments: "88586857",
-    caption: "More engagement photos. Still no one asking ME if I want to get engaged. Rude. - Oz",
+    caption:
+      "More engagement photos. Still no one asking ME if I want to get engaged. Rude.",
     timestamp: "8 months ago",
   },
   {
@@ -24,7 +25,8 @@ export const photosFeed = [
     alt: "Engagement Dinner",
     likes: "93901750",
     comments: "88586857",
-    caption: "Engagement dinner! I wasn't invited but I heard there were appetizers. This is what I'm dealing with here. - Oz",
+    caption:
+      "Engagement dinner! I wasn't invited but I heard there were appetizers. This is what I'm dealing with here.",
     timestamp: "8 months ago",
   },
   {
@@ -33,7 +35,8 @@ export const photosFeed = [
     alt: "Hiking with Oz",
     likes: "93901750",
     comments: "88586857",
-    caption: "FINALLY a photo that actually includes me. Best hike of their lives, obviously. I was there. - Oz",
+    caption:
+      "FINALLY a photo that actually includes me. Best hike of their lives, obviously. I was there.",
     timestamp: "7 months ago",
   },
   {
@@ -42,7 +45,8 @@ export const photosFeed = [
     alt: "Oz Feeling Cute",
     likes: "99999999",
     comments: "99999999",
-    caption: "Felt cute, might delete later. (Just kidding, I look incredible and this is staying up forever) - Oz",
+    caption:
+      "Felt cute, might delete later. (Just kidding, I look incredible and this is staying up forever)",
     timestamp: "6 months ago",
   },
   {
@@ -51,7 +55,8 @@ export const photosFeed = [
     alt: "Boat Trip",
     likes: "93901750",
     comments: "88586857",
-    caption: "Boat day! The humans got seasick. I did not. Superior species confirmed. - Oz",
+    caption:
+      "Boat day! The humans got seasick. I did not. Superior species confirmed.",
     timestamp: "6 months ago",
   },
   {
@@ -60,7 +65,8 @@ export const photosFeed = [
     alt: "Ceramics Lesson",
     likes: "93901750",
     comments: "88586857",
-    caption: "They took a ceramics class. I could have made better bowls with my paws but sure, go off. - Oz",
+    caption:
+      "They took a ceramics class. I could have made better bowls with my paws but sure, go off.",
     timestamp: "6 months ago",
   },
   {
@@ -69,7 +75,8 @@ export const photosFeed = [
     alt: "French Village",
     likes: "93901750",
     comments: "88586857",
-    caption: "France! Land of cheese, wine, and me being left at home with a petsitter. Zero stars. - Oz",
+    caption:
+      "France! Charming villages, cobblestone streets, and baguettes. This was before my time. They didn't know what they were missing.",
     timestamp: "5 months ago",
   },
   {
@@ -78,7 +85,8 @@ export const photosFeed = [
     alt: "France Dinner",
     likes: "93901750",
     comments: "88586857",
-    caption: "Look at them eating fancy French food while I'm stuck with kibble. I'm calling my lawyer. - Oz",
+    caption:
+      "French dinner date. Wine, candlelight, probably some heated debate about whether croissants are better than pain au chocolat.",
     timestamp: "5 months ago",
   },
   {
@@ -87,7 +95,8 @@ export const photosFeed = [
     alt: "Lavender Fields",
     likes: "93901750",
     comments: "88586857",
-    caption: "Lavender fields in France. Probably smells nice. I wouldn't know. I WAS AT HOME. - Oz",
+    caption:
+      "Lavender fields in Provence. Purple for days. Very romantic. Very photogenic. Very pre-dog era.",
     timestamp: "5 months ago",
   },
   {
@@ -96,7 +105,8 @@ export const photosFeed = [
     alt: "Portugal",
     likes: "93901750",
     comments: "88586857",
-    caption: "Portugal! Another trip without me. Starting to think they don't understand I'm the best travel companion. - Oz",
+    caption:
+      "Portugal! Pastel de nata, ocean views, and tile everywhere. Living their best pre-puppy life.",
     timestamp: "5 months ago",
   },
   {
@@ -105,7 +115,8 @@ export const photosFeed = [
     alt: "Jamaica Hammock",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jamaica hammock vibes. I bet I'd look great in a hammock. We'll never know because SOME DOGS weren't invited. - Oz",
+    caption:
+      "Jamaica hammock life. Peak relaxation achieved. They were practicing for all the naps we'd take together later.",
     timestamp: "4 months ago",
   },
   {
@@ -114,7 +125,8 @@ export const photosFeed = [
     alt: "Jamaica Sunset",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jamaica sunset. Beautiful. Tragic. I'm experiencing complex emotions about not being there. - Oz",
+    caption:
+      "Jamaica sunset. Beautiful. Tragic. I'm experiencing complex emotions about not being there.",
     timestamp: "4 months ago",
   },
   {
@@ -123,7 +135,8 @@ export const photosFeed = [
     alt: "Thailand Temple",
     likes: "93901750",
     comments: "88586857",
-    caption: "Thailand temple. Very spiritual. I'm spiritual too. I meditate every time they leave the house (on the couch). - Oz",
+    caption:
+      "Thailand temple. Very spiritual. I'm spiritual too. I meditate every time they leave the house (on the couch).",
     timestamp: "4 months ago",
   },
   {
@@ -132,7 +145,8 @@ export const photosFeed = [
     alt: "Thailand Hike",
     likes: "93901750",
     comments: "88586857",
-    caption: "Hiking in Thailand without their BEST HIKING BUDDY. Remember the photo from earlier where I was on a hike? Yeah. - Oz",
+    caption:
+      "Jungle hiking in Thailand! Humid, tropical, probably full of interesting smells. The adventure continues.",
     timestamp: "4 months ago",
   },
   {
@@ -141,7 +155,8 @@ export const photosFeed = [
     alt: "Prague Cold Weather",
     likes: "93901750",
     comments: "88586857",
-    caption: "Prague in the cold. I have a fur coat. I was MADE for this weather. But sure, leave me behind. - Oz",
+    caption:
+      "Prague in the cold. I have a fur coat. I was MADE for this weather.",
     timestamp: "3 months ago",
   },
   {
@@ -150,7 +165,8 @@ export const photosFeed = [
     alt: "New York",
     likes: "93901750",
     comments: "88586857",
-    caption: "New York City! The Big Apple! I've heard dogs love it there. This is just speculation on my part. - Oz",
+    caption:
+      "New York City! The Big Apple! I've heard dogs love it there. This is just speculation on my part.",
     timestamp: "3 months ago",
   },
   {
@@ -159,7 +175,8 @@ export const photosFeed = [
     alt: "New York 2",
     likes: "93901750",
     comments: "88586857",
-    caption: "More NYC content. Living their best lives. Meanwhile I'm living my DECENT life. It's fine. I'm fine. - Oz",
+    caption:
+      "More NYC content. Living their best lives. Meanwhile I'm living my DECENT life. It's fine. I'm fine.",
     timestamp: "3 months ago",
   },
   {
@@ -168,7 +185,8 @@ export const photosFeed = [
     alt: "Jerusalem Hills",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jerusalem hills. Historic. Beautiful. Would have been better with a dog in the frame. Just saying. - Oz",
+    caption:
+      "Jerusalem hills. Historic. Beautiful. Would have been better with a dog in the frame. Just saying.",
     timestamp: "3 months ago",
   },
   {
@@ -177,7 +195,8 @@ export const photosFeed = [
     alt: "Park HaMesila",
     likes: "93901750",
     comments: "88586857",
-    caption: "Park HaMesila! THIS IS A DOG PARK. I WAS THERE. Finally, some respect. - Oz",
+    caption:
+      "Park HaMesila! A DOG PARK. I WASN'T THERE. The irony is not lost on me.",
     timestamp: "2 months ago",
   },
   {
@@ -186,7 +205,8 @@ export const photosFeed = [
     alt: "Sea Hike",
     likes: "93901750",
     comments: "88586857",
-    caption: "Hiking by the sea! Water, trails, probably some good sniffs. I should write a travel blog. - Oz",
+    caption:
+      "Hiking by the sea! Water, trails, probably some good sniffs. I should write a travel blog.",
     timestamp: "2 months ago",
   },
   {
@@ -195,7 +215,8 @@ export const photosFeed = [
     alt: "USA Hike",
     likes: "93901750",
     comments: "88586857",
-    caption: "USA hiking vibes. Americans love dogs. I would have been SO popular there. Missed opportunity. - Oz",
+    caption:
+      "USA hiking vibes. Americans love dogs. I would have been SO popular there. Missed opportunity.",
     timestamp: "2 months ago",
   },
   {
@@ -204,7 +225,8 @@ export const photosFeed = [
     alt: "Jack's Apartment Balcony",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jack's balcony. I sun myself here. It's my office. I do important work here (napping). - Oz",
+    caption:
+      "Jack's balcony. Alex's hair looks amazing. Jack could use a haircut. Just calling it like I see it.",
     timestamp: "2 months ago",
   },
   {
@@ -213,7 +235,8 @@ export const photosFeed = [
     alt: "London - Jack's House",
     likes: "93901750",
     comments: "88586857",
-    caption: "London! This is where Jack lived before he met Alex. I wasn't born yet. Dark times for everyone. - Oz",
+    caption:
+      "London! This is where Jack lived before he met Alex. I wasn't born yet. Dark times for everyone.",
     timestamp: "15 years ago",
   },
   {
@@ -222,7 +245,8 @@ export const photosFeed = [
     alt: "Tower of London",
     likes: "93901750",
     comments: "88586857",
-    caption: "Tower of London. Historic. Medieval. They had dogs back then too. Those dogs would get it. - Oz",
+    caption:
+      "Tower of London. Historic. Medieval. They had dogs back then too. Those dogs would get it.",
     timestamp: "1 month ago",
   },
   {
@@ -231,7 +255,8 @@ export const photosFeed = [
     alt: "Baby Jack",
     likes: "93901750",
     comments: "88586857",
-    caption: "Baby Jack! Before he knew the joy of dog ownership. Look at him, he had no idea what was missing. - Oz",
+    caption:
+      "Baby Jack! Before he knew the joy of dog ownership. Look at him, he had no idea what was missing.",
     timestamp: "30 years ago",
   },
   {
@@ -240,7 +265,8 @@ export const photosFeed = [
     alt: "Young Jack with Balloons",
     likes: "93901750",
     comments: "88586857",
-    caption: "Young Jack with balloons. Cute kid. Would have been cuter with a puppy. Just objectively true. - Oz",
+    caption:
+      "Young Jack with balloons. Cute kid. Would have been cuter with a puppy. Just objectively true.",
     timestamp: "28 years ago",
   },
   {
@@ -249,7 +275,8 @@ export const photosFeed = [
     alt: "Jack in Cat Costume",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jack dressed as a CAT. We don't talk about this. This is a dark chapter we've all moved past. - Oz",
+    caption:
+      "Jack dressed as a CAT. We don't talk about this. This is a dark chapter we've all moved past.",
     timestamp: "27 years ago",
   },
   {
@@ -258,7 +285,8 @@ export const photosFeed = [
     alt: "Jack in Teletubbies Costume",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jack as a Teletubby. I respect the commitment to the bit but PLEASE delete this. - Oz",
+    caption:
+      "Jack as a Teletubby. I respect the commitment to the bit but PLEASE delete this.",
     timestamp: "26 years ago",
   },
   {
@@ -267,7 +295,8 @@ export const photosFeed = [
     alt: "Young Jack with Sister Ilana",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jack with his big sister Ilana! She seems cool. I bet she'd let me on the couch. - Oz",
+    caption:
+      "Jack with his big sister Ilana! She seems cool. I bet she'd let me on the couch.",
     timestamp: "27 years ago",
   },
   {
@@ -276,7 +305,8 @@ export const photosFeed = [
     alt: "Young Jack with Sister Ilana 2",
     likes: "93901750",
     comments: "88586857",
-    caption: "More Jack and Ilana content. Sibling goals. I'm an only dog so I wouldn't know. Living vicariously here. - Oz",
+    caption:
+      "More Jack and Ilana content. Sibling goals. I'm an only dog so I wouldn't know. Living vicariously here.",
     timestamp: "26 years ago",
   },
   {
@@ -285,7 +315,8 @@ export const photosFeed = [
     alt: "Jack's Parents Wedding",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jack's parents' wedding! This is where it all started. No dogs in this photo either. The cycle continues. - Oz",
+    caption:
+      "Jack's parents' wedding! This is where it all started. No dogs in this photo either. The cycle continues.",
     timestamp: "35 years ago",
   },
   {
@@ -294,7 +325,8 @@ export const photosFeed = [
     alt: "Young Alex",
     likes: "93901750",
     comments: "88586857",
-    caption: "Baby Alex! Already had that look of someone who would one day give the best ear scratches. - Oz",
+    caption:
+      "Baby Alex! Already had that look of someone who would one day give the best ear scratches.",
     timestamp: "28 years ago",
   },
   {
@@ -303,7 +335,8 @@ export const photosFeed = [
     alt: "Alex's Parents Wedding",
     likes: "93901750",
     comments: "88586857",
-    caption: "Alex's parents' wedding! Beautiful. Classic. Would have been elevated by a ring bearer dog. Missed opportunity. - Oz",
+    caption:
+      "Alex's parents' wedding! Beautiful. Classic. Would have been elevated by a ring bearer dog. Missed opportunity.",
     timestamp: "33 years ago",
   },
   {
@@ -312,16 +345,8 @@ export const photosFeed = [
     alt: "Devon's Wedding",
     likes: "93901750",
     comments: "88586857",
-    caption: "Alex's sister Devon's wedding! Everyone looks so happy. I bet they had a good DJ. Was there a puppy table? - Oz",
-    timestamp: "3 years ago",
-  },
-  {
-    id: 36,
-    url: "/photos/devon_wedding_bw.jpg",
-    alt: "Devon's Wedding B&W",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "Devon's wedding in black & white. Artistic. Timeless. I look good in black & white too. Check photo #5. - Oz",
+    caption:
+      "Alex's sister Devon's wedding! Everyone looks so happy. I bet they had a good DJ. Was there a puppy table?",
     timestamp: "3 years ago",
   },
   {
@@ -330,7 +355,8 @@ export const photosFeed = [
     alt: "Jesse & Ariella's Wedding",
     likes: "93901750",
     comments: "88586857",
-    caption: "Jesse and Ariella's wedding! Love is in the air. Also pollen. But mostly love. - Oz",
+    caption:
+      "Jesse and Ariella's wedding! They're the best. Sorry I barked at you guys that one time. (Okay, multiple times.)",
     timestamp: "2 years ago",
   },
 ];

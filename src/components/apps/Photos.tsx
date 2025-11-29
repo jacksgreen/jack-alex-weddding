@@ -124,7 +124,8 @@ const Photos = () => {
               </div>
             </div>
             <div className="text-sm leading-relaxed mb-2">
-              <span className="font-black">Oz the dog</span> {photo.caption}
+              <span className="font-black">oz_the_dog</span>{" "}
+              <span className="font-extralight">{photo.caption}</span>
             </div>
             <div className="text-xs text-gray-500 uppercase">
               {photo.timestamp}
