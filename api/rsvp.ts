@@ -1,11 +1,15 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import fetch from 'node-fetch';
 
 interface RSVPSubmission {
-  firstName: string;
-  lastName: string;
+  Id: string;
+  attendingFriday: boolean;
+  attendingWedding: boolean;
   email: string;
-  attending: string;
-  timestamp?: string;
+  guestCount: number;
+  name: string;
+  notes?: string;
+  timestamp: string;
 }
 
 export default async function handler(
@@ -18,14 +22,11 @@ export default async function handler(
   }
 
   try {
-    const { firstName, lastName, email, attending } = req.body as RSVPSubmission;
+    const { Id, attendingFriday, attendingWedding, email, guestCount, name, notes, timestamp } = req.body as RSVPSubmission;
 
     // Validate input
-    if (!firstName || !lastName || !email || !attending) {
-      return res.status(400).json({
-        error: 'Missing required fields',
-        required: ['firstName', 'lastName', 'email', 'attending']
-      });
+    if (!Id || typeof attendingFriday !== 'boolean' || typeof attendingWedding !== 'boolean' || !email || !guestCount || !name || !timestamp) {
+      return res.status(400).json({ error: 'Missing required fields', required: ['Id','attendingFriday','attendingWedding','email','guestCount','name','timestamp'] });
     }
 
     // Validate email format
@@ -36,56 +37,32 @@ export default async function handler(
       });
     }
 
-    // Add timestamp
-    const submission: RSVPSubmission = {
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      email: email.trim().toLowerCase(),
-      attending: attending.trim(),
-      timestamp: new Date().toISOString()
+    const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
+    const AIRTABLE_TABLE_ID = process.env.AIRTABLE_TABLE_ID;
+    const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
+    if (!AIRTABLE_BASE_ID || !AIRTABLE_TABLE_ID || !AIRTABLE_TOKEN) {
+      return res.status(500).json({ error: 'Airtable environment variables not configured.' });
+    }
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}`;
+    const headers = {
+      'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
+      'Content-Type': 'application/json'
     };
-
-    // TODO: Add Airtable or Google Sheets integration here
-    // For now, just log the submission
-    console.log('RSVP Submission:', submission);
-
-    // Placeholder response - replace with actual API call
-    // Example for future integration:
-    //
-    // Airtable:
-    // const response = await fetch(`https://api.airtable.com/v0/${baseId}/${tableName}`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Authorization': `Bearer ${process.env.AIRTABLE_API_KEY}`,
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ fields: submission })
-    // });
-    //
-    // Google Sheets:
-    // const auth = new google.auth.GoogleAuth({
-    //   credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS),
-    //   scopes: ['https://www.googleapis.com/auth/spreadsheets']
-    // });
-    // const sheets = google.sheets({ version: 'v4', auth });
-    // await sheets.spreadsheets.values.append({
-    //   spreadsheetId: process.env.SHEET_ID,
-    //   range: 'Sheet1!A:C',
-    //   valueInputOption: 'USER_ENTERED',
-    //   requestBody: { values: [[submission.name, submission.attending, submission.timestamp]] }
-    // });
-
-    return res.status(200).json({
-      success: true,
-      message: 'RSVP submitted successfully',
-      data: submission
+    const fields = { Id, attendingFriday, attendingWedding, email, guestCount, name, notes, timestamp };
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ fields })
     });
+    const airtableResult = await response.json();
+    console.log('Airtable response:', airtableResult);
+    if (!response.ok) {
+      return res.status(502).json({ error: 'Airtable error', airtable: airtableResult });
+    }
+    return res.status(200).json({ success: true, data: airtableResult });
 
   } catch (error) {
-    console.error('Error processing RSVP:', error);
-    return res.status(500).json({
-      error: 'Internal server error',
-      message: error instanceof Error ? error.message : 'Unknown error'
-    });
+    console.error('RSVP/Airtable error:', error);
+    return res.status(500).json({ error: 'Internal server error', message: error instanceof Error ? error.message : 'Unknown error' });
   }
 }

@@ -19,23 +19,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import cuid from 'cuid'; // at top, needs to be installed if not present
 
 const formSchema = z.object({
-  firstName: z
-    .string()
-    .min(1, "First name is required")
-    .min(2, "First name must be at least 2 characters")
-    .max(50, "First name must be less than 50 characters"),
-  lastName: z
-    .string()
-    .min(1, "Last name is required")
-    .min(2, "Last name must be at least 2 characters")
-    .max(50, "Last name must be less than 50 characters"),
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email({ message: "Please enter a valid email address" }),
-  attending: z.enum(["yes", "no"]),
+  Id: z.string().min(1),
+  attendingFriday: z.boolean(),
+  attendingWedding: z.boolean(),
+  email: z.string().email(),
+  guestCount: z.number().min(1),
+  name: z.string().min(1),
+  notes: z.string().optional(),
+  timestamp: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -49,10 +43,14 @@ const RSVP = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      Id: cuid(),
+      attendingFriday: false,
+      attendingWedding: true,
       email: "",
-      attending: "yes",
+      guestCount: 1,
+      name: "",
+      notes: "",
+      timestamp: new Date().toISOString(),
     },
   });
 
@@ -90,111 +88,71 @@ const RSVP = () => {
     <div className="p-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="block text-sm font-bold mb-1">
-                  First Name
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your first name"
-                    {...field}
-                    className="h-8 text-sm"
-                  />
-                </FormControl>
-                <FormMessage className="text-xs text-red-700" />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="block text-sm font-bold mb-1">
-                  Last Name
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your last name"
-                    {...field}
-                    className="h-8 text-sm"
-                  />
-                </FormControl>
-                <FormMessage className="text-xs text-red-700" />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="block text-sm font-bold mb-1">
-                  Email
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="your.email@example.com"
-                    {...field}
-                    className="h-8 text-sm"
-                  />
-                </FormControl>
-                <FormMessage className="text-xs text-red-700" />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="attending"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="block text-sm font-bold mb-1">
-                  Will you be attending?
-                </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="h-8 text-sm">
-                      <SelectValue placeholder="Select your response" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="yes">Yes</SelectItem>
-                    <SelectItem value="no">No</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage className="text-xs text-red-700" />
-              </FormItem>
-            )}
-          />
-
-          <Button
-            type="submit"
-            disabled={status === "submitting"}
-            variant="win95"
-            className="mt-4"
-          >
+          {/* Name */}
+          <FormField control={form.control} name="name" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Your full name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}/>
+          {/* Email */}
+          <FormField control={form.control} name="email" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="you@email.com" type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}/>
+          {/* Guest Count */}
+          <FormField control={form.control} name="guestCount" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Number of Guests</FormLabel>
+              <FormControl>
+                <Input type="number" min={1} max={10} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}/>
+          {/* Attending Friday */}
+          <FormField control={form.control} name="attendingFriday" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Attending Friday?</FormLabel>
+              <FormControl>
+                <input type="checkbox" checked={field.value} onChange={e => field.onChange(e.target.checked)} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}/>
+          {/* Attending Wedding */}
+          <FormField control={form.control} name="attendingWedding" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Attending Wedding?</FormLabel>
+              <FormControl>
+                <input type="checkbox" checked={field.value} onChange={e => field.onChange(e.target.checked)} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}/>
+          {/* Notes */}
+          <FormField control={form.control} name="notes" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Notes</FormLabel>
+              <FormControl>
+                <textarea placeholder="Anything we should know?" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}/>
+          <Button type="submit" disabled={status === "submitting"}>
             {status === "submitting" ? "Submitting..." : "Submit"}
           </Button>
-
           {message && (
-            <div
-              className={`text-sm ${
-                status === "success" ? "text-green-700" : "text-red-700"
-              }`}
-            >
-              {message}
-            </div>
+            <div className={`text-sm ${status === "success" ? "text-green-700" : "text-red-700"}`}>{message}</div>
           )}
         </form>
       </Form>
