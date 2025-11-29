@@ -1,15 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import cuid from 'cuid';
 import fetch from 'node-fetch';
 
 interface RSVPSubmission {
-  Id: string;
   attendingFriday: boolean;
   attendingWedding: boolean;
   email: string;
   guestCount: number;
   name: string;
   notes?: string;
-  timestamp: string;
 }
 
 export default async function handler(
@@ -22,11 +21,11 @@ export default async function handler(
   }
 
   try {
-    const { Id, attendingFriday, attendingWedding, email, guestCount, name, notes, timestamp } = req.body as RSVPSubmission;
+    const { attendingFriday, attendingWedding, email, guestCount, name, notes } = req.body as RSVPSubmission;
 
     // Validate input
-    if (!Id || typeof attendingFriday !== 'boolean' || typeof attendingWedding !== 'boolean' || !email || !guestCount || !name || !timestamp) {
-      return res.status(400).json({ error: 'Missing required fields', required: ['Id','attendingFriday','attendingWedding','email','guestCount','name','timestamp'] });
+    if (typeof attendingFriday !== 'boolean' || typeof attendingWedding !== 'boolean' || !email || !guestCount || !name) {
+      return res.status(400).json({ error: 'Missing required fields', required: ['attendingFriday','attendingWedding','email','guestCount','name'] });
     }
 
     // Validate email format
@@ -36,6 +35,9 @@ export default async function handler(
         error: 'Invalid email format'
       });
     }
+
+    const Id = cuid();
+    const timestamp = new Date().toISOString();
 
     const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
     const AIRTABLE_TABLE_ID = process.env.AIRTABLE_TABLE_ID;
@@ -48,7 +50,16 @@ export default async function handler(
       'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
       'Content-Type': 'application/json'
     };
-    const fields = { Id, attendingFriday, attendingWedding, email, guestCount, name, notes, timestamp };
+    const fields = {
+      Id,
+      attendingFriday,
+      attendingWedding,
+      email,
+      guestCount,
+      name,
+      notes,
+      timestamp,
+    };
     const response = await fetch(url, {
       method: 'POST',
       headers,

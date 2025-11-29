@@ -22,14 +22,12 @@ import {
 import cuid from 'cuid'; // at top, needs to be installed if not present
 
 const formSchema = z.object({
-  Id: z.string().min(1),
   attendingFriday: z.boolean(),
   attendingWedding: z.boolean(),
   email: z.string().email(),
   guestCount: z.number().min(1),
   name: z.string().min(1),
   notes: z.string().optional(),
-  timestamp: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -43,14 +41,12 @@ const RSVP = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      Id: cuid(),
       attendingFriday: false,
       attendingWedding: true,
       email: "",
       guestCount: 1,
       name: "",
       notes: "",
-      timestamp: new Date().toISOString(),
     },
   });
 
