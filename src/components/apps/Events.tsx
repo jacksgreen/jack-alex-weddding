@@ -1,20 +1,23 @@
 const Events = () => (
-    <div className="p-4 space-y-4">
-        <div className="border-2 border-gray-400 p-3 bg-pink-50 shadow-win-in">
-            <h3 className="font-bold text-lg mb-1">Friday Night Dinner</h3>
-            <p className="font-bold text-win-blue">Friday, Oct 14th @ 7:00 PM</p>
-            <p className="text-sm mb-2">The Golden Garden</p>
-            <p className="text-sm">Casual attire. Come hungry for dumplings!</p>
-        </div>
-
-        <div className="border-2 border-gray-400 p-3 bg-white shadow-win-in">
-            <h3 className="font-bold text-lg mb-1">The Wedding</h3>
-            <p className="font-bold text-win-blue">Saturday, Oct 15th @ 4:00 PM</p>
-            <p className="text-sm mb-2">The Grand Hotel</p>
-            <p className="text-sm">Ceremony followed by cocktail hour and reception.</p>
-            <p className="text-xs mt-2 text-gray-500">*Shuttles depart from hotel lobby at 3:30 PM</p>
-        </div>
+  <div className="p-4 space-y-6">
+    <div>
+      <h2 className="text-lg font-bold mb-2">Friday, June 19<br />Shabbat Dinner</h2>
+      <div className="text-sm">
+        <div><span className="font-semibold">Time:</span> To be determined</div>
+        <div><span className="font-semibold">Location:</span> Pinkhas Ben Ya'ir St 3, Tel Aviv-Yafo</div>
+      </div>
+      <div className="mt-1 text-xs text-gray-600">Join us for a warm Shabbat dinner to kick off the celebration weekend.</div>
     </div>
+    <div className="border-b border-gray-300"></div>
+    <div>
+      <h2 className="text-lg font-bold mb-2">Sunday, June 21<br />Wedding Celebration</h2>
+      <div className="text-sm">
+        <div><span className="font-semibold">Time:</span> To be determined</div>
+        <div><span className="font-semibold">Location:</span> Beit Hanan, Israel</div>
+      </div>
+      <div className="mt-1 text-xs text-gray-600">Transportation details to follow soon. We can't wait to celebrate with you!</div>
+    </div>
+  </div>
 );
 
 export default Events;
