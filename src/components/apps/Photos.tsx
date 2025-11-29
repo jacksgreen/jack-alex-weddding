@@ -7,90 +7,14 @@ import {
   Bookmark,
   MoreHorizontal,
 } from "lucide-react";
-
-// Photo data from /public/photos folder with Instagram-style metadata
-const mockPhotos = [
-  {
-    id: 1,
-    url: "/photos/jack_1.jpeg",
-    alt: "Jack & Alex 1",
-    likes: "93901750",
-    comments: "88586857",
-    caption:
-      "If your girl (1) drives a Honda ATC 110 three-wheeler, (2) owns a speargun, (3) cruises Caribbean beaches on said vehicle to catch fresh grouper with said speargun... then you, my friend... you've found what they call a 'keeper' Picture by the king Jean-Daniel Lorieux",
-    timestamp: "5 months ago",
-  },
-  {
-    id: 2,
-    url: "/photos/jack_2.jpeg",
-    alt: "Jack & Alex 2",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "Forever starts now 💍",
-    timestamp: "5 months ago",
-  },
-  {
-    id: 3,
-    url: "/photos/jack_3.jpeg",
-    alt: "Jack & Alex 3",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "Celebrating with our favorite people 🎉",
-    timestamp: "5 months ago",
-  },
-  {
-    id: 4,
-    url: "/photos/jack_4.jpeg",
-    alt: "Jack & Alex 4",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "Just married! 👰🤵",
-    timestamp: "5 months ago",
-  },
-  {
-    id: 5,
-    url: "/photos/jack_5.jpeg",
-    alt: "Jack & Alex 5",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "What a magical evening 🌙",
-    timestamp: "5 months ago",
-  },
-  {
-    id: 6,
-    url: "/photos/jack_6.jpeg",
-    alt: "Jack & Alex 6",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "Dancing the night away 💃🕺",
-    timestamp: "5 months ago",
-  },
-  {
-    id: 7,
-    url: "/photos/jack_7.jpeg",
-    alt: "Jack & Alex 7",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "Golden hour perfection 🌅",
-    timestamp: "5 months ago",
-  },
-  {
-    id: 8,
-    url: "/photos/jack_8.jpeg",
-    alt: "Jack & Alex 8",
-    likes: "93901750",
-    comments: "88586857",
-    caption: "Thank you to everyone who made this day special ❤️",
-    timestamp: "5 months ago",
-  },
-];
+import { photosFeed } from "./photosFeed";
 
 const Photos = () => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(
     null
   );
   const [liked, setLiked] = useState<boolean[]>(
-    new Array(mockPhotos.length).fill(false)
+    new Array(photosFeed.length).fill(false)
   );
 
   const handlePhotoClick = (index: number) => {
@@ -105,11 +29,11 @@ const Photos = () => {
   };
 
   const selectedPhoto =
-    selectedPhotoIndex !== null ? mockPhotos[selectedPhotoIndex] : null;
+    selectedPhotoIndex !== null ? photosFeed[selectedPhotoIndex] : null;
 
   return (
     <div className="h-full overflow-y-auto bg-white">
-      {mockPhotos.map((photo, index) => (
+      {photosFeed.map((photo, index) => (
         <div
           key={photo.id}
           className="bg-white border-[3px] border-black rounded-[12px] mb-8 overflow-hidden shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
@@ -200,8 +124,7 @@ const Photos = () => {
               </div>
             </div>
             <div className="text-sm leading-relaxed mb-2">
-              <span className="font-bold">{photo.username}</span>{" "}
-              {photo.caption}
+              <span className="font-black">Oz the dog</span> {photo.caption}
             </div>
             <div className="text-xs text-gray-500 uppercase">
               {photo.timestamp}
