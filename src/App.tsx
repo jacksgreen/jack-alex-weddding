@@ -31,24 +31,34 @@ function App() {
   const openWindow = (
     id: string,
     title: string,
-    component: React.ReactNode
+    component: React.ReactNode,
+    customPosition?: { x: number; y: number }
   ) => {
     if (windows.find((w) => w.id === id)) {
       setActiveWindowId(id);
       return;
     }
-    // Random position within a safe area (20% to 60% of viewport)
-    const maxX = window.innerWidth * 0.4;
-    const maxY = window.innerHeight * 0.4;
-    const minX = window.innerWidth * 0.05;
-    const minY = window.innerHeight * 0.05;
+
+    let position;
+    if (customPosition) {
+      position = customPosition;
+    } else {
+      // Random position within a safe area (5% to 45% of viewport)
+      const maxX = window.innerWidth * 0.4;
+      const maxY = window.innerHeight * 0.4;
+      const minX = window.innerWidth * 0.05;
+      const minY = window.innerHeight * 0.05;
+      position = {
+        x: minX + Math.random() * (maxX - minX),
+        y: minY + Math.random() * (maxY - minY),
+      };
+    }
 
     const newWindow = {
       id,
       title,
       component,
-      x: minX + Math.random() * (maxX - minX),
-      y: minY + Math.random() * (maxY - minY),
+      ...position,
     };
     setWindows([...windows, newWindow]);
     setActiveWindowId(id);
@@ -70,7 +80,10 @@ function App() {
   useEffect(() => {
     if (!isLoading) {
       // Open About Us window on load after loading screen
-      openWindow("about", "About Us", <AboutUs />);
+      // Position it in top-left area with some randomness (50-150px from top/left)
+      const x = 50 + Math.random() * 100;
+      const y = 50 + Math.random() * 100;
+      openWindow("about", "About Us", <AboutUs />, { x, y });
     }
   }, [isLoading]);
 
@@ -106,7 +119,11 @@ function App() {
           title="About"
           iconSrc="/icons/about.png"
           iconClassName="w-12 h-12"
-          onClick={() => openWindow("about", "About Us", <AboutUs />)}
+          onClick={() => {
+            const x = 50 + Math.random() * 100;
+            const y = 50 + Math.random() * 100;
+            openWindow("about", "About Us", <AboutUs />, { x, y });
+          }}
         />
         <DockItem
           title="Events"
