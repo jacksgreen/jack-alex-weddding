@@ -32,7 +32,29 @@ export default {
       boxShadow: {
         'win-out': '1px 1px 0px 1px #000000, inset 1px 1px 0px 1px #ffffff, inset -1px -1px 0px 1px #808080',
         'win-in': 'inset 1px 1px 0px 1px #808080, inset -1px -1px 0px 1px #ffffff',
-      }
+      },
+      keyframes: {
+        'slide-pop': {
+          '0%': {
+            transform: 'translateX(200px) scale(0.8)',
+            opacity: '0',
+          },
+          '60%': {
+            transform: 'translateX(-10px) scale(1.05)',
+            opacity: '1',
+          },
+          '80%': {
+            transform: 'translateX(5px) scale(0.98)',
+          },
+          '100%': {
+            transform: 'translateX(0) scale(1)',
+            opacity: '1',
+          },
+        },
+      },
+      animation: {
+        'slide-pop': 'slide-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 30s forwards',
+      },
     },
   },
   plugins: [],
