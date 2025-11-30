@@ -6,6 +6,7 @@ const MusicPlayer = () => {
   const [trackTitle, setTrackTitle] = useState("READY");
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const widgetRef = useRef<any>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,8 +36,14 @@ const MusicPlayer = () => {
           setIsPlaying(false);
         });
 
+        // Listen to loading state changes
+        widget.bind((window as any).SC.Widget.Events.LOAD_PROGRESS, () => {
+          setIsLoading(true);
+        });
+
         // Get current track info
         widget.bind((window as any).SC.Widget.Events.READY, () => {
+          setIsLoading(false);
           widget.getCurrentSound((sound: any) => {
             if (sound) {
               setTrackTitle(sound.title);
@@ -47,6 +54,7 @@ const MusicPlayer = () => {
         widget.bind(
           (window as any).SC.Widget.Events.PLAY_PROGRESS,
           (event: any) => {
+            setIsLoading(false);
             widget.getCurrentSound((sound: any) => {
               if (sound) {
                 setTrackTitle(sound.title);
@@ -171,13 +179,32 @@ const MusicPlayer = () => {
 
   const skipForward = () => {
     if (widgetRef.current) {
+      setIsLoading(true);
+      setCurrentTime(0);
+      setDuration(0);
       widgetRef.current.next();
+      // Seek to beginning after a short delay to ensure track has loaded
+      setTimeout(() => {
+        if (widgetRef.current) {
+          widgetRef.current.seekTo(0);
+        }
+      }, 100);
     }
   };
 
   const skipBack = () => {
     if (widgetRef.current) {
+      setIsLoading(true);
+      setCurrentTime(0);
+      setDuration(0);
+      // Go to previous track in playlist
       widgetRef.current.prev();
+      // Seek to beginning after a short delay to ensure track has loaded
+      setTimeout(() => {
+        if (widgetRef.current) {
+          widgetRef.current.seekTo(0);
+        }
+      }, 100);
     }
   };
 
@@ -253,7 +280,18 @@ const MusicPlayer = () => {
             </div>
           )}
           <div className="whitespace-nowrap overflow-hidden px-4">
-            {isPlaying ? (
+            {isLoading ? (
+              <div
+                className="font-bold tracking-widest animate-pulse"
+                style={{
+                  color: "#FFE0A0",
+                  textShadow:
+                    "2px 0 4px rgba(255, 150, 100, 0.8), -2px 0 4px rgba(100, 200, 255, 0.8), 0 0 15px rgba(255, 220, 150, 1), 0 0 25px rgba(255, 200, 100, 0.6)",
+                }}
+              >
+                LOADING...
+              </div>
+            ) : isPlaying ? (
               <div
                 className="font-bold tracking-widest"
                 style={{
