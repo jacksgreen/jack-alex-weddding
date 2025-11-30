@@ -68,15 +68,14 @@ const AboutUs = () => {
               These days, you'll find Jack out on his bike and Alex reminding
               him—lovingly, of course, that it does not belong in the middle of
               the apartment. Or the hallway. Or the bedroom. Otherwise, they're
-              visiting family or escorting Oz on his daily constitutional along
-              Park HaMesila. And now, after all these years together, they've
+              visiting family, hanging with friends, or at the dog park with Oz.
+              And now, after all these years together, they've
               decided to make it official. No return ticket this time.
-            </p>
-          </>
-        )}
-      </div>
+          </p>
+        </>
+      )}
     </div>
-  );
-};
+  </div>
+);
 
 export default AboutUs;
