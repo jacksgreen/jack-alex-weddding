@@ -74,7 +74,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           <img
             src="/loading-image.jpg"
             alt="Wedding Couple"
-            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              progress > 40 ? "grayscale-0" : "grayscale"
+            }`}
           />
           <div className="absolute inset-0 bg-black/10 pointer-events-none" />
         </div>

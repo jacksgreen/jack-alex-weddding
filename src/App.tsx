@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Desktop from "./components/Desktop";
 import Window from "./components/Window";
 
@@ -23,10 +23,35 @@ interface WindowState {
   y: number;
 }
 
+// Helper to generate initial windows
+const getInitialWindows = (): WindowState[] => {
+  const aboutX = 50 + Math.random() * 80;
+  const aboutY = 50 + Math.random() * 80;
+  const rsvpX = aboutX + 450;
+  const rsvpY = aboutY + 200 + (Math.random() * 60 - 30);
+
+  return [
+    {
+      id: "rsvp",
+      title: "RSVP",
+      component: <RSVP />,
+      x: rsvpX,
+      y: rsvpY,
+    },
+    {
+      id: "about",
+      title: "About Us",
+      component: <AboutUs />,
+      x: aboutX,
+      y: aboutY,
+    },
+  ];
+};
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [windows, setWindows] = useState<WindowState[]>([]);
-  const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
+  const [windows, setWindows] = useState<WindowState[]>(getInitialWindows);
+  const [activeWindowId, setActiveWindowId] = useState<string | null>("about");
 
   const openWindow = (
     id: string,
@@ -77,16 +102,6 @@ function App() {
     setActiveWindowId(id);
   };
 
-  useEffect(() => {
-    if (!isLoading) {
-      // Open About Us window on load after loading screen
-      // Position it in top-left area with some randomness (50-150px from top/left)
-      const x = 50 + Math.random() * 100;
-      const y = 50 + Math.random() * 100;
-      openWindow("about", "About Us", <AboutUs />, { x, y });
-    }
-  }, [isLoading]);
-
   if (isLoading) {
     return <LoadingScreen onComplete={() => setIsLoading(false)} />;
   }
@@ -133,9 +148,7 @@ function App() {
         <DockItem
           title="Recs"
           iconSrc="/icons/recs.png"
-          onClick={() =>
-            openWindow("recs", "Local Gems", <Recommendations />)
-          }
+          onClick={() => openWindow("recs", "Local Gems", <Recommendations />)}
         />
         <DockItem
           title="Insta"
