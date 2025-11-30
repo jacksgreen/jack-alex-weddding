@@ -69,13 +69,14 @@ const AboutUs = () => {
               him—lovingly, of course, that it does not belong in the middle of
               the apartment. Or the hallway. Or the bedroom. Otherwise, they're
               visiting family, hanging with friends, or at the dog park with Oz.
-              And now, after all these years together, they've
-              decided to make it official. No return ticket this time.
-          </p>
-        </>
-      )}
+              And now, after all these years together, they've decided to make
+              it official. No return ticket this time.
+            </p>
+          </>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default AboutUs;
