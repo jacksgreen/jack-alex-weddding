@@ -57,7 +57,7 @@ const MusicPlayer = () => {
         };
     }, []);
 
-    // Static Noise Effect
+    // Enhanced CRT/VHS Effect
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -67,32 +67,57 @@ const MusicPlayer = () => {
 
         let animationFrameId: number;
         let resizeObserver: ResizeObserver;
+        let scanlineOffset = 0;
 
         const drawNoise = () => {
             const w = canvas.width;
             const h = canvas.height;
-            
+
             if (w === 0 || h === 0) return;
 
+            // Clear canvas
+            ctx.clearRect(0, 0, w, h);
+
+            // Dynamic noise intensity based on playing state
+            const noiseIntensity = isPlaying ? 0.15 : 0.08;
             const idata = ctx.createImageData(w, h);
             const buffer32 = new Uint32Array(idata.data.buffer);
             const len = buffer32.length;
 
             for (let i = 0; i < len; i++) {
-                if (Math.random() < 0.1) { 
-                    // Stronger green noise
-                    // Alpha(80) Blue(100) Green(255) Red(100) - Higher alpha (0x50)
-                    buffer32[i] = 0x5064FF64; 
+                if (Math.random() < noiseIntensity) {
+                    // Brighter noise with more white for visibility
+                    const intensity = Math.random();
+                    const r = Math.floor(intensity * (isPlaying ? 220 : 150));
+                    const g = Math.floor(intensity * 255);
+                    const b = Math.floor(intensity * (isPlaying ? 220 : 180));
+                    const a = Math.floor(intensity * (isPlaying ? 180 : 80));
+                    buffer32[i] = (a << 24) | (b << 16) | (g << 8) | r;
                 }
             }
 
             ctx.putImageData(idata, 0, 0);
-            
-            // Add scanline effect
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-            for (let i = 0; i < h; i += 3) {
+
+            // Animated scanlines - slower movement
+            scanlineOffset = (scanlineOffset + 0.3) % 6;
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+            for (let i = Math.floor(scanlineOffset); i < h; i += 3) {
                 ctx.fillRect(0, i, w, 1);
             }
+
+            // Random glitch lines when playing - brighter and less frequent
+            if (isPlaying && Math.random() < 0.02) {
+                const glitchY = Math.floor(Math.random() * h);
+                ctx.fillStyle = `rgba(200, 255, 220, ${Math.random() * 0.5 + 0.3})`;
+                ctx.fillRect(0, glitchY, w, 2);
+            }
+
+            // Vignette effect
+            const gradient = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, Math.max(w, h) * 0.7);
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.4)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, w, h);
 
             animationFrameId = requestAnimationFrame(drawNoise);
         };
@@ -106,7 +131,7 @@ const MusicPlayer = () => {
                     }
                 });
                 resizeObserver.observe(canvas.parentElement);
-                
+
                 // Force initial size
                 canvas.width = canvas.parentElement.clientWidth;
                 canvas.height = canvas.parentElement.clientHeight;
@@ -122,7 +147,7 @@ const MusicPlayer = () => {
             }
             cancelAnimationFrame(animationFrameId);
         };
-    }, []);
+    }, [isPlaying]);
 
     const togglePlayPause = () => {
         if (widgetRef.current) {
@@ -145,20 +170,65 @@ const MusicPlayer = () => {
     return (
         <div className="flex flex-col h-full p-2 gap-4">
             {/* Display Screen */}
-            <div className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden h-32 flex flex-col justify-center">
+            <div
+                className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden h-32 flex flex-col justify-center"
+                style={{
+                    boxShadow: isPlaying
+                        ? 'inset 0 0 30px rgba(200, 255, 220, 0.5), inset 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 40px rgba(150, 255, 180, 0.4), 0 0 60px rgba(100, 255, 150, 0.2)'
+                        : 'inset 2px 2px 4px rgba(0, 0, 0, 0.8)',
+                    transition: 'box-shadow 0.3s ease'
+                }}
+            >
                 {/* Noise Canvas */}
-                <canvas 
-                    ref={canvasRef} 
+                <canvas
+                    ref={canvasRef}
                     className="absolute inset-0 w-full h-full pointer-events-none z-0"
                 />
-                
-                <div className="absolute inset-0 bg-pastel-blue/5 pointer-events-none z-0"></div>
-                
-                <div className="relative z-10 text-pastel-blue font-mono text-sm leading-relaxed text-center">
-                    {isPlaying && <div className="text-xs text-pastel-pink mb-2">Now playing</div>}
+
+                {/* CRT Glow overlay - brighter */}
+                <div
+                    className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-300"
+                    style={{
+                        background: isPlaying
+                            ? 'radial-gradient(ellipse at center, rgba(200, 255, 220, 0.25) 0%, rgba(0, 255, 100, 0.1) 50%, transparent 80%)'
+                            : 'radial-gradient(ellipse at center, rgba(150, 220, 255, 0.08) 0%, transparent 70%)',
+                        mixBlendMode: 'screen'
+                    }}
+                ></div>
+
+                {/* Chromatic aberration effect - brighter text */}
+                <div
+                    className="relative z-10 font-mono text-sm leading-relaxed text-center"
+                    style={{
+                        color: isPlaying ? '#E0FFE0' : '#A0D0FF',
+                        textShadow: isPlaying
+                            ? '2px 0 4px rgba(255, 100, 150, 0.7), -2px 0 4px rgba(100, 255, 255, 0.7), 0 0 15px rgba(200, 255, 200, 0.9), 0 0 30px rgba(150, 255, 150, 0.5)'
+                            : '1px 0 2px rgba(150, 220, 255, 0.5), -1px 0 2px rgba(220, 150, 255, 0.5), 0 0 10px rgba(180, 220, 255, 0.6)',
+                        transition: 'all 0.3s ease'
+                    }}
+                >
+                    {isPlaying && (
+                        <div
+                            className="text-xs mb-2"
+                            style={{
+                                color: '#FFE0FF',
+                                textShadow: '2px 0 3px rgba(255, 100, 150, 0.8), -2px 0 3px rgba(100, 255, 255, 0.8), 0 0 12px rgba(255, 200, 255, 1), 0 0 20px rgba(255, 150, 200, 0.6)',
+                                animation: 'pulse 3s ease-in-out infinite'
+                            }}
+                        >
+                            ♪ Now playing ♪
+                        </div>
+                    )}
                     <div className="whitespace-nowrap overflow-hidden px-4">
                             {isPlaying ? (
-                            <div className="animate-pulse text-pastel-yellow font-bold tracking-widest">
+                            <div
+                                className="font-bold tracking-widest"
+                                style={{
+                                    color: '#FFFFCC',
+                                    animation: 'pulse 2.5s ease-in-out infinite, flicker 0.4s infinite',
+                                    textShadow: '3px 0 5px rgba(255, 100, 150, 0.8), -3px 0 5px rgba(100, 255, 255, 0.8), 0 0 20px rgba(255, 255, 200, 1), 0 0 35px rgba(255, 255, 150, 0.7), 0 0 50px rgba(255, 230, 100, 0.4)'
+                                }}
+                            >
                                 {trackTitle.length > 25 ? trackTitle.substring(0, 25) + '...' : trackTitle}
                             </div>
                         ) : (
@@ -167,6 +237,13 @@ const MusicPlayer = () => {
                     </div>
                 </div>
             </div>
+
+            <style>{`
+                @keyframes flicker {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.95; }
+                }
+            `}</style>
 
             {/* Hidden SoundCloud iframe */}
             <iframe
