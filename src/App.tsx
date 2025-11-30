@@ -64,7 +64,7 @@ const getInitialWindows = (): WindowState[] => {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [windows, setWindows] = useState<WindowState[]>(getInitialWindows);
-  const [activeWindowId, setActiveWindowId] = useState<string | null>("rsvp");
+  const [activeWindowId, setActiveWindowId] = useState<string | null>("about");
 
   const openWindow = (
     id: string,
