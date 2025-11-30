@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Play, Pause, SkipForward, SkipBack } from "lucide-react";
+import { useOzMode } from "@/contexts/OzModeContext";
 
 const SOUND_CLOUD_PLAYLIST_URL =
   "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2150567474&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true";
 
 const MusicPlayer = () => {
+  const { isOzMode } = useOzMode();
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackTitle, setTrackTitle] = useState("READY");
   const [currentTime, setCurrentTime] = useState(0);
@@ -243,10 +245,12 @@ const MusicPlayer = () => {
     <div className="flex flex-col h-full p-2 gap-4">
       {/* Display Screen */}
       <div
-        className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden h-32 flex flex-col justify-center"
+        className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden h-32 flex flex-col justify-center dark:border-purple-300"
         style={{
           boxShadow: isPlaying
-            ? "inset 0 0 40px rgba(255, 250, 235, 0.8), inset 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 245, 220, 0.9), 0 0 80px rgba(255, 240, 200, 0.6), 0 0 120px rgba(255, 235, 190, 0.4)"
+            ? isOzMode
+              ? "inset 0 0 40px rgba(200, 180, 255, 0.4), inset 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 50px rgba(220, 200, 255, 0.5), 0 0 80px rgba(200, 180, 255, 0.35), 0 0 120px rgba(190, 170, 255, 0.2)"
+              : "inset 0 0 40px rgba(255, 250, 235, 0.8), inset 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 245, 220, 0.9), 0 0 80px rgba(255, 240, 200, 0.6), 0 0 120px rgba(255, 235, 190, 0.4)"
             : "inset 2px 2px 4px rgba(0, 0, 0, 0.8)",
           transition: "box-shadow 0.3s ease",
         }}
@@ -262,7 +266,11 @@ const MusicPlayer = () => {
           className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-300"
           style={{
             background: isPlaying
-              ? "radial-gradient(ellipse at center, rgba(200, 255, 220, 0.25) 0%, rgba(0, 255, 100, 0.1) 50%, transparent 80%)"
+              ? isOzMode
+                ? "radial-gradient(ellipse at center, rgba(168, 85, 247, 0.3) 0%, rgba(147, 51, 234, 0.15) 50%, transparent 80%)"
+                : "radial-gradient(ellipse at center, rgba(200, 255, 220, 0.25) 0%, rgba(0, 255, 100, 0.1) 50%, transparent 80%)"
+              : isOzMode
+              ? "radial-gradient(ellipse at center, rgba(139, 92, 246, 0.12) 0%, transparent 70%)"
               : "radial-gradient(ellipse at center, rgba(150, 220, 255, 0.08) 0%, transparent 70%)",
             mixBlendMode: "screen",
           }}
@@ -272,9 +280,15 @@ const MusicPlayer = () => {
         <div
           className="relative z-10 font-mono text-sm leading-relaxed text-center"
           style={{
-            color: isPlaying ? "#E0FFE0" : "#A0D0FF",
+            color: isPlaying
+              ? isOzMode ? "#E0D0FF" : "#E0FFE0"
+              : isOzMode ? "#C0B0FF" : "#A0D0FF",
             textShadow: isPlaying
-              ? "2px 0 4px rgba(255, 100, 150, 0.7), -2px 0 4px rgba(100, 255, 255, 0.7), 0 0 15px rgba(200, 255, 200, 0.9), 0 0 30px rgba(150, 255, 150, 0.5)"
+              ? isOzMode
+                ? "2px 0 4px rgba(168, 85, 247, 0.8), -2px 0 4px rgba(217, 70, 239, 0.8), 0 0 15px rgba(168, 85, 247, 1), 0 0 30px rgba(147, 51, 234, 0.6)"
+                : "2px 0 4px rgba(255, 100, 150, 0.7), -2px 0 4px rgba(100, 255, 255, 0.7), 0 0 15px rgba(200, 255, 200, 0.9), 0 0 30px rgba(150, 255, 150, 0.5)"
+              : isOzMode
+              ? "1px 0 2px rgba(168, 85, 247, 0.6), -1px 0 2px rgba(217, 70, 239, 0.6), 0 0 10px rgba(139, 92, 246, 0.7)"
               : "1px 0 2px rgba(150, 220, 255, 0.5), -1px 0 2px rgba(220, 150, 255, 0.5), 0 0 10px rgba(180, 220, 255, 0.6)",
             transition: "all 0.3s ease",
           }}
@@ -283,9 +297,10 @@ const MusicPlayer = () => {
             <div
               className="text-xs mb-2"
               style={{
-                color: "#FFE0FF",
-                textShadow:
-                  "2px 0 3px rgba(255, 100, 150, 0.8), -2px 0 3px rgba(100, 255, 255, 0.8), 0 0 12px rgba(255, 200, 255, 1), 0 0 20px rgba(255, 150, 200, 0.6)",
+                color: isOzMode ? "#F0E0FF" : "#FFE0FF",
+                textShadow: isOzMode
+                  ? "2px 0 3px rgba(168, 85, 247, 0.9), -2px 0 3px rgba(217, 70, 239, 0.9), 0 0 12px rgba(192, 132, 252, 1), 0 0 20px rgba(168, 85, 247, 0.7)"
+                  : "2px 0 3px rgba(255, 100, 150, 0.8), -2px 0 3px rgba(100, 255, 255, 0.8), 0 0 12px rgba(255, 200, 255, 1), 0 0 20px rgba(255, 150, 200, 0.6)",
                 animation: "pulse 3s ease-in-out infinite",
               }}
             >
@@ -297,9 +312,10 @@ const MusicPlayer = () => {
               <div
                 className="font-bold tracking-widest animate-pulse"
                 style={{
-                  color: "#FFE0A0",
-                  textShadow:
-                    "2px 0 4px rgba(255, 150, 100, 0.8), -2px 0 4px rgba(100, 200, 255, 0.8), 0 0 15px rgba(255, 220, 150, 1), 0 0 25px rgba(255, 200, 100, 0.6)",
+                  color: isOzMode ? "#E0D0FF" : "#FFE0A0",
+                  textShadow: isOzMode
+                    ? "2px 0 4px rgba(168, 85, 247, 0.9), -2px 0 4px rgba(192, 132, 252, 0.9), 0 0 15px rgba(168, 85, 247, 1), 0 0 25px rgba(147, 51, 234, 0.7)"
+                    : "2px 0 4px rgba(255, 150, 100, 0.8), -2px 0 4px rgba(100, 200, 255, 0.8), 0 0 15px rgba(255, 220, 150, 1), 0 0 25px rgba(255, 200, 100, 0.6)",
                 }}
               >
                 LOADING...
@@ -308,11 +324,12 @@ const MusicPlayer = () => {
               <div
                 className="font-bold tracking-widest"
                 style={{
-                  color: "#FFFFCC",
+                  color: isOzMode ? "#F0E0FF" : "#FFFFCC",
                   animation:
                     "pulse 2.5s ease-in-out infinite, flicker 0.4s infinite",
-                  textShadow:
-                    "3px 0 5px rgba(255, 100, 150, 0.8), -3px 0 5px rgba(100, 255, 255, 0.8), 0 0 20px rgba(255, 255, 200, 1), 0 0 35px rgba(255, 255, 150, 0.7), 0 0 50px rgba(255, 230, 100, 0.4)",
+                  textShadow: isOzMode
+                    ? "3px 0 5px rgba(168, 85, 247, 0.9), -3px 0 5px rgba(217, 70, 239, 0.9), 0 0 20px rgba(192, 132, 252, 1), 0 0 35px rgba(168, 85, 247, 0.8), 0 0 50px rgba(147, 51, 234, 0.5)"
+                    : "3px 0 5px rgba(255, 100, 150, 0.8), -3px 0 5px rgba(100, 255, 255, 0.8), 0 0 20px rgba(255, 255, 200, 1), 0 0 35px rgba(255, 255, 150, 0.7), 0 0 50px rgba(255, 230, 100, 0.4)",
                 }}
               >
                 {trackTitle.length > 25
