@@ -379,4 +379,14 @@ export const photosFeed = [
       "Alex's family visiting day! Everyone together. Missing one very important family member (me, obviously).",
     timestamp: "20 years ago",
   },
+  {
+    id: 40,
+    url: "/photos/alex-devon-mom-dad-alex-baby-aunt-cindy-uncle-jeff-wedding.jpg",
+    alt: "Alex's Family at Wedding",
+    likes: "93901750",
+    comments: "88586857",
+    caption:
+      "Alex's family at a wedding! Mom, Dad, Devon, baby Alex, Aunt Cindy, Uncle Jeff - everyone looking fabulous. Still no dog though.",
+    timestamp: "28 years ago",
+  },
 ];
