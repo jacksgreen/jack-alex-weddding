@@ -359,4 +359,24 @@ export const photosFeed = [
       "Jesse and Ariella's wedding! They're the best. Sorry I barked at you guys that one time. (Okay, multiple times.)",
     timestamp: "2 years ago",
   },
+  {
+    id: 38,
+    url: "/photos/alex-siblings-devon-reid-halloween-young.jpg",
+    alt: "Alex's Siblings Devon and Reid Halloween",
+    likes: "93901750",
+    comments: "88586857",
+    caption:
+      "Alex's siblings Devon and Reid in Halloween costumes! Look at these little humans. I bet they'd have shared their candy with me.",
+    timestamp: "25 years ago",
+  },
+  {
+    id: 39,
+    url: "/photos/alex-family-visiting-day.jpg",
+    alt: "Alex Family Visiting Day",
+    likes: "93901750",
+    comments: "88586857",
+    caption:
+      "Alex's family visiting day! Everyone together. Missing one very important family member (me, obviously).",
+    timestamp: "20 years ago",
+  },
 ];
