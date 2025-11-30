@@ -48,7 +48,7 @@ const Events = () => {
         {/* Sunday Event */}
         <div>
           <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
-            <span className="text-xl">{isOzMode ? "🦴" : "💒"}</span> Sunday,
+            <span className="text-xl">{isOzMode ? "🦴" : "💍"}</span> Sunday,
             June 21
           </h3>
           <div className={`border p-3 shadow-win-in space-y-2 ${
