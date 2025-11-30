@@ -58,7 +58,11 @@ const Window = ({
         className={`flex justify-between items-center p-1 border-b-2 select-none cursor-move ${
           isOzMode ? "bg-gray-700 border-gray-900" : "bg-pool-pink border-black"
         }`}
-        onPointerDown={(e) => dragControls.start(e)}
+        style={{ touchAction: "none" }}
+        onPointerDown={(e) => {
+          e.preventDefault();
+          dragControls.start(e);
+        }}
       >
         <div
           className={`font-bold px-1 flex items-center gap-2 ${
