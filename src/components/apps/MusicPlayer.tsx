@@ -173,7 +173,17 @@ const MusicPlayer = () => {
 
   const togglePlayPause = () => {
     if (widgetRef.current) {
-      widgetRef.current.toggle();
+      if (isPlaying) {
+        widgetRef.current.pause();
+      } else {
+        widgetRef.current.play();
+        // On mobile, sometimes play fails and needs a retry
+        setTimeout(() => {
+          if (widgetRef.current && !isPlaying) {
+            widgetRef.current.play();
+          }
+        }, 100);
+      }
     }
   };
 
