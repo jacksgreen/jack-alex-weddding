@@ -23,6 +23,19 @@ interface WindowState {
   y: number;
 }
 
+// Window size configuration for each window type
+const getWindowSize = (id: string): { width: number; maxHeight: number } => {
+  const sizes: Record<string, { width: number; maxHeight: number }> = {
+    about: { width: 400, maxHeight: 600 },
+    rsvp: { width: 400, maxHeight: 600 },
+    events: { width: 400, maxHeight: 600 },
+    photos: { width: 400, maxHeight: 600 },
+    music: { width: 400, maxHeight: 600 },
+    recs: { width: 360, maxHeight: 500 },
+  };
+  return sizes[id] || { width: 400, maxHeight: 600 };
+};
+
 // Helper to generate initial windows
 const getInitialWindows = (): WindowState[] => {
   const aboutX = 0;
@@ -110,19 +123,24 @@ function App() {
     <OzModeProvider>
       <Desktop>
         {/* Windows Layer */}
-        {windows.map((win) => (
-          <Window
-            key={win.id}
-            id={win.id}
-            title={win.title}
-            onClose={closeWindow}
-            isActive={activeWindowId === win.id}
-            onFocus={() => focusWindow(win.id)}
-            initialPosition={{ x: win.x, y: win.y }}
-          >
-            {win.component}
-          </Window>
-        ))}
+        {windows.map((win) => {
+          const { width, maxHeight } = getWindowSize(win.id);
+          return (
+            <Window
+              key={win.id}
+              id={win.id}
+              title={win.title}
+              onClose={closeWindow}
+              isActive={activeWindowId === win.id}
+              onFocus={() => focusWindow(win.id)}
+              initialPosition={{ x: win.x, y: win.y }}
+              width={width}
+              maxHeight={maxHeight}
+            >
+              {win.component}
+            </Window>
+          );
+        })}
       </Desktop>
 
       {/* Oz Mode Toggle Button - Outside Desktop to avoid dark filter */}

@@ -11,6 +11,8 @@ interface WindowProps {
   isActive: boolean;
   onFocus: () => void;
   initialPosition?: { x: number; y: number };
+  width?: number;
+  maxHeight?: number;
 }
 
 const Window = ({
@@ -21,6 +23,8 @@ const Window = ({
   isActive,
   onFocus,
   initialPosition = { x: 100, y: 100 },
+  width = 400,
+  maxHeight = 600,
 }: WindowProps) => {
   const { isOzMode } = useOzMode();
   const dragControls = useDragControls();
@@ -47,10 +51,10 @@ const Window = ({
         border: "2px solid",
         display: "grid",
         gridTemplateRows: "auto 1fr",
-        width: isMobile ? "80vw" : "400px",
+        width: isMobile ? "80vw" : `${width}px`,
         height: "fit-content",
         minHeight: "200px",
-        maxHeight: isMobile ? "60vh" : "600px",
+        maxHeight: isMobile ? "60vh" : `${maxHeight}px`,
       }}
     >
       {/* Title Bar */}
