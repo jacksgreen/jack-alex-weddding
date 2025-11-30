@@ -243,7 +243,7 @@ const MusicPlayer = () => {
         className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden h-32 flex flex-col justify-center"
         style={{
           boxShadow: isPlaying
-            ? "inset 0 0 30px rgba(200, 255, 220, 0.5), inset 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 40px rgba(150, 255, 180, 0.4), 0 0 60px rgba(100, 255, 150, 0.2)"
+            ? "inset 0 0 40px rgba(255, 250, 235, 0.8), inset 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 245, 220, 0.9), 0 0 80px rgba(255, 240, 200, 0.6), 0 0 120px rgba(255, 235, 190, 0.4)"
             : "inset 2px 2px 4px rgba(0, 0, 0, 0.8)",
           transition: "box-shadow 0.3s ease",
         }}
