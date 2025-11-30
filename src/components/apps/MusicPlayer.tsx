@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Play, Pause, SkipForward, SkipBack } from "lucide-react";
 
+const SOUND_CLOUD_PLAYLIST_URL =
+  "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2150567474&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true";
+
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackTitle, setTrackTitle] = useState("READY");
@@ -338,7 +341,7 @@ const MusicPlayer = () => {
         scrolling="no"
         frameBorder="no"
         allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/661426833&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+        src={SOUND_CLOUD_PLAYLIST_URL}
         style={{ display: "none" }}
       />
 
