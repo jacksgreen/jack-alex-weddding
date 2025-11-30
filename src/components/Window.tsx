@@ -32,29 +32,19 @@ const Window = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Generate random initial position for mobile (within 20% margin)
-  const getMobilePosition = () => {
-    if (typeof window === "undefined") return { x: 0, y: 0 };
-    const maxX = window.innerWidth * 0.2;
-    const maxY = window.innerHeight * 0.2;
-    return {
-      x: Math.random() * maxX,
-      y: Math.random() * maxY,
-    };
-  };
-
-  const [mobileInitialPos] = useState(getMobilePosition());
-
   return (
     <motion.div
       drag={true}
+      onDrag={(_e, info) => {
+        console.log(info.point.x, info.point.y);
+      }}
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
-      initial={isMobile ? mobileInitialPos : initialPosition}
-      className={`absolute shadow-win-out ${
-        isActive ? "z-50" : "z-10"
-      } ${isOzMode ? "bg-gray-800" : "bg-pool-mint"}`}
+      initial={initialPosition}
+      className={`absolute shadow-win-out ${isActive ? "z-50" : "z-10"} ${
+        isOzMode ? "bg-gray-800" : "bg-pool-mint"
+      }`}
       onMouseDown={onFocus}
       style={{
         border: "2px solid",
@@ -69,18 +59,22 @@ const Window = ({
       {/* Title Bar */}
       <div
         className={`flex justify-between items-center p-1 border-b-2 select-none cursor-move ${
-          isOzMode
-            ? "bg-gray-700 border-gray-900"
-            : "bg-pool-pink border-black"
+          isOzMode ? "bg-gray-700 border-gray-900" : "bg-pool-pink border-black"
         }`}
         onPointerDown={(e) => dragControls.start(e)}
       >
-        <div className={`font-bold px-1 flex items-center gap-2 ${
-          isOzMode ? "text-gray-100" : "text-black"
-        }`}>
-          {isOzMode && <span className="text-base brightness-150 contrast-125">🐾</span>}
+        <div
+          className={`font-bold px-1 flex items-center gap-2 ${
+            isOzMode ? "text-gray-100" : "text-black"
+          }`}
+        >
+          {isOzMode && (
+            <span className="text-base brightness-150 contrast-125">🐾</span>
+          )}
           {title}
-          {isOzMode && <span className="text-base brightness-150 contrast-125">🐾</span>}
+          {isOzMode && (
+            <span className="text-base brightness-150 contrast-125">🐾</span>
+          )}
         </div>
         <button
           onClick={(e) => {

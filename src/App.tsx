@@ -25,10 +25,10 @@ interface WindowState {
 
 // Helper to generate initial windows
 const getInitialWindows = (): WindowState[] => {
-  const aboutX = 50 + Math.random() * 80;
-  const aboutY = 50 + Math.random() * 80;
-  const rsvpX = aboutX + 450;
-  const rsvpY = aboutY + 200 + (Math.random() * 60 - 30);
+  const aboutX = 0;
+  const aboutY = 30;
+  const rsvpX = 50;
+  const rsvpY = 200;
 
   return [
     {
@@ -51,7 +51,7 @@ const getInitialWindows = (): WindowState[] => {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [windows, setWindows] = useState<WindowState[]>(getInitialWindows);
-  const [activeWindowId, setActiveWindowId] = useState<string | null>("about");
+  const [activeWindowId, setActiveWindowId] = useState<string | null>("rsvp");
 
   const openWindow = (
     id: string,
