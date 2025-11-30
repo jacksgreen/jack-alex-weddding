@@ -6,6 +6,7 @@ const MusicPlayer = () => {
     const [trackTitle, setTrackTitle] = useState('READY');
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const widgetRef = useRef<any>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         // Load SoundCloud Widget API
@@ -56,6 +57,73 @@ const MusicPlayer = () => {
         };
     }, []);
 
+    // Static Noise Effect
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let animationFrameId: number;
+        let resizeObserver: ResizeObserver;
+
+        const drawNoise = () => {
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            if (w === 0 || h === 0) return;
+
+            const idata = ctx.createImageData(w, h);
+            const buffer32 = new Uint32Array(idata.data.buffer);
+            const len = buffer32.length;
+
+            for (let i = 0; i < len; i++) {
+                if (Math.random() < 0.1) { 
+                    // Stronger green noise
+                    // Alpha(80) Blue(100) Green(255) Red(100) - Higher alpha (0x50)
+                    buffer32[i] = 0x5064FF64; 
+                }
+            }
+
+            ctx.putImageData(idata, 0, 0);
+            
+            // Add scanline effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            for (let i = 0; i < h; i += 3) {
+                ctx.fillRect(0, i, w, 1);
+            }
+
+            animationFrameId = requestAnimationFrame(drawNoise);
+        };
+
+        const init = () => {
+            if (canvas.parentElement) {
+                resizeObserver = new ResizeObserver((entries) => {
+                    for (const entry of entries) {
+                        canvas.width = entry.contentRect.width;
+                        canvas.height = entry.contentRect.height;
+                    }
+                });
+                resizeObserver.observe(canvas.parentElement);
+                
+                // Force initial size
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            drawNoise();
+        };
+
+        init();
+
+        return () => {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, []);
+
     const togglePlayPause = () => {
         if (widgetRef.current) {
             widgetRef.current.toggle();
@@ -77,17 +145,24 @@ const MusicPlayer = () => {
     return (
         <div className="flex flex-col h-full p-2 gap-4">
             {/* Display Screen */}
-            <div className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden">
-                <div className="absolute inset-0 bg-pastel-blue/10 pointer-events-none"></div>
-                <div className="text-pastel-blue font-mono text-sm leading-relaxed text-center">
-                    <div className="text-xs text-pastel-pink mb-1">STATUS: {isPlaying ? 'PLAYING' : 'READY'}</div>
-                    <div className="whitespace-nowrap overflow-hidden">
+            <div className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden h-32 flex flex-col justify-center">
+                {/* Noise Canvas */}
+                <canvas 
+                    ref={canvasRef} 
+                    className="absolute inset-0 w-full h-full pointer-events-none z-0"
+                />
+                
+                <div className="absolute inset-0 bg-pastel-blue/5 pointer-events-none z-0"></div>
+                
+                <div className="relative z-10 text-pastel-blue font-mono text-sm leading-relaxed text-center">
+                    {isPlaying && <div className="text-xs text-pastel-pink mb-2">Now playing</div>}
+                    <div className="whitespace-nowrap overflow-hidden px-4">
                             {isPlaying ? (
-                            <div className="animate-pulse text-pastel-yellow">
+                            <div className="animate-pulse text-pastel-yellow font-bold tracking-widest">
                                 {trackTitle.length > 25 ? trackTitle.substring(0, 25) + '...' : trackTitle}
                             </div>
                         ) : (
-                            'WAITING FOR INPUT...'
+                            <span className="animate-pulse">INSERT TAPE...</span>
                         )}
                     </div>
                 </div>

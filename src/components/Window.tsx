@@ -35,9 +35,6 @@ const Window = ({
   return (
     <motion.div
       drag={true}
-      onDrag={(_e, info) => {
-        console.log(info.point.x, info.point.y);
-      }}
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
