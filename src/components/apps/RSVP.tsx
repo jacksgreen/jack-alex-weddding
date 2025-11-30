@@ -15,6 +15,9 @@ import { Button } from "@/components/ui/button";
 import { useOzMode } from "@/contexts/OzModeContext";
 
 const formSchema = z.object({
+  canCome: z.boolean().nullable().refine((val) => val !== null, {
+    message: "Please select Yes or No",
+  }),
   attendingFriday: z.boolean(),
   attendingWedding: z.boolean(),
   email: z.string().min(1, "Must include email").email("Please enter a valid email address"),
@@ -35,14 +38,17 @@ const RSVP = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      canCome: null,
       attendingFriday: false,
-      attendingWedding: true,
+      attendingWedding: false,
       email: "",
       guestCount: 1,
       name: "",
       notes: "",
     },
   });
+
+  const canCome = form.watch("canCome");
 
   const onSubmit = async (values: FormValues) => {
     setStatus("submitting");
@@ -149,8 +155,73 @@ const RSVP = () => {
             </div>
           </div>
 
-          {/* Event Attendance and Guest Count in row */}
-          <div className="grid grid-cols-2 gap-3">
+          {/* Can You Come Section */}
+          <div>
+            <h3 className="font-bold text-sm mb-1.5 flex items-center gap-1.5">
+              <span className="text-base">❓</span>
+              {isOzMode ? "Can You Come?" : "Can You Come?"}
+            </h3>
+            <div className={`border p-2 shadow-win-in ${
+              isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
+            }`}>
+              <FormField
+                control={form.control}
+                name="canCome"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex gap-2">
+                      <div
+                        className={`flex-1 flex items-center justify-center gap-2 p-2 rounded cursor-pointer transition-colors border-2 ${
+                          field.value === true
+                            ? isOzMode
+                              ? "bg-gray-700/50 border-yellow-600"
+                              : "bg-pastel-blue/30 border-black"
+                            : isOzMode
+                            ? "border-gray-600"
+                            : "border-gray-400"
+                        }`}
+                        onClick={() => {
+                          field.onChange(true);
+                          if (!field.value) {
+                            form.setValue("attendingWedding", true);
+                          }
+                        }}
+                      >
+                        <span className="text-sm font-bold cursor-pointer pointer-events-none">
+                          {isOzMode ? "✅ Yes" : "Yes"}
+                        </span>
+                      </div>
+                      <div
+                        className={`flex-1 flex items-center justify-center gap-2 p-2 rounded cursor-pointer transition-colors border-2 ${
+                          field.value === false
+                            ? isOzMode
+                              ? "bg-gray-700/50 border-yellow-600"
+                              : "bg-pastel-pink/30 border-black"
+                            : isOzMode
+                            ? "border-gray-600"
+                            : "border-gray-400"
+                        }`}
+                        onClick={() => {
+                          field.onChange(false);
+                          form.setValue("attendingFriday", false);
+                          form.setValue("attendingWedding", false);
+                        }}
+                      >
+                        <span className="text-sm font-bold cursor-pointer pointer-events-none">
+                          {isOzMode ? "❌ No" : "No"}
+                        </span>
+                      </div>
+                    </div>
+                    <FormMessage className="text-sm text-red-700" />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          {/* Event Attendance and Guest Count in row - Only show if canCome is true */}
+          {canCome === true && (
+            <div className="grid grid-cols-2 gap-3">
             {/* Event Attendance Section */}
             <div className="flex flex-col">
               <h3 className="font-bold text-sm mb-1.5 flex items-center gap-1.5">
@@ -268,6 +339,7 @@ const RSVP = () => {
               </div>
             </div>
           </div>
+          )}
 
           {/* Additional Notes Section */}
           <div>
