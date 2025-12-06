@@ -70,13 +70,9 @@ const RSVP = () => {
   };
 
   return (
-    <div className="p-3">
+    <div className="pt-0 pb-3 px-3" style={{ backgroundColor: "#faf4c6", color: "black" }}>
       {isOzMode && (
-        <div className={`border-2 p-3 mb-4 text-base ${
-          isOzMode
-            ? "bg-yellow-900/30 border-yellow-600 text-gray-200"
-            : "bg-yellow-50 border-yellow-400 text-black"
-        }`}>
+        <div className="p-3 mb-4 text-base bg-black/10 text-black" style={{ backgroundColor: "#faf4c6" }}>
           <p className="font-bold mb-1">🐕 Oz's Note:</p>
           <p>
             If you're bringing treats for me, check "Yes". If not... also check
@@ -92,7 +88,7 @@ const RSVP = () => {
             name="name"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap">
+                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap text-black">
                   {isOzMode ? "Human's Name" : "Name"}
                 </FormLabel>
                 <FormControl>
@@ -103,7 +99,8 @@ const RSVP = () => {
                         : "Your full name"
                     }
                     {...field}
-                    className="h-8 text-base mt-0 w-full min-w-0"
+                    className="h-8 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
+                    style={{ backgroundColor: "#faf4c6" }}
                   />
                 </FormControl>
                 <FormMessage className="text-sm text-red-700" />
@@ -117,7 +114,7 @@ const RSVP = () => {
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap">
+                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap text-black">
                   {isOzMode ? "Email (For Spam, Probably)" : "Email"}
                 </FormLabel>
                 <FormControl>
@@ -129,7 +126,8 @@ const RSVP = () => {
                         : "your.email@example.com"
                     }
                     {...field}
-                    className="h-8 text-base mt-0 w-full min-w-0"
+                    className="h-8 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
+                    style={{ backgroundColor: "#faf4c6" }}
                   />
                 </FormControl>
                 <FormMessage className="text-sm text-red-700" />
@@ -143,7 +141,7 @@ const RSVP = () => {
             name="guestCount"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap">
+                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap text-black">
                   {isOzMode ? "Number of Humans" : "Number of Guests"}
                 </FormLabel>
                 <FormControl>
@@ -153,7 +151,8 @@ const RSVP = () => {
                     max={10}
                     {...field}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
-                    className="h-8 text-base mt-0 w-full min-w-0"
+                    className="h-8 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
+                    style={{ backgroundColor: "#faf4c6" }}
                   />
                 </FormControl>
                 <FormMessage className="text-sm text-red-700" />
@@ -163,7 +162,7 @@ const RSVP = () => {
 
           {/* Events Section */}
           <div className="mt-2">
-            <label className="block text-base font-bold mb-1 whitespace-nowrap">Events</label>
+            <label className="block text-base font-bold mb-1 whitespace-nowrap text-black">Events</label>
             <FormField
               control={form.control}
               name="attendingFriday"
@@ -175,9 +174,10 @@ const RSVP = () => {
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
                       className="w-4 h-4 mt-0 self-center"
+                      style={{ accentColor: "black" }}
                     />
                   </FormControl>
-                  <FormLabel className="text-base font-normal mb-0 flex items-center whitespace-nowrap">
+                  <FormLabel className="text-base font-normal mb-0 flex items-center whitespace-nowrap text-black">
                     {isOzMode ? "Friday Dinner (No dogs allowed 😔)" : "Attending Friday?"}
                   </FormLabel>
                   <FormMessage className="text-sm text-red-700" />
@@ -196,9 +196,10 @@ const RSVP = () => {
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
                       className="w-4 h-4 mt-0 self-center"
+                      style={{ accentColor: "black" }}
                     />
                   </FormControl>
-                  <FormLabel className="text-base font-normal mb-0 flex items-center whitespace-nowrap">
+                  <FormLabel className="text-base font-normal mb-0 flex items-center whitespace-nowrap text-black">
                     {isOzMode ? "Sunday Wedding (Say yes!)" : "Attending Wedding?"}
                   </FormLabel>
                   <FormMessage className="text-sm text-red-700" />
@@ -213,16 +214,13 @@ const RSVP = () => {
             name="notes"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel className="block text-sm font-bold mb-0.5">
+                <FormLabel className="block text-sm font-bold mb-0.5 text-black">
                   {isOzMode ? "Special Requests (Treats for Oz?)" : "Notes"}
                 </FormLabel>
                 <FormControl>
                   <textarea
-                    className={`w-full p-1.5 min-h-[35px] border rounded shadow-sm focus:outline-none text-base resize-y mt-0 ${
-                      isOzMode
-                        ? "bg-gray-800 border-gray-600 text-gray-100 focus:border-gray-500"
-                        : "bg-white border-gray-400 text-black focus:border-black"
-                    }`}
+                    className="w-full p-1.5 min-h-[35px] border border-black/30 rounded shadow-sm focus:outline-none text-base resize-y mt-0 text-black placeholder:text-gray-600 focus:border-black"
+                    style={{ backgroundColor: "#faf4c6" }}
                     placeholder={
                       isOzMode
                         ? "Any dietary restrictions? Bringing treats for me?"

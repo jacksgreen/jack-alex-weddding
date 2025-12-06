@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Desktop from "./components/Desktop";
 import Window from "./components/Window";
+import RSVPWindow from "./components/RSVPWindow";
 
 import MusicPlayer from "./components/apps/MusicPlayer";
 import AboutUs from "./components/apps/AboutUs";
@@ -40,17 +41,8 @@ const getWindowSize = (id: string): { width: number; maxHeight: number } => {
 const getInitialWindows = (): WindowState[] => {
   const aboutX = 0;
   const aboutY = 30;
-  const rsvpX = 50;
-  const rsvpY = 200;
 
   return [
-    {
-      id: "rsvp",
-      title: "RSVP",
-      component: <RSVP />,
-      x: rsvpX,
-      y: rsvpY,
-    },
     {
       id: "about",
       title: "About Us",
@@ -64,7 +56,7 @@ const getInitialWindows = (): WindowState[] => {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [windows, setWindows] = useState<WindowState[]>(getInitialWindows);
-  const [activeWindowId, setActiveWindowId] = useState<string | null>("rsvp");
+  const [activeWindowId, setActiveWindowId] = useState<string | null>("about");
 
   const openWindow = (
     id: string,
@@ -125,6 +117,23 @@ function App() {
         {/* Windows Layer */}
         {windows.map((win) => {
           const { width, maxHeight } = getWindowSize(win.id);
+          if (win.id === "rsvp") {
+            return (
+              <RSVPWindow
+                key={win.id}
+                id={win.id}
+                title={win.title}
+                onClose={closeWindow}
+                isActive={activeWindowId === win.id}
+                onFocus={() => focusWindow(win.id)}
+                initialPosition={{ x: win.x, y: win.y }}
+                width={width}
+                maxHeight={maxHeight}
+              >
+                {win.component}
+              </RSVPWindow>
+            );
+          }
           return (
             <Window
               key={win.id}
@@ -177,6 +186,7 @@ function App() {
           title="RSVP"
           iconSrc="/icons/rsvp.png"
           onClick={() => openWindow("rsvp", "RSVP", <RSVP />)}
+          showBadge={true}
         />
         <DockItem
           title="Player"
