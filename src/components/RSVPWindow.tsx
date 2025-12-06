@@ -31,6 +31,7 @@ const RSVPWindow = ({
   const [isDraggable, setIsDraggable] = useState(true);
   const windowRef = useRef<HTMLDivElement>(null);
   const isResizing = useRef(false);
+  const [hasBeenResized, setHasBeenResized] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -43,6 +44,7 @@ const RSVPWindow = ({
     e.preventDefault();
     isResizing.current = true;
     setIsDraggable(false);
+    setHasBeenResized(true);
 
     const startX = e.clientX;
     const startY = e.clientY;
@@ -102,10 +104,10 @@ const RSVPWindow = ({
         backgroundColor: "#faf4c6",
         display: "grid",
         gridTemplateRows: "auto 1fr",
-        width: isMobile ? "80vw" : `${windowSize.width}px`,
-        height: isMobile ? "fit-content" : `${windowSize.height}px`,
+        width: isMobile && !hasBeenResized ? "80vw" : `${windowSize.width}px`,
+        height: isMobile && !hasBeenResized ? "fit-content" : `${windowSize.height}px`,
         minHeight: "200px",
-        maxHeight: isMobile ? "60vh" : "none",
+        maxHeight: isMobile && !hasBeenResized ? "60vh" : "none",
         boxShadow: "6px 6px 0px rgba(0, 0, 0, 0.15)",
         overflow: "hidden",
       }}
