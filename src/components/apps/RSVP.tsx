@@ -161,49 +161,51 @@ const RSVP = () => {
             )}
           />
 
-          {/* Attending Friday */}
-          <FormField
-            control={form.control}
-            name="attendingFriday"
-            render={({ field }) => (
-              <FormItem className="flex items-center gap-2">
-                <FormControl>
-                  <input
-                    type="checkbox"
-                    checked={field.value}
-                    onChange={(e) => field.onChange(e.target.checked)}
-                    className="w-4 h-4"
-                  />
-                </FormControl>
-                <FormLabel className="text-sm font-bold mb-0">
-                  {isOzMode ? "Friday Dinner (No dogs allowed 😔)" : "Attending Friday?"}
-                </FormLabel>
-                <FormMessage className="text-xs text-red-700" />
-              </FormItem>
-            )}
-          />
+          {/* Events Section */}
+          <div className="mt-2">
+            <label className="block text-sm font-bold mb-1">Events</label>
+            <FormField
+              control={form.control}
+              name="attendingFriday"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-2 space-y-0 mb-0">
+                  <FormControl>
+                    <input
+                      type="checkbox"
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
+                      className="w-4 h-4 mt-0 self-center"
+                    />
+                  </FormControl>
+                  <FormLabel className="text-sm font-normal mb-0 flex items-center">
+                    {isOzMode ? "Friday Dinner (No dogs allowed 😔)" : "Attending Friday?"}
+                  </FormLabel>
+                  <FormMessage className="text-xs text-red-700" />
+                </FormItem>
+              )}
+            />
 
-          {/* Attending Wedding */}
-          <FormField
-            control={form.control}
-            name="attendingWedding"
-            render={({ field }) => (
-              <FormItem className="flex items-center gap-2">
-                <FormControl>
-                  <input
-                    type="checkbox"
-                    checked={field.value}
-                    onChange={(e) => field.onChange(e.target.checked)}
-                    className="w-4 h-4"
-                  />
-                </FormControl>
-                <FormLabel className="text-sm font-bold mb-0">
-                  {isOzMode ? "Sunday Wedding (Say yes!)" : "Attending Wedding?"}
-                </FormLabel>
-                <FormMessage className="text-xs text-red-700" />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="attendingWedding"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-2 space-y-0 mt-0 mb-0">
+                  <FormControl>
+                    <input
+                      type="checkbox"
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
+                      className="w-4 h-4 mt-0 self-center"
+                    />
+                  </FormControl>
+                  <FormLabel className="text-sm font-normal mb-0 flex items-center">
+                    {isOzMode ? "Sunday Wedding (Say yes!)" : "Attending Wedding?"}
+                  </FormLabel>
+                  <FormMessage className="text-xs text-red-700" />
+                </FormItem>
+              )}
+            />
+          </div>
 
           {/* Notes */}
           <FormField
@@ -216,7 +218,7 @@ const RSVP = () => {
                 </FormLabel>
                 <FormControl>
                   <textarea
-                    className={`w-full p-2 min-h-[80px] border rounded shadow-sm focus:outline-none text-sm resize-y mt-0 ${
+                    className={`w-full p-2 min-h-[50px] border rounded shadow-sm focus:outline-none text-sm resize-y mt-0 ${
                       isOzMode
                         ? "bg-gray-800 border-gray-600 text-gray-100 focus:border-gray-500"
                         : "bg-white border-gray-400 text-black focus:border-black"
