@@ -78,10 +78,19 @@ function App() {
       const maxY = window.innerHeight * 0.4;
       const minX = window.innerWidth * 0.05;
       const minY = window.innerHeight * 0.05;
-      position = {
-        x: minX + Math.random() * (maxX - minX),
-        y: minY + Math.random() * (maxY - minY),
-      };
+
+      // Position recs window higher to avoid dock
+      if (id === "recs") {
+        position = {
+          x: minX + Math.random() * (maxX - minX),
+          y: window.innerHeight * 0.1 + Math.random() * (window.innerHeight * 0.2),
+        };
+      } else {
+        position = {
+          x: minX + Math.random() * (maxX - minX),
+          y: minY + Math.random() * (maxY - minY),
+        };
+      }
     }
 
     const newWindow = {
