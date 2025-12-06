@@ -7,11 +7,11 @@ interface RSVPWindowProps {
   title: string;
   children: ReactNode;
   onClose: (id: string) => void;
-  isActive: boolean;
   onFocus: () => void;
   initialPosition?: { x: number; y: number };
   width?: number;
   maxHeight?: number;
+  zIndex?: number;
 }
 
 const RSVPWindow = ({
@@ -19,11 +19,11 @@ const RSVPWindow = ({
   title,
   children,
   onClose,
-  isActive,
   onFocus,
   initialPosition = { x: 100, y: 100 },
   width = 350,
   maxHeight = 600,
+  zIndex = 10,
 }: RSVPWindowProps) => {
   const dragControls = useDragControls();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -58,16 +58,16 @@ const RSVPWindow = ({
       let newWidth = startWidth;
       let newHeight = startHeight;
 
-      if (direction.includes('e')) {
+      if (direction.includes("e")) {
         newWidth = Math.max(300, startWidth + deltaX);
       }
-      if (direction.includes('w')) {
+      if (direction.includes("w")) {
         newWidth = Math.max(300, startWidth - deltaX);
       }
-      if (direction.includes('s')) {
+      if (direction.includes("s")) {
         newHeight = Math.max(200, startHeight + deltaY);
       }
-      if (direction.includes('n')) {
+      if (direction.includes("n")) {
         newHeight = Math.max(200, startHeight - deltaY);
       }
 
@@ -77,12 +77,12 @@ const RSVPWindow = ({
     const handlePointerUp = () => {
       isResizing.current = false;
       setIsDraggable(true);
-      document.removeEventListener('pointermove', handlePointerMove);
-      document.removeEventListener('pointerup', handlePointerUp);
+      document.removeEventListener("pointermove", handlePointerMove);
+      document.removeEventListener("pointerup", handlePointerUp);
     };
 
-    document.addEventListener('pointermove', handlePointerMove);
-    document.addEventListener('pointerup', handlePointerUp);
+    document.addEventListener("pointermove", handlePointerMove);
+    document.addEventListener("pointerup", handlePointerUp);
   };
 
   return (
@@ -93,9 +93,10 @@ const RSVPWindow = ({
       dragListener={false}
       dragMomentum={false}
       initial={initialPosition}
-      className={`absolute ${isActive ? "z-50" : "z-10"}`}
+      className="absolute"
       onMouseDown={onFocus}
       style={{
+        zIndex,
         border: "2px solid black",
         borderRadius: "12px",
         backgroundColor: "#faf4c6",
@@ -162,24 +163,24 @@ const RSVPWindow = ({
       {!isMobile && (
         <>
           <div
-            onPointerDown={(e) => handleResizeStart(e, 'se')}
+            onPointerDown={(e) => handleResizeStart(e, "se")}
             className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize z-10"
-            style={{ touchAction: 'none' }}
+            style={{ touchAction: "none" }}
           />
           <div
-            onPointerDown={(e) => handleResizeStart(e, 'sw')}
+            onPointerDown={(e) => handleResizeStart(e, "sw")}
             className="absolute bottom-0 left-0 w-4 h-4 cursor-sw-resize z-10"
-            style={{ touchAction: 'none' }}
+            style={{ touchAction: "none" }}
           />
           <div
-            onPointerDown={(e) => handleResizeStart(e, 'ne')}
+            onPointerDown={(e) => handleResizeStart(e, "ne")}
             className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize z-10"
-            style={{ touchAction: 'none' }}
+            style={{ touchAction: "none" }}
           />
           <div
-            onPointerDown={(e) => handleResizeStart(e, 'nw')}
+            onPointerDown={(e) => handleResizeStart(e, "nw")}
             className="absolute top-0 left-0 w-4 h-4 cursor-nw-resize z-10"
-            style={{ touchAction: 'none' }}
+            style={{ touchAction: "none" }}
           />
         </>
       )}
@@ -188,4 +189,3 @@ const RSVPWindow = ({
 };
 
 export default RSVPWindow;
-

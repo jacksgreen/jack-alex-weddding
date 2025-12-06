@@ -23,6 +23,7 @@ interface WindowState {
   component: React.ReactNode;
   x: number;
   y: number;
+  zIndex: number;
 }
 
 // Window size configuration for each window type
@@ -50,6 +51,7 @@ const getInitialWindows = (): WindowState[] => {
       component: <AboutUs />,
       x: aboutX,
       y: aboutY,
+      zIndex: 1,
     },
   ];
 };
@@ -58,6 +60,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [windows, setWindows] = useState<WindowState[]>(getInitialWindows);
   const [activeWindowId, setActiveWindowId] = useState<string | null>("about");
+  const [nextZIndex, setNextZIndex] = useState(2);
 
   const openWindow = (
     id: string,
@@ -74,26 +77,19 @@ function App() {
     if (customPosition) {
       position = customPosition;
     } else {
-      // Random position within a safe area (5% to 45% of viewport)
+      // Random position within a safe area, ensuring windows stay in top portion
+      // to avoid overlapping with dock at bottom
       const maxX = window.innerWidth * 0.4;
-      const maxY = window.innerHeight * 0.4;
       const minX = window.innerWidth * 0.05;
-      const minY = window.innerHeight * 0.05;
 
-      // Position recs window higher to avoid dock
-      if (id === "recs") {
-        position = {
-          x: minX + Math.random() * (maxX - minX),
-          y:
-            window.innerHeight * 0.1 +
-            Math.random() * (window.innerHeight * 0.2),
-        };
-      } else {
-        position = {
-          x: minX + Math.random() * (maxX - minX),
-          y: minY + Math.random() * (maxY - minY),
-        };
-      }
+      // Keep all windows in the top 30% of the viewport to avoid dock
+      const minY = window.innerHeight * 0.05;
+      const maxY = window.innerHeight * 0.3;
+
+      position = {
+        x: minX + Math.random() * (maxX - minX),
+        y: minY + Math.random() * (maxY - minY),
+      };
     }
 
     const newWindow = {
@@ -101,9 +97,11 @@ function App() {
       title,
       component,
       ...position,
+      zIndex: nextZIndex,
     };
     setWindows([...windows, newWindow]);
     setActiveWindowId(id);
+    setNextZIndex(nextZIndex + 1);
   };
 
   const closeWindow = (id: string) => {
@@ -117,6 +115,13 @@ function App() {
 
   const focusWindow = (id: string) => {
     setActiveWindowId(id);
+    // Update z-index to bring this window to front
+    setWindows((prevWindows) =>
+      prevWindows.map((win) =>
+        win.id === id ? { ...win, zIndex: nextZIndex } : win
+      )
+    );
+    setNextZIndex(nextZIndex + 1);
   };
 
   if (isLoading) {
@@ -151,11 +156,11 @@ function App() {
                 id={win.id}
                 title={win.title}
                 onClose={closeWindow}
-                isActive={activeWindowId === win.id}
                 onFocus={() => focusWindow(win.id)}
                 initialPosition={{ x: win.x, y: win.y }}
                 width={width}
                 maxHeight={maxHeight}
+                zIndex={win.zIndex}
               >
                 {win.component}
               </RSVPWindow>
@@ -167,11 +172,11 @@ function App() {
               id={win.id}
               title={win.title}
               onClose={closeWindow}
-              isActive={activeWindowId === win.id}
               onFocus={() => focusWindow(win.id)}
               initialPosition={{ x: win.x, y: win.y }}
               width={width}
               maxHeight={maxHeight}
+              zIndex={win.zIndex}
             >
               {win.component}
             </Window>
