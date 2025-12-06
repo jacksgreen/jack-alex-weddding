@@ -70,9 +70,9 @@ const RSVP = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-3">
       {isOzMode && (
-        <div className={`border-2 p-3 mb-4 text-sm ${
+        <div className={`border-2 p-3 mb-4 text-base ${
           isOzMode
             ? "bg-yellow-900/30 border-yellow-600 text-gray-200"
             : "bg-yellow-50 border-yellow-400 text-black"
@@ -92,7 +92,7 @@ const RSVP = () => {
             name="name"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel className="block text-sm font-bold mb-1">
+                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap">
                   {isOzMode ? "Human's Name" : "Name"}
                 </FormLabel>
                 <FormControl>
@@ -103,10 +103,10 @@ const RSVP = () => {
                         : "Your full name"
                     }
                     {...field}
-                    className="h-8 text-sm mt-0"
+                    className="h-8 text-base mt-0 w-full min-w-0"
                   />
                 </FormControl>
-                <FormMessage className="text-xs text-red-700" />
+                <FormMessage className="text-sm text-red-700" />
               </FormItem>
             )}
           />
@@ -117,7 +117,7 @@ const RSVP = () => {
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel className="block text-sm font-bold mb-1">
+                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap">
                   {isOzMode ? "Email (For Spam, Probably)" : "Email"}
                 </FormLabel>
                 <FormControl>
@@ -129,10 +129,10 @@ const RSVP = () => {
                         : "your.email@example.com"
                     }
                     {...field}
-                    className="h-8 text-sm mt-0"
+                    className="h-8 text-base mt-0 w-full min-w-0"
                   />
                 </FormControl>
-                <FormMessage className="text-xs text-red-700" />
+                <FormMessage className="text-sm text-red-700" />
               </FormItem>
             )}
           />
@@ -143,7 +143,7 @@ const RSVP = () => {
             name="guestCount"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel className="block text-sm font-bold mb-1">
+                <FormLabel className="block text-base font-bold mb-1 whitespace-nowrap">
                   {isOzMode ? "Number of Humans" : "Number of Guests"}
                 </FormLabel>
                 <FormControl>
@@ -153,17 +153,17 @@ const RSVP = () => {
                     max={10}
                     {...field}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
-                    className="h-8 text-sm mt-0"
+                    className="h-8 text-base mt-0 w-full min-w-0"
                   />
                 </FormControl>
-                <FormMessage className="text-xs text-red-700" />
+                <FormMessage className="text-sm text-red-700" />
               </FormItem>
             )}
           />
 
           {/* Events Section */}
           <div className="mt-2">
-            <label className="block text-sm font-bold mb-1">Events</label>
+            <label className="block text-base font-bold mb-1 whitespace-nowrap">Events</label>
             <FormField
               control={form.control}
               name="attendingFriday"
@@ -177,10 +177,10 @@ const RSVP = () => {
                       className="w-4 h-4 mt-0 self-center"
                     />
                   </FormControl>
-                  <FormLabel className="text-sm font-normal mb-0 flex items-center">
+                  <FormLabel className="text-base font-normal mb-0 flex items-center whitespace-nowrap">
                     {isOzMode ? "Friday Dinner (No dogs allowed 😔)" : "Attending Friday?"}
                   </FormLabel>
-                  <FormMessage className="text-xs text-red-700" />
+                  <FormMessage className="text-sm text-red-700" />
                 </FormItem>
               )}
             />
@@ -198,10 +198,10 @@ const RSVP = () => {
                       className="w-4 h-4 mt-0 self-center"
                     />
                   </FormControl>
-                  <FormLabel className="text-sm font-normal mb-0 flex items-center">
+                  <FormLabel className="text-base font-normal mb-0 flex items-center whitespace-nowrap">
                     {isOzMode ? "Sunday Wedding (Say yes!)" : "Attending Wedding?"}
                   </FormLabel>
-                  <FormMessage className="text-xs text-red-700" />
+                  <FormMessage className="text-sm text-red-700" />
                 </FormItem>
               )}
             />
@@ -218,7 +218,7 @@ const RSVP = () => {
                 </FormLabel>
                 <FormControl>
                   <textarea
-                    className={`w-full p-2 min-h-[50px] border rounded shadow-sm focus:outline-none text-sm resize-y mt-0 ${
+                    className={`w-full p-1.5 min-h-[35px] border rounded shadow-sm focus:outline-none text-base resize-y mt-0 ${
                       isOzMode
                         ? "bg-gray-800 border-gray-600 text-gray-100 focus:border-gray-500"
                         : "bg-white border-gray-400 text-black focus:border-black"
@@ -231,7 +231,7 @@ const RSVP = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage className="text-xs text-red-700" />
+                <FormMessage className="text-sm text-red-700" />
               </FormItem>
             )}
           />
@@ -240,7 +240,7 @@ const RSVP = () => {
             type="submit"
             disabled={status === "submitting"}
             variant="win95"
-            className="mt-4"
+            className="mt-4 text-base h-7 px-2 py-1"
           >
             {status === "submitting"
               ? isOzMode
@@ -253,7 +253,7 @@ const RSVP = () => {
 
           {message && (
             <div
-              className={`text-sm ${
+              className={`text-base ${
                 status === "success" ? "text-green-700" : "text-red-700"
               }`}
             >

@@ -27,7 +27,7 @@ interface WindowState {
 const getWindowSize = (id: string): { width: number; maxHeight: number } => {
   const sizes: Record<string, { width: number; maxHeight: number }> = {
     about: { width: 400, maxHeight: 600 },
-    rsvp: { width: 400, maxHeight: 600 },
+    rsvp: { width: 350, maxHeight: 600 },
     events: { width: 400, maxHeight: 600 },
     photos: { width: 400, maxHeight: 600 },
     music: { width: 400, maxHeight: 600 },
