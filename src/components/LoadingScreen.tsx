@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Sun } from "lucide-react";
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -90,19 +91,15 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
             </h1>
             <div className="flex justify-between items-end">
               <span className="text-xs max-md:text-[10px] font-bold tracking-wider">
-                WEDDING ENHANCER VERSION 1.0
+                GUEST OS v1.0 ☼ 2026
               </span>
-              {/* Sun icon placeholder - using CSS/SVG or just a div for now */}
-              <div className="w-8 h-4 max-md:w-6 max-md:h-3 bg-black rounded-t-full" />
+              <Sun className="w-6 h-6 max-md:w-5 max-md:h-5" strokeWidth={2.5} />
             </div>
           </div>
 
           {/* Credits/Info */}
           <div className="text-xs max-md:text-[10px] space-y-2 mb-auto text-gray-800 leading-relaxed max-md:space-y-1">
-            <p>
-              Two people who clean up nice, and one dog who steals the show.
-            </p>
-            <p>© 2026 Wedding Systems Ltd. • No refunds on dance moves.</p>
+            <p>Summer ☼ 2026 ☼ Tel Aviv</p>
           </div>
 
           {/* Loading Status */}

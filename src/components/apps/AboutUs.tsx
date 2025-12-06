@@ -10,7 +10,7 @@ const AboutUs = () => {
           <img
             src="/photos/park-hamesila.jpg"
             alt="Couple"
-            className="w-full h-48 object-cover mb-2 border border-gray-400 shadow-[inset_0_0_60px_rgba(0,0,0,0.2),4px_4px_0_rgba(0,0,0,0.3)] brightness-105 contrast-105 saturate-110 hue-rotate-[-5deg] sepia-[0.15] hover:saturate-125 hover:sepia-[0.05] transition-all duration-300"
+            className="w-full aspect-video object-cover mb-2 border border-gray-400 shadow-[inset_0_0_60px_rgba(0,0,0,0.2),4px_4px_0_rgba(0,0,0,0.3)] brightness-105 contrast-105 saturate-110 hue-rotate-[-5deg] sepia-[0.15] hover:saturate-125 hover:sepia-[0.05] transition-all duration-300"
           />
           <p className="text-sm italic text-center">
             {isOzMode

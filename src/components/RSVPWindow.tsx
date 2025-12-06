@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useRef } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -27,6 +27,10 @@ const RSVPWindow = ({
 }: RSVPWindowProps) => {
   const dragControls = useDragControls();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [windowSize, setWindowSize] = useState({ width, height: maxHeight });
+  const [isDraggable, setIsDraggable] = useState(true);
+  const windowRef = useRef<HTMLDivElement>(null);
+  const isResizing = useRef(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -34,9 +38,57 @@ const RSVPWindow = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const handleResizeStart = (e: React.PointerEvent, direction: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    isResizing.current = true;
+    setIsDraggable(false);
+
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startWidth = windowSize.width;
+    const startHeight = windowSize.height;
+
+    const handlePointerMove = (moveEvent: PointerEvent) => {
+      if (!isResizing.current) return;
+
+      const deltaX = moveEvent.clientX - startX;
+      const deltaY = moveEvent.clientY - startY;
+
+      let newWidth = startWidth;
+      let newHeight = startHeight;
+
+      if (direction.includes('e')) {
+        newWidth = Math.max(300, startWidth + deltaX);
+      }
+      if (direction.includes('w')) {
+        newWidth = Math.max(300, startWidth - deltaX);
+      }
+      if (direction.includes('s')) {
+        newHeight = Math.max(200, startHeight + deltaY);
+      }
+      if (direction.includes('n')) {
+        newHeight = Math.max(200, startHeight - deltaY);
+      }
+
+      setWindowSize({ width: newWidth, height: newHeight });
+    };
+
+    const handlePointerUp = () => {
+      isResizing.current = false;
+      setIsDraggable(true);
+      document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerup', handlePointerUp);
+    };
+
+    document.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointerup', handlePointerUp);
+  };
+
   return (
     <motion.div
-      drag={true}
+      ref={windowRef}
+      drag={isDraggable}
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
@@ -49,11 +101,11 @@ const RSVPWindow = ({
         backgroundColor: "#faf4c6",
         display: "grid",
         gridTemplateRows: "auto 1fr",
-        width: isMobile ? "80vw" : `${width}px`,
-        height: "fit-content",
+        width: isMobile ? "80vw" : `${windowSize.width}px`,
+        height: isMobile ? "fit-content" : `${windowSize.height}px`,
         minHeight: "200px",
-        maxHeight: isMobile ? "60vh" : `${maxHeight}px`,
-        boxShadow: "none",
+        maxHeight: isMobile ? "60vh" : "none",
+        boxShadow: "6px 6px 0px rgba(0, 0, 0, 0.15)",
         overflow: "hidden",
       }}
     >
@@ -66,6 +118,7 @@ const RSVPWindow = ({
         }}
         onPointerDown={(e) => {
           e.preventDefault();
+          onFocus();
           dragControls.start(e);
         }}
       >
@@ -104,6 +157,32 @@ const RSVPWindow = ({
           {children}
         </div>
       </div>
+
+      {/* Resize Handles - Only Corners */}
+      {!isMobile && (
+        <>
+          <div
+            onPointerDown={(e) => handleResizeStart(e, 'se')}
+            className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize z-10"
+            style={{ touchAction: 'none' }}
+          />
+          <div
+            onPointerDown={(e) => handleResizeStart(e, 'sw')}
+            className="absolute bottom-0 left-0 w-4 h-4 cursor-sw-resize z-10"
+            style={{ touchAction: 'none' }}
+          />
+          <div
+            onPointerDown={(e) => handleResizeStart(e, 'ne')}
+            className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize z-10"
+            style={{ touchAction: 'none' }}
+          />
+          <div
+            onPointerDown={(e) => handleResizeStart(e, 'nw')}
+            className="absolute top-0 left-0 w-4 h-4 cursor-nw-resize z-10"
+            style={{ touchAction: 'none' }}
+          />
+        </>
+      )}
     </motion.div>
   );
 };

@@ -26,3 +26,36 @@ body {
   box-shadow: inset 1px 1px 0px 1px #ffffff, inset -1px -1px 0px 1px #808080;
   height: 16px;
 }
+
+/* Poolsuite Toast Styling */
+.poolsuite-toast {
+  color: black !important;
+}
+
+.poolsuite-toast [data-title] {
+  font-weight: bold !important;
+  font-size: 20px !important;
+  color: black !important;
+}
+
+.poolsuite-toast [data-description] {
+  color: black !important;
+  opacity: 0.8;
+  font-size: 16px !important;
+  margin-top: 4px;
+}
+
+.poolsuite-toast [data-button] {
+  background: #e0f2f1 !important;
+  border: 2px solid black !important;
+  border-radius: 8px !important;
+  color: black !important;
+  font-family: 'VT323', monospace !important;
+  font-size: 16px !important;
+  padding: 4px 12px !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15) !important;
+}
+
+.poolsuite-toast [data-button]:hover {
+  background: #b5ead7 !important;
+}

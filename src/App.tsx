@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Toaster } from "sonner";
 import Desktop from "./components/Desktop";
 import Window from "./components/Window";
 import RSVPWindow from "./components/RSVPWindow";
@@ -83,7 +84,9 @@ function App() {
       if (id === "recs") {
         position = {
           x: minX + Math.random() * (maxX - minX),
-          y: window.innerHeight * 0.1 + Math.random() * (window.innerHeight * 0.2),
+          y:
+            window.innerHeight * 0.1 +
+            Math.random() * (window.innerHeight * 0.2),
         };
       } else {
         position = {
@@ -122,6 +125,21 @@ function App() {
 
   return (
     <OzModeProvider>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: "#fff0f3",
+            border: "2px solid black",
+            borderRadius: "12px",
+            boxShadow: "6px 6px 0px rgba(0, 0, 0, 0.15)",
+            fontFamily: "VT323, monospace",
+            fontSize: "18px",
+            padding: "16px",
+          },
+          className: "poolsuite-toast",
+        }}
+      />
       <Desktop>
         {/* Windows Layer */}
         {windows.map((win) => {
