@@ -179,9 +179,9 @@ function App() {
           onClick={() => openWindow("rsvp", "RSVP", <RSVP />)}
         />
         <DockItem
-          title="PoolFM"
+          title="Player"
           iconSrc="/icons/mixtapes.png"
-          onClick={() => openWindow("music", "PoolFM", <MusicPlayer />)}
+          onClick={() => openWindow("music", "Player", <MusicPlayer />)}
         />
       </Dock>
     </OzModeProvider>
