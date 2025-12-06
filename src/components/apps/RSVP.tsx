@@ -91,7 +91,7 @@ const RSVP = () => {
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="space-y-0">
                 <FormLabel className="block text-sm font-bold mb-1">
                   {isOzMode ? "Human's Name" : "Name"}
                 </FormLabel>
@@ -103,7 +103,7 @@ const RSVP = () => {
                         : "Your full name"
                     }
                     {...field}
-                    className="h-8 text-sm"
+                    className="h-8 text-sm mt-0"
                   />
                 </FormControl>
                 <FormMessage className="text-xs text-red-700" />
@@ -116,7 +116,7 @@ const RSVP = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="space-y-0">
                 <FormLabel className="block text-sm font-bold mb-1">
                   {isOzMode ? "Email (For Spam, Probably)" : "Email"}
                 </FormLabel>
@@ -129,7 +129,7 @@ const RSVP = () => {
                         : "your.email@example.com"
                     }
                     {...field}
-                    className="h-8 text-sm"
+                    className="h-8 text-sm mt-0"
                   />
                 </FormControl>
                 <FormMessage className="text-xs text-red-700" />
@@ -142,7 +142,7 @@ const RSVP = () => {
             control={form.control}
             name="guestCount"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="space-y-0">
                 <FormLabel className="block text-sm font-bold mb-1">
                   {isOzMode ? "Number of Humans" : "Number of Guests"}
                 </FormLabel>
@@ -153,7 +153,7 @@ const RSVP = () => {
                     max={10}
                     {...field}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
-                    className="h-8 text-sm"
+                    className="h-8 text-sm mt-0"
                   />
                 </FormControl>
                 <FormMessage className="text-xs text-red-700" />
@@ -210,13 +210,13 @@ const RSVP = () => {
             control={form.control}
             name="notes"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="block text-sm font-bold mb-1">
+              <FormItem className="space-y-0">
+                <FormLabel className="block text-sm font-bold mb-0.5">
                   {isOzMode ? "Special Requests (Treats for Oz?)" : "Notes"}
                 </FormLabel>
                 <FormControl>
                   <textarea
-                    className={`w-full p-2 min-h-[80px] border rounded shadow-sm focus:outline-none text-sm resize-y ${
+                    className={`w-full p-2 min-h-[80px] border rounded shadow-sm focus:outline-none text-sm resize-y mt-0 ${
                       isOzMode
                         ? "bg-gray-800 border-gray-600 text-gray-100 focus:border-gray-500"
                         : "bg-white border-gray-400 text-black focus:border-black"
