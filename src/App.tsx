@@ -68,8 +68,16 @@ function App() {
     component: React.ReactNode,
     customPosition?: { x: number; y: number }
   ) => {
-    if (windows.find((w) => w.id === id)) {
+    const existingWindow = windows.find((w) => w.id === id);
+    if (existingWindow) {
+      // Bring existing window to front by updating z-index
       setActiveWindowId(id);
+      setWindows((prevWindows) =>
+        prevWindows.map((win) =>
+          win.id === id ? { ...win, zIndex: nextZIndex } : win
+        )
+      );
+      setNextZIndex(nextZIndex + 1);
       return;
     }
 
