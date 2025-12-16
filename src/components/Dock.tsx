@@ -8,7 +8,12 @@ interface DockProps {
 const Dock = ({ children }: DockProps) => {
   return (
     <div className="fixed bottom-0 left-0 w-full flex justify-center pb-4 pointer-events-none z-50 max-md:pb-2">
-      <div className="bg-pastel-cream border-2 border-black flex pointer-events-auto shadow-win-out max-md:overflow-x-auto max-md:w-full max-md:max-w-full max-md:justify-center">
+      <div
+        className="bg-pastel-cream border-2 border-[#2b2b2b] rounded-[10px] flex pointer-events-auto max-md:overflow-x-auto max-md:w-full max-md:max-w-full max-md:justify-center overflow-hidden"
+        style={{
+          boxShadow: '0 2px 0 rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.15)',
+        }}
+      >
         {children}
       </div>
     </div>
@@ -34,9 +39,29 @@ export const DockItem = ({
 }: DockItemProps) => {
   return (
     <div
-      className="flex flex-col items-center justify-center w-20 h-20 max-md:w-16 max-md:h-16 cursor-pointer hover:bg-pastel-peach active:bg-pastel-pink border-r-2 border-black last:border-r-0 transition-colors flex-shrink-0 relative"
+      className="flex flex-col items-center justify-center w-20 h-20 max-md:w-16 max-md:h-16 cursor-pointer transition-all flex-shrink-0 relative group border-r border-[#2b2b2b] last:border-r-0"
+      style={{
+        background: '#f8f2ea',
+        boxShadow: 'inset 2px 2px 0 rgba(255,255,255,.9), inset -2px -2px 0 rgba(0,0,0,.25), 0 2px 0 rgba(0,0,0,.15)',
+      }}
       onClick={onClick}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = '#ffe8d6';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = '#f8f2ea';
+      }}
+      onMouseDown={(e) => {
+        // Pressed/sunken state - invert the bevel
+        e.currentTarget.style.boxShadow = 'inset -2px -2px 0 rgba(255,255,255,.9), inset 2px 2px 0 rgba(0,0,0,.25)';
+      }}
+      onMouseUp={(e) => {
+        e.currentTarget.style.boxShadow = 'inset 2px 2px 0 rgba(255,255,255,.9), inset -2px -2px 0 rgba(0,0,0,.25), 0 2px 0 rgba(0,0,0,.15)';
+      }}
     >
+      {/* Highlight line for divider bevel effect */}
+      <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-white/70 first:hidden" />
+
       <div
         className={`${iconClassName} max-md:w-6 max-md:h-6 mb-1 flex items-center justify-center relative`}
       >
@@ -45,6 +70,7 @@ export const DockItem = ({
             src={iconSrc}
             alt={title}
             className="w-full h-full object-contain"
+            style={{ imageRendering: 'pixelated' }}
           />
         ) : IconComponent ? (
           <IconComponent size={24} color="black" />
@@ -55,7 +81,7 @@ export const DockItem = ({
           </div>
         )}
       </div>
-      <span className="text-black text-xs max-md:text-[10px] font-bold font-retro uppercase tracking-wide">
+      <span className="text-black text-xs max-md:text-[10px] font-bold font-retro tracking-wide">
         {title}
       </span>
     </div>
