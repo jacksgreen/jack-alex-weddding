@@ -6,7 +6,7 @@ const Recommendations = () => {
   return (
     <div className="p-4 space-y-6 h-full overflow-y-auto">
         <div className="text-center space-y-2 mb-4">
-            <h2 className="text-3xl font-serif tracking-tight">
+        <h2 className="text-3xl font-retro tracking-tight">
               {isOzMode ? "Oz's Guide to Tel Aviv" : "Tel Aviv Guide"}
             </h2>
             <p className="text-sm italic">June 2026</p>
