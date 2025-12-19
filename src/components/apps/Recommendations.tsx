@@ -80,6 +80,34 @@ const Recommendations = () => {
                 </div>
             </div>
 
+            {/* Jerusalem Tour Guide */}
+            <div>
+                <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+                    <span className="text-xl">{isOzMode ? "🏰" : "🏰"}</span>{" "}
+                    {isOzMode ? "Tour Guide Recommendation" : "Tour Guide to Jerusalem"}
+                </h3>
+                <div className={`border p-3 shadow-win-in ${
+                    isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
+                }`}>
+                    <p className={`text-sm mb-2 ${isOzMode ? "text-gray-300" : "text-gray-700"}`}>
+                      {isOzMode
+                        ? "If you want to go to Jerusalem, arrange your own tour with Nicole Goldstein Strassman. She's a licensed tour guide. She's not my tour guide, but my humans say she's good."
+                        : "Arrange your own tour to Jerusalem with Nicole Goldstein Strassman, Licensed Tour Guide."}
+                    </p>
+                    <div className={`text-sm space-y-1 border-t pt-2 ${
+                        isOzMode ? "border-gray-600" : "border-gray-400/30"
+                    }`}>
+                        <p>📞 +972-547486067</p>
+                        <p>✉️ <a href="mailto:tourandexplorejerusalem@gmail.com" className={`hover:underline ${
+                            isOzMode ? "text-blue-400" : "text-win-blue"
+                        }`}>tourandexplorejerusalem@gmail.com</a></p>
+                        <p>🌐 <a href="https://tourandexplorejerusalem.com" target="_blank" rel="noopener noreferrer" className={`hover:underline ${
+                            isOzMode ? "text-blue-400" : "text-win-blue"
+                        }`}>tourandexplorejerusalem.com</a></p>
+                    </div>
+                </div>
+            </div>
+
             {/* Travel Agent */}
             <div>
                  <h3 className="font-bold text-lg mb-2 flex items-center gap-2">

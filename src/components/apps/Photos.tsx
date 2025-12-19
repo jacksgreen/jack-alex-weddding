@@ -34,7 +34,7 @@ const Photos = () => {
     selectedPhotoIndex !== null ? photosFeed[selectedPhotoIndex] : null;
 
   return (
-    <div className={`h-full overflow-y-auto ${isOzMode ? "bg-black" : "bg-white"}`}>
+    <div className={`h-full overflow-y-auto pt-2 ${isOzMode ? "bg-black" : "bg-white"}`}>
       {photosFeed.map((photo, index) => (
         <div
           key={photo.id}

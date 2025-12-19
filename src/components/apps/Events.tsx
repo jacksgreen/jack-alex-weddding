@@ -5,7 +5,7 @@ const Events = () => {
 
   return (
     <div className="p-4 space-y-6 h-full overflow-y-auto">
-      <div className="text-center space-y-2 mb-4">
+      <div className="text-center space-y-2 mb-2">
         <h2 className="text-3xl font-retro tracking-tight">
           {isOzMode ? "Times When I Don't Get Fed On Schedule" : "Wedding Events"}
         </h2>
@@ -14,6 +14,33 @@ const Events = () => {
       </div>
 
       <div className="space-y-6">
+        {/* Thursday Event */}
+        <div>
+          <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+            <span className="text-xl">{isOzMode ? "🏛️" : "🏛️"}</span> Thursday,
+            June 18
+          </h3>
+          <div className={`border p-3 shadow-win-in space-y-2 ${
+            isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
+          }`}>
+            <h4 className="font-bold text-sm">
+              {isOzMode ? "Optional Excursion (I'm Not Invited)" : "Caesarea Tour"}
+            </h4>
+            <div className="text-sm space-y-1">
+              <div>
+                <span className="font-semibold">Details:</span> To be determined
+              </div>
+            </div>
+            <p className={`text-xs pt-2 border-t ${
+              isOzMode ? "text-gray-400 border-gray-600" : "text-gray-600 border-gray-300"
+            }`}>
+              {isOzMode
+                ? "My humans arranged this optional tour. I'll be at home, probably napping. You're welcome."
+                : "We've arranged an optional excursion to discover the beauty of Caesarea. Details to follow."}
+            </p>
+          </div>
+        </div>
+
         {/* Friday Event */}
         <div>
           <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
@@ -72,6 +99,25 @@ const Events = () => {
               {isOzMode
                 ? "They're getting married! About time. Also, I heard there's a buffet. Just saying, scraps are appreciated."
                 : "Transportation details to follow soon. We can't wait to celebrate with you!"}
+            </p>
+          </div>
+        </div>
+
+        {/* More Events TBD */}
+        <div>
+          <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+            <span className="text-xl">{isOzMode ? "🤔" : "📅"}</span>{" "}
+            More Events Coming Soon
+          </h3>
+          <div className={`border p-3 shadow-win-in ${
+            isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
+          }`}>
+            <p className={`text-sm ${
+              isOzMode ? "text-gray-300" : "text-gray-700"
+            }`}>
+              {isOzMode
+                ? "My humans are still figuring out the full schedule. Check back for updates!"
+                : "We're still finalizing the weekend schedule and may add more events. Check back for updates."}
             </p>
           </div>
         </div>
