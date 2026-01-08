@@ -9,7 +9,7 @@ const Recommendations = () => {
         <h2 className="text-3xl font-retro tracking-tight">
               {isOzMode ? "Oz's Guide to Tel Aviv" : "Tel Aviv Guide"}
             </h2>
-            <p className="text-sm italic">June 2026</p>
+            <p className="text-base italic">June 2026</p>
             <div className="w-full h-px bg-black/20"></div>
         </div>
 
@@ -18,7 +18,7 @@ const Recommendations = () => {
             <div className={`p-3 border shadow-win-in ${
                 isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-400"
             }`}>
-                 <p className="text-sm leading-relaxed">
+                 <p className="text-base leading-relaxed">
                     {isOzMode
                       ? "Listen up, guests. You're coming to MY city for MY humans' wedding. Here's what you need to know."
                       : "We are so looking forward to seeing you in Israel to celebrate Alex and Jack's wedding!"}
@@ -34,12 +34,12 @@ const Recommendations = () => {
                 <div className={`border p-3 shadow-win-in space-y-2 ${
                     isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
                 }`}>
-                    <p className={`text-xs mb-2 ${isOzMode ? "text-gray-400" : "text-gray-500"}`}>
+                    <p className={`text-sm mb-2 ${isOzMode ? "text-gray-400" : "text-gray-500"}`}>
                       {isOzMode
                         ? "These hotels are near the beach where I do my morning business. You're welcome."
                         : "Excellent locations for the beach, restaurants and the city buzz."}
                     </p>
-                    <ul className="text-sm space-y-1 list-disc pl-4">
+                    <ul className="text-base space-y-1 list-disc pl-4">
                         <li>Royal Beach Tel Aviv</li>
                         <li>Elkonin</li>
                         <li>The Savoy Tel Aviv Sea Side</li>
@@ -62,7 +62,7 @@ const Recommendations = () => {
                 <div className={`border p-3 shadow-win-in ${
                     isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
                 }`}>
-                    <p className="text-sm mb-2">
+                    <p className="text-base mb-2">
                       {isOzMode
                         ? "Go to these places. Maybe you'll see me. Definitely bring treats if you do."
                         : "For some fun when you feel like exploring:"}
@@ -71,7 +71,7 @@ const Recommendations = () => {
                         href="https://tinyurl.com/35wt8a5m"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`text-sm font-bold block hover:underline ${
+                        className={`text-base font-bold block hover:underline ${
                             isOzMode ? "text-blue-400" : "text-win-blue"
                         }`}
                     >
@@ -89,12 +89,12 @@ const Recommendations = () => {
                 <div className={`border p-3 shadow-win-in ${
                     isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
                 }`}>
-                    <p className={`text-sm mb-2 ${isOzMode ? "text-gray-300" : "text-gray-700"}`}>
+                    <p className={`text-base mb-2 ${isOzMode ? "text-gray-300" : "text-gray-700"}`}>
                       {isOzMode
                         ? "If you want to go to Jerusalem, arrange your own tour with Nicole Goldstein Strassman. She's a licensed tour guide. She's not my tour guide, but my humans say she's good."
                         : "Arrange your own tour to Jerusalem with Nicole Goldstein Strassman, Licensed Tour Guide."}
                     </p>
-                    <div className={`text-sm space-y-1 border-t pt-2 ${
+                    <div className={`text-base space-y-1 border-t pt-2 ${
                         isOzMode ? "border-gray-600" : "border-gray-400/30"
                     }`}>
                         <p>📞 +972-547486067</p>
@@ -116,13 +116,13 @@ const Recommendations = () => {
                 <div className={`border p-3 shadow-win-in ${
                     isOzMode ? "bg-gray-700 border-gray-600" : "bg-pool-mint border-gray-500"
                 }`}>
-                    <p className="text-sm mb-2">
+                    <p className="text-base mb-2">
                         {isOzMode
                           ? "Ariella helps humans with travel stuff. She's nice. I bet she'd pet me if she met me."
                           : "For help with bookings, we are working with"}{" "}
                         <strong>Ariella</strong>.
                     </p>
-                    <div className={`text-sm space-y-1 border-t pt-2 ${
+                    <div className={`text-base space-y-1 border-t pt-2 ${
                         isOzMode ? "border-gray-600" : "border-gray-400/30"
                     }`}>
                         <p>📞 +44 7813 177 379</p>
@@ -136,7 +136,7 @@ const Recommendations = () => {
                 </div>
             </div>
 
-            <div className={`text-center text-xs pt-4 pb-2 ${
+            <div className={`text-center text-sm pt-4 pb-2 ${
                 isOzMode ? "text-gray-400" : "text-gray-500"
             }`}>
                 {isOzMode

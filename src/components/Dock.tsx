@@ -81,7 +81,7 @@ export const DockItem = ({
           </div>
         )}
       </div>
-      <span className="text-black text-xs max-md:text-[10px] font-bold font-retro tracking-wide">
+      <span className="text-black text-xs max-md:text-xs font-bold font-retro tracking-wide">
         {title}
       </span>
     </div>

@@ -5,14 +5,14 @@ const AboutUs = () => {
 
   return (
     <div className="p-4 space-y-4">
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-4 text-lg">
         <div className=" p-2">
           <img
             src="/photos/park-hamesila.jpg"
             alt="Couple"
             className="w-full aspect-video object-cover mb-2 border border-gray-400 shadow-[inset_0_0_60px_rgba(0,0,0,0.2),4px_4px_0_rgba(0,0,0,0.3)] brightness-105 contrast-105 saturate-110 hue-rotate-[-5deg] sepia-[0.15] hover:saturate-125 hover:sepia-[0.05] transition-all duration-300"
           />
-          <p className="text-sm italic text-center">
+          <p className="text-base italic text-center">
             {isOzMode
               ? '"This is MY park. They just walk in it."'
               : '"Just a casual stroll through Park HaMesila..."'}

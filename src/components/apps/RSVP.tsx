@@ -99,7 +99,7 @@ const RSVP = () => {
                         : "Your full name"
                     }
                     {...field}
-                    className="h-8 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
+                    className="h-10 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
                     style={{ backgroundColor: "#faf4c6" }}
                   />
                 </FormControl>
@@ -126,7 +126,7 @@ const RSVP = () => {
                         : "your.email@example.com"
                     }
                     {...field}
-                    className="h-8 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
+                    className="h-10 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
                     style={{ backgroundColor: "#faf4c6" }}
                   />
                 </FormControl>
@@ -151,7 +151,7 @@ const RSVP = () => {
                     max={10}
                     {...field}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
-                    className="h-8 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
+                    className="h-10 text-base mt-0 w-full min-w-0 border border-black/30 text-black placeholder:text-gray-600"
                     style={{ backgroundColor: "#faf4c6" }}
                   />
                 </FormControl>
@@ -173,7 +173,7 @@ const RSVP = () => {
                       type="checkbox"
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
-                      className="w-4 h-4 mt-0 self-center"
+                      className="w-5 h-5 mt-0 self-center"
                       style={{ accentColor: "black" }}
                     />
                   </FormControl>
@@ -195,7 +195,7 @@ const RSVP = () => {
                       type="checkbox"
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
-                      className="w-4 h-4 mt-0 self-center"
+                      className="w-5 h-5 mt-0 self-center"
                       style={{ accentColor: "black" }}
                     />
                   </FormControl>
@@ -238,7 +238,7 @@ const RSVP = () => {
             type="submit"
             disabled={status === "submitting"}
             variant="win95"
-            className="mt-4 text-base h-7 px-2 py-1"
+            className="mt-4 text-base h-10 px-4 py-2"
           >
             {status === "submitting"
               ? isOzMode

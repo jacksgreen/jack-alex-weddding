@@ -105,7 +105,7 @@ const RSVPWindow = ({
         width: isMobile ? "80vw" : `${windowSize.width}px`,
         height: isMobile ? "fit-content" : `${windowSize.height}px`,
         minHeight: "200px",
-        maxHeight: isMobile ? "60vh" : "none",
+        maxHeight: isMobile ? "70vh" : "none",
         boxShadow: "6px 6px 0px rgba(0, 0, 0, 0.15)",
         overflow: "hidden",
       }}
@@ -137,10 +137,10 @@ const RSVPWindow = ({
             e.stopPropagation();
             onClose(id);
           }}
-          className="w-5 h-5 flex items-center justify-center bg-win-bg border border-win-bevel-light active:border-win-bevel-dark shadow-win-out active:shadow-win-in flex-shrink-0"
+          className="w-8 h-8 flex items-center justify-center bg-win-bg border border-win-bevel-light active:border-win-bevel-dark shadow-win-out active:shadow-win-in flex-shrink-0"
           style={{ marginTop: "2px" }}
         >
-          <X size={14} color="black" />
+          <X size={20} color="black" />
         </button>
       </div>
 

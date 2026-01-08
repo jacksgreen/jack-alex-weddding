@@ -9,7 +9,7 @@ const Events = () => {
         <h2 className="text-3xl font-retro tracking-tight">
           {isOzMode ? "Times When I Don't Get Fed On Schedule" : "Wedding Events"}
         </h2>
-        <p className="text-sm italic">June 2026</p>
+        <p className="text-base italic">June 2026</p>
         <div className="w-full h-px bg-black/20"></div>
       </div>
 
@@ -23,15 +23,15 @@ const Events = () => {
           <div className={`border p-3 shadow-win-in space-y-2 ${
             isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
           }`}>
-            <h4 className="font-bold text-sm">
+            <h4 className="font-bold text-base">
               {isOzMode ? "Optional Excursion (I'm Not Invited)" : "Caesarea Tour"}
             </h4>
-            <div className="text-sm space-y-1">
+            <div className="text-base space-y-1">
               <div>
                 <span className="font-semibold">Details:</span> To be determined
               </div>
             </div>
-            <p className={`text-xs pt-2 border-t ${
+            <p className={`text-sm pt-2 border-t ${
               isOzMode ? "text-gray-400 border-gray-600" : "text-gray-600 border-gray-300"
             }`}>
               {isOzMode
@@ -50,10 +50,10 @@ const Events = () => {
           <div className={`border p-3 shadow-win-in space-y-2 ${
             isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
           }`}>
-            <h4 className="font-bold text-sm">
+            <h4 className="font-bold text-base">
               {isOzMode ? "Dinner (Not For Dogs Apparently)" : "Shabbat Dinner"}
             </h4>
-            <div className="text-sm space-y-1">
+            <div className="text-base space-y-1">
               <div>
                 <span className="font-semibold">Time:</span> To be determined
               </div>
@@ -62,7 +62,7 @@ const Events = () => {
                 Ya'ir St 3, Tel Aviv-Yafo
               </div>
             </div>
-            <p className={`text-xs pt-2 border-t ${
+            <p className={`text-sm pt-2 border-t ${
               isOzMode ? "text-gray-400 border-gray-600" : "text-gray-600 border-gray-300"
             }`}>
               {isOzMode
@@ -81,10 +81,10 @@ const Events = () => {
           <div className={`border p-3 shadow-win-in space-y-2 ${
             isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
           }`}>
-            <h4 className="font-bold text-sm">
+            <h4 className="font-bold text-base">
               {isOzMode ? "The Big Celebration (Fingers crossed for scraps)" : "Wedding Celebration"}
             </h4>
-            <div className="text-sm space-y-1">
+            <div className="text-base space-y-1">
               <div>
                 <span className="font-semibold">Time:</span> To be determined
               </div>
@@ -93,7 +93,7 @@ const Events = () => {
                 Israel
               </div>
             </div>
-            <p className={`text-xs pt-2 border-t ${
+            <p className={`text-sm pt-2 border-t ${
               isOzMode ? "text-gray-400 border-gray-600" : "text-gray-600 border-gray-300"
             }`}>
               {isOzMode
@@ -112,7 +112,7 @@ const Events = () => {
           <div className={`border p-3 shadow-win-in ${
             isOzMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-500"
           }`}>
-            <p className={`text-sm ${
+            <p className={`text-base ${
               isOzMode ? "text-gray-300" : "text-gray-700"
             }`}>
               {isOzMode
@@ -122,7 +122,7 @@ const Events = () => {
           </div>
         </div>
 
-        <div className={`text-center text-xs pt-4 pb-2 ${
+        <div className={`text-center text-sm pt-4 pb-2 ${
           isOzMode ? "text-gray-400" : "text-gray-500"
         }`}>
           {isOzMode
