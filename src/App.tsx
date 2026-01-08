@@ -200,7 +200,6 @@ function App() {
         <DockItem
           title="About"
           iconSrc="/icons/about.png"
-          iconClassName="w-12 h-12"
           onClick={() => {
             const x = 50 + Math.random() * 100;
             const y = 50 + Math.random() * 100;
