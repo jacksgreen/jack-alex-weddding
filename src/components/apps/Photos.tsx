@@ -35,7 +35,7 @@ const Photos = () => {
 
   return (
     <div
-      className={`h-full overflow-y-auto px-6 pt-2 ${
+      className={`h-full overflow-y-auto px-4 pt-2 ${
         isOzMode ? "bg-black" : "bg-white"
       }`}
     >
