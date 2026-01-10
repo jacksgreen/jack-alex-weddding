@@ -34,7 +34,11 @@ const Photos = () => {
     selectedPhotoIndex !== null ? photosFeed[selectedPhotoIndex] : null;
 
   return (
-    <div className={`h-full overflow-y-auto pt-2 ${isOzMode ? "bg-black" : "bg-white"}`}>
+    <div
+      className={`h-full overflow-y-auto px-6 pt-2 ${
+        isOzMode ? "bg-black" : "bg-white"
+      }`}
+    >
       {photosFeed.map((photo, index) => (
         <div
           key={photo.id}
@@ -45,9 +49,11 @@ const Photos = () => {
           }`}
         >
           {/* Post Header */}
-          <div className={`flex items-center justify-between px-4 py-3 ${
-            isOzMode ? "bg-gray-900" : "bg-white"
-          }`}>
+          <div
+            className={`flex items-center justify-between px-4 py-3 ${
+              isOzMode ? "bg-gray-900" : "bg-white"
+            }`}
+          >
             <div className="flex items-center gap-3">
               {/* Profile Picture - Click 3 times for Oz Mode */}
               <button
@@ -65,13 +71,19 @@ const Photos = () => {
                 />
               </button>
               {/* Username */}
-              <div className={`font-bold text-base ${
-                isOzMode ? "text-gray-100" : "text-black"
-              }`}>Oz the dog</div>
+              <div
+                className={`font-bold text-base ${
+                  isOzMode ? "text-gray-100" : "text-black"
+                }`}
+              >
+                Oz the dog
+              </div>
             </div>
-            <button className={`p-1 rounded ${
-              isOzMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
-            }`}>
+            <button
+              className={`p-1 rounded ${
+                isOzMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
+              }`}
+            >
               <MoreHorizontal
                 size={24}
                 strokeWidth={2.5}
@@ -98,9 +110,11 @@ const Photos = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className={`flex items-center justify-between px-4 py-3 ${
-            isOzMode ? "bg-gray-900" : "bg-white"
-          }`}>
+          <div
+            className={`flex items-center justify-between px-4 py-3 ${
+              isOzMode ? "bg-gray-900" : "bg-white"
+            }`}
+          >
             <div className="flex items-center gap-4">
               <button
                 onClick={(e) => handleLike(index, e)}
@@ -147,11 +161,17 @@ const Photos = () => {
             <div className="flex items-center gap-2 mb-2">
               <Heart
                 size={16}
-                className={isOzMode ? "fill-gray-300 stroke-gray-300" : "fill-black stroke-black"}
+                className={
+                  isOzMode
+                    ? "fill-gray-300 stroke-gray-300"
+                    : "fill-black stroke-black"
+                }
               />
-              <div className={`font-bold text-sm ${
-                isOzMode ? "text-gray-300" : "text-black"
-              }`}>
+              <div
+                className={`font-bold text-sm ${
+                  isOzMode ? "text-gray-300" : "text-black"
+                }`}
+              >
                 {liked[index]
                   ? `${(parseInt(photo.likes) + 1).toLocaleString()} likes`
                   : `${parseInt(photo.likes).toLocaleString()} likes`}
@@ -164,15 +184,19 @@ const Photos = () => {
                     : "fill-black stroke-black"
                 }`}
               />
-              <div className={`font-bold text-sm ${
-                isOzMode ? "text-gray-300" : "text-black"
-              }`}>
+              <div
+                className={`font-bold text-sm ${
+                  isOzMode ? "text-gray-300" : "text-black"
+                }`}
+              >
                 {parseInt(photo.comments).toLocaleString()} comments
               </div>
             </div>
-            <div className={`text-sm leading-relaxed mb-2 ${
-              isOzMode ? "text-gray-200" : "text-black"
-            }`}>
+            <div
+              className={`text-sm leading-relaxed mb-2 ${
+                isOzMode ? "text-gray-200" : "text-black"
+              }`}
+            >
               <span className="font-black">oz_the_dog</span>{" "}
               <span className="font-extralight">{photo.caption}</span>
             </div>
