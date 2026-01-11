@@ -221,12 +221,12 @@ function App() {
           iconSrc="/icons/photos.png"
           onClick={() => openWindow("photos", "Insta", <Photos />)}
         />
-        <DockItem
+        {/* <DockItem
           title="RSVP"
           iconSrc="/icons/rsvp.png"
           onClick={() => openWindow("rsvp", "RSVP", <RSVP />)}
           showBadge={true}
-        />
+        /> */}
         <DockItem
           title="Player"
           iconSrc="/icons/mixtapes.png"
