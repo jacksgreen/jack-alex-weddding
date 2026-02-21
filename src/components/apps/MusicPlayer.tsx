@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Play, Pause, SkipForward, SkipBack } from "lucide-react";
+import { useState, useEffect, useRef, FormEvent } from "react";
+import { Play, Pause, SkipForward, SkipBack, Send } from "lucide-react";
 import { useOzMode } from "@/contexts/OzModeContext";
 
 const SOUND_CLOUD_PLAYLIST_URL =
@@ -15,6 +15,8 @@ const MusicPlayer = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const widgetRef = useRef<any>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [songInput, setSongInput] = useState("");
+  const [songStatus, setSongStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   useEffect(() => {
     // Load SoundCloud Widget API
@@ -234,6 +236,27 @@ const MusicPlayer = () => {
     widgetRef.current.seekTo(seekPosition);
   };
 
+  const handleSongSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!songInput.trim() || songStatus === "submitting") return;
+
+    setSongStatus("submitting");
+    try {
+      const res = await fetch("/api/song-suggestion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ song: songInput.trim() }),
+      });
+      if (!res.ok) throw new Error("Failed to submit");
+      setSongStatus("success");
+      setSongInput("");
+      setTimeout(() => setSongStatus("idle"), 2500);
+    } catch {
+      setSongStatus("error");
+      setTimeout(() => setSongStatus("idle"), 2500);
+    }
+  };
+
   const formatTime = (ms: number) => {
     const seconds = Math.floor(ms / 1000);
     const mins = Math.floor(seconds / 60);
@@ -420,6 +443,67 @@ const MusicPlayer = () => {
         >
           <SkipForward size={20} className="text-gray-800 fill-current" />
         </button>
+      </div>
+
+      {/* Song Suggestion — cassette insert card */}
+      <div className="mx-1 mt-2 border border-gray-400 shadow-win-out bg-pastel-cream relative">
+        {/* Dashed "tear here" top edge */}
+        <div className="absolute -top-px left-2 right-2 border-t border-dashed border-gray-300" />
+
+        <div className="px-3 pt-2.5 pb-2">
+          <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-mono text-center mb-0.5">
+            Request line
+          </p>
+          <p className="text-[11px] text-gray-600 font-mono text-center mb-2">
+            What&apos;s one song that gets you on the dancefloor?
+          </p>
+
+          <form onSubmit={handleSongSubmit}>
+            <div
+              className="shadow-win-in bg-white relative"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(transparent, transparent 19px, #e5e1d8 19px, #e5e1d8 20px)",
+                backgroundPosition: "0 8px",
+              }}
+            >
+              <textarea
+                value={songInput}
+                onChange={(e) => setSongInput(e.target.value)}
+                placeholder={
+                  songStatus === "success"
+                    ? "Thanks! We'll add it to the list"
+                    : songStatus === "error"
+                    ? "Something went wrong, try again..."
+                    : "e.g. Dancing Queen \u2013 ABBA"
+                }
+                disabled={songStatus === "submitting" || songStatus === "success"}
+                rows={2}
+                className="w-full bg-transparent px-2 pt-2 pb-1 text-xs font-mono text-gray-800 placeholder:text-gray-400 focus:outline-none disabled:opacity-50 resize-none leading-[20px]"
+              />
+            </div>
+
+            <div className="flex items-center justify-between mt-1.5">
+              <span className="text-[9px] text-gray-400 font-mono italic">
+                {songStatus === "success"
+                  ? "Submitted!"
+                  : songStatus === "submitting"
+                  ? "Sending..."
+                  : songStatus === "error"
+                  ? "Failed \u2013 try again"
+                  : "\u266A"}
+              </span>
+              <button
+                type="submit"
+                disabled={!songInput.trim() || songStatus === "submitting" || songStatus === "success"}
+                className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider bg-pastel-cream border border-gray-400 shadow-win-out active:shadow-win-in active:translate-y-px disabled:opacity-40 disabled:active:shadow-win-out disabled:active:translate-y-0"
+              >
+                <Send size={10} className="text-gray-600" />
+                <span className="text-gray-600">Send</span>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
 
       {/* Decorative Elements */}
