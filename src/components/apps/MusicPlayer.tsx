@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Play, Pause, SkipForward, SkipBack } from "lucide-react";
+import { useState, useEffect, useRef, FormEvent } from "react";
+import { Play, Pause, SkipForward, SkipBack, Send } from "lucide-react";
 import { useOzMode } from "@/contexts/OzModeContext";
 
 const SOUND_CLOUD_PLAYLIST_URL =
@@ -15,6 +15,9 @@ const MusicPlayer = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const widgetRef = useRef<any>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [nameInput, setNameInput] = useState("");
+  const [songInput, setSongInput] = useState("");
+  const [songStatus, setSongStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   useEffect(() => {
     // Load SoundCloud Widget API
@@ -234,6 +237,28 @@ const MusicPlayer = () => {
     widgetRef.current.seekTo(seekPosition);
   };
 
+  const handleSongSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!songInput.trim() || !nameInput.trim() || songStatus === "submitting") return;
+
+    setSongStatus("submitting");
+    try {
+      const res = await fetch("/api/song-suggestion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: nameInput.trim(), song: songInput.trim() }),
+      });
+      if (!res.ok) throw new Error("Failed to submit");
+      setSongStatus("success");
+      setNameInput("");
+      setSongInput("");
+      setTimeout(() => setSongStatus("idle"), 2500);
+    } catch {
+      setSongStatus("error");
+      setTimeout(() => setSongStatus("idle"), 2500);
+    }
+  };
+
   const formatTime = (ms: number) => {
     const seconds = Math.floor(ms / 1000);
     const mins = Math.floor(seconds / 60);
@@ -245,7 +270,7 @@ const MusicPlayer = () => {
     <div className="flex flex-col h-full p-2 gap-4">
       {/* Display Screen */}
       <div
-        className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden h-32 flex flex-col justify-center dark:border-purple-300"
+        className="bg-gray-900 border-2 border-pastel-green shadow-win-in p-3 mb-2 relative overflow-hidden min-h-32 flex flex-col justify-center dark:border-purple-300"
         style={{
           boxShadow: isPlaying
             ? isOzMode
@@ -422,8 +447,349 @@ const MusicPlayer = () => {
         </button>
       </div>
 
+      {/* Song Suggestion — cassette tape */}
+      <div
+        className="mx-1 mt-3 relative"
+        style={{
+          /* Plastic shell body */
+          background: "linear-gradient(175deg, #f0e0c8 0%, #e8d8c0 30%, #e0d0b4 70%, #d8c8a8 100%)",
+          borderRadius: 10,
+          border: "2px solid #a89070",
+          boxShadow: "0 3px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(0,0,0,0.08)",
+          padding: "8px 8px 6px",
+          /* Aspect ratio roughly 275:175 */
+        }}
+      >
+        {/* Screw holes — 5 total: 4 corners + 1 center-top */}
+        {[
+          { top: 6, left: 6 },
+          { top: 6, right: 6 },
+          { bottom: 6, left: 6 },
+          { bottom: 6, right: 6 },
+          { top: 6, left: "50%", transform: "translateX(-50%)" },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className="absolute"
+            style={{
+              ...pos,
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "radial-gradient(circle at 35% 35%, #d8c8a8 0%, #b8a080 50%, #a08868 100%)",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.35), 0 0.5px 0 rgba(255,255,255,0.3)",
+            }}
+          />
+        ))}
+
+        {/* ── LABEL STICKER ── upper ~60% of the tape */}
+        <div
+          style={{
+            background: "linear-gradient(180deg, #FFF9E6 0%, #fff4d8 100%)",
+            border: "1px solid #d0c0a0",
+            borderRadius: 4,
+            padding: "5px 8px 6px",
+            position: "relative",
+          }}
+        >
+          {/* Reel windows row + center label */}
+          <div className="flex items-center gap-2">
+            {/* Left reel window */}
+            <div
+              className="shrink-0 flex items-center justify-center"
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                background: "radial-gradient(circle, #28201a 0%, #1e180e 70%, #141008 100%)",
+                border: "2.5px solid #c0a880",
+                boxShadow: "inset 0 2px 8px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.15)",
+              }}
+            >
+              {/* Tape spool — visible through window */}
+              <div
+                className="flex items-center justify-center"
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  border: "1.5px solid rgba(80,65,45,0.5)",
+                  background: "conic-gradient(from 0deg, #3a3020 0%, #2a2018 25%, #3a3020 50%, #2a2018 75%, #3a3020 100%)",
+                }}
+              >
+                {/* Hub — hexagonal spindle */}
+                <div
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: "50%",
+                    background: "radial-gradient(circle at 40% 35%, #f0e4cc 0%, #d8c8a8 100%)",
+                    border: "1.5px solid #a89070",
+                    boxShadow: "0 1px 2px rgba(0,0,0,0.4)",
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Center text between reels */}
+            <div className="flex-1 text-center min-w-0">
+              <p
+                className="font-mono uppercase leading-none"
+                style={{ fontSize: 7, letterSpacing: "0.3em", color: "#b09870" }}
+              >
+                Side B
+              </p>
+              <p
+                className="font-mono leading-tight mt-0.5"
+                style={{ fontSize: 9, color: "#7a6a50", letterSpacing: "0.04em" }}
+              >
+                Request Line
+              </p>
+            </div>
+
+            {/* Right reel window */}
+            <div
+              className="shrink-0 flex items-center justify-center"
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                background: "radial-gradient(circle, #28201a 0%, #1e180e 70%, #141008 100%)",
+                border: "2.5px solid #c0a880",
+                boxShadow: "inset 0 2px 8px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.15)",
+              }}
+            >
+              <div
+                className="flex items-center justify-center"
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  border: "1.5px solid rgba(80,65,45,0.5)",
+                  background: "conic-gradient(from 30deg, #3a3020 0%, #2a2018 25%, #3a3020 50%, #2a2018 75%, #3a3020 100%)",
+                }}
+              >
+                <div
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: "50%",
+                    background: "radial-gradient(circle at 40% 35%, #f0e4cc 0%, #d8c8a8 100%)",
+                    border: "1.5px solid #a89070",
+                    boxShadow: "0 1px 2px rgba(0,0,0,0.4)",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Thin printed rule */}
+          <div className="my-1" style={{ borderTop: "0.5px solid #d8c8a8" }} />
+
+          {/* Question + form on the label */}
+          <p
+            className="font-mono text-center mb-1"
+            style={{ fontSize: 10, color: "#7a6a50", lineHeight: 1.3 }}
+          >
+            What&apos;s a song that gets you on the dancefloor?
+          </p>
+
+          <form onSubmit={handleSongSubmit}>
+            <div className="flex items-baseline gap-1.5 mb-1">
+              <label
+                className="font-mono shrink-0 uppercase"
+                style={{ fontSize: 8, letterSpacing: "0.1em", color: "#b0a088" }}
+              >
+                From:
+              </label>
+              <input
+                type="text"
+                value={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+                placeholder="Your name"
+                disabled={songStatus === "submitting" || songStatus === "success"}
+                className="flex-1 font-mono text-xs focus:outline-none disabled:opacity-50"
+                style={{
+                  background: "transparent",
+                  borderBottom: "1px solid #d8c8a8",
+                  padding: "1px 4px",
+                  color: "#4a3c2e",
+                }}
+              />
+            </div>
+
+            <div
+              style={{
+                background: "#fffef8",
+                border: "1px solid #d8ccb8",
+                boxShadow: "inset 1px 1px 3px rgba(0,0,0,0.05)",
+                backgroundImage:
+                  "repeating-linear-gradient(transparent, transparent 19px, #ece4d8 19px, #ece4d8 20px)",
+                backgroundPosition: "0 7px",
+              }}
+            >
+              <textarea
+                value={songInput}
+                onChange={(e) => setSongInput(e.target.value)}
+                placeholder={
+                  songStatus === "success"
+                    ? "Thanks! We'll add it to the list"
+                    : songStatus === "error"
+                    ? "Something went wrong, try again..."
+                    : "e.g. Dancing Queen \u2013 ABBA"
+                }
+                disabled={songStatus === "submitting" || songStatus === "success"}
+                rows={2}
+                className="w-full bg-transparent font-mono text-xs focus:outline-none disabled:opacity-50 resize-none"
+                style={{
+                  padding: "8px 8px 4px 8px",
+                  color: "#4a3c2e",
+                  lineHeight: "20px",
+                }}
+              />
+            </div>
+
+            <div className="flex items-center justify-between mt-1">
+              <span
+                className="font-mono italic"
+                style={{
+                  fontSize: 9,
+                  color: songStatus === "success" ? "#6b8a5e" : songStatus === "error" ? "#b85450" : "#b0a090",
+                }}
+              >
+                {songStatus === "success"
+                  ? "\u2713 Submitted!"
+                  : songStatus === "submitting"
+                  ? "Sending..."
+                  : songStatus === "error"
+                  ? "Failed \u2013 try again"
+                  : ""}
+              </span>
+              <button
+                type="submit"
+                disabled={!songInput.trim() || !nameInput.trim() || songStatus === "submitting" || songStatus === "success"}
+                className="flex items-center gap-1 font-mono uppercase bg-pastel-cream border border-gray-400 shadow-win-out active:shadow-win-in active:translate-y-px disabled:opacity-35 disabled:active:shadow-win-out disabled:active:translate-y-0"
+                style={{
+                  fontSize: 10,
+                  letterSpacing: "0.08em",
+                  padding: "2px 8px",
+                  color: "#6b5c48",
+                }}
+              >
+                <Send size={9} />
+                <span>Send</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* ── TAPE HEAD WINDOW ── bottom center, wide rounded rect */}
+        <div
+          className="relative mx-auto mt-1.5 overflow-hidden"
+          style={{
+            width: "65%",
+            height: 18,
+            borderRadius: "3px 3px 5px 5px",
+            background: "linear-gradient(180deg, #1a140e 0%, #241c14 40%, #1a140e 100%)",
+            border: "2px solid #a89070",
+            boxShadow: "inset 0 2px 6px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(255,255,255,0.12)",
+          }}
+        >
+          {/* Left guide reel */}
+          <div
+            className="absolute"
+            style={{
+              top: "50%",
+              left: "12%",
+              transform: "translateY(-50%)",
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              border: "1.5px solid #4a3c28",
+              background: "radial-gradient(circle, #3a3020 0%, #282018 100%)",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.4)",
+            }}
+          />
+          {/* Right guide reel */}
+          <div
+            className="absolute"
+            style={{
+              top: "50%",
+              right: "12%",
+              transform: "translateY(-50%)",
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              border: "1.5px solid #4a3c28",
+              background: "radial-gradient(circle, #3a3020 0%, #282018 100%)",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.4)",
+            }}
+          />
+          {/* Tape strip running between reels */}
+          <div
+            className="absolute"
+            style={{
+              top: "50%",
+              left: "18%",
+              right: "18%",
+              height: 4,
+              transform: "translateY(-50%)",
+              background: "linear-gradient(180deg, #4a3828 0%, #2e2218 50%, #3a2c1e 100%)",
+              boxShadow: "0 0 2px rgba(0,0,0,0.3)",
+            }}
+          />
+          {/* Tape head opening — center notch */}
+          <div
+            className="absolute"
+            style={{
+              bottom: 0,
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: 14,
+              height: 4,
+              background: "#0a0806",
+              borderRadius: "2px 2px 0 0",
+            }}
+          />
+        </div>
+
+        {/* ── BOTTOM EDGE — capstan & pinch roller openings ── */}
+        <div className="flex justify-center gap-6 mt-1">
+          {/* Left capstan hole */}
+          <div
+            style={{
+              width: 5,
+              height: 5,
+              borderRadius: "50%",
+              background: "radial-gradient(circle, #b0a080 0%, #988868 100%)",
+              boxShadow: "inset 0 1px 1px rgba(0,0,0,0.3)",
+            }}
+          />
+          {/* Center alignment hole (rectangular) */}
+          <div
+            style={{
+              width: 8,
+              height: 4,
+              borderRadius: 1,
+              background: "#a89070",
+              boxShadow: "inset 0 1px 1px rgba(0,0,0,0.25)",
+            }}
+          />
+          {/* Right capstan hole */}
+          <div
+            style={{
+              width: 5,
+              height: 5,
+              borderRadius: "50%",
+              background: "radial-gradient(circle, #b0a080 0%, #988868 100%)",
+              boxShadow: "inset 0 1px 1px rgba(0,0,0,0.3)",
+            }}
+          />
+        </div>
+      </div>
+
       {/* Decorative Elements */}
-      <div className="mt-auto border-t border-pastel-green pt-2 flex justify-between text-[10px] text-gray-500 font-mono">
+      <div className="mt-2 border-t border-pastel-green pt-2 flex justify-between text-[10px] text-gray-500 font-mono">
         <span>STEREO SOUND</span>
         <span>HI-FI</span>
       </div>
