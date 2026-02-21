@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import cuid from 'cuid';
 
 interface SongSuggestion {
+  name: string;
   song: string;
 }
 
@@ -14,10 +15,13 @@ export default async function handler(
   }
 
   try {
-    const { song } = req.body as SongSuggestion;
+    const { name, song } = req.body as SongSuggestion;
 
     if (!song || typeof song !== 'string' || !song.trim()) {
       return res.status(400).json({ error: 'Missing required field: song' });
+    }
+    if (!name || typeof name !== 'string' || !name.trim()) {
+      return res.status(400).json({ error: 'Missing required field: name' });
     }
 
     const Id = cuid();
@@ -37,6 +41,7 @@ export default async function handler(
     };
     const fields = {
       Id,
+      name: name.trim(),
       song: song.trim(),
       timestamp,
     };
